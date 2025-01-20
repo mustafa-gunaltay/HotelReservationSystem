@@ -22,7 +22,8 @@ public class Main extends Application {
 //        DaoTests.adminDaoImplUnitTest();
 //        DaoTests.receptionistDaoImplUnitTest();
 
-//        ServiceTests.adminServiceImplTest();
+//        ServiceTests.adminServiceImplUnitTest();
+//        ServiceTests.ReceptionistServiceImplUnitTest();
     }
 
     public static void main(String[] args) {
