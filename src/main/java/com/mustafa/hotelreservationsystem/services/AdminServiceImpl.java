@@ -2,6 +2,9 @@ package com.mustafa.hotelreservationsystem.services;
 
 import com.mustafa.hotelreservationsystem.dao.AdminDao;
 import com.mustafa.hotelreservationsystem.dao.AdminDaoImpl;
+import com.mustafa.hotelreservationsystem.exceptions.general.InvalidAdminException;
+import com.mustafa.hotelreservationsystem.exceptions.general.InvalidAdminPasswordException;
+import com.mustafa.hotelreservationsystem.exceptions.general.InvalidAdminUsernameException;
 import com.mustafa.hotelreservationsystem.models.Admin;
 
 import java.util.ArrayList;
@@ -39,7 +42,7 @@ public class AdminServiceImpl implements AdminService {
 
     // istenildigi yerde cagrilacak, exception firlatmamasi demek bu username ve pw'nin valid oldugu anlamina gelecek
     @Override
-    public void validateAdmin(String username, String pw) {
+    public void validateAdmin(String username, String pw) throws InvalidAdminUsernameException, InvalidAdminPasswordException {
         List<Admin> allAdmins = adminDao.retrieveAllAdmins();
         List<String> usernames = new ArrayList<>();
         List<String> passwords = new ArrayList<>();
@@ -66,12 +69,12 @@ public class AdminServiceImpl implements AdminService {
 
         if (!usernameExist){
             System.out.println("Username does not exist in system");
-            // exception firlat
+            throw new InvalidAdminUsernameException("No admin account found for the provided username: " + username);
         }
 
         if (!pwExist){
             System.out.println("Password does not match with username");
-            // exception firlat
+            throw new InvalidAdminPasswordException("Username does not match with provided password: " + pw);
         }
 
     }

@@ -1,5 +1,7 @@
 package com.mustafa.hotelreservationsystem.dao;
 
+import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistPasswordException;
+import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistUsernameException;
 import com.mustafa.hotelreservationsystem.models.Entity;
 import com.mustafa.hotelreservationsystem.models.Receptionist;
 

@@ -2,6 +2,8 @@ package com.mustafa.hotelreservationsystem.services;
 
 import com.mustafa.hotelreservationsystem.dao.ReceptionistDao;
 import com.mustafa.hotelreservationsystem.dao.ReceptionistDaoImpl;
+import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistPasswordException;
+import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistUsernameException;
 import com.mustafa.hotelreservationsystem.models.Admin;
 import com.mustafa.hotelreservationsystem.models.Receptionist;
 
@@ -43,7 +45,7 @@ public class ReceptionistServiceImpl implements ReceptionistService{
     }
 
     @Override
-    public void validateReceptionist(String username, String pw) {
+    public void validateReceptionist(String username, String pw) throws InvalidReceptionistUsernameException, InvalidReceptionistPasswordException {
         List<Receptionist> allReceptionists = receptionistDao.retrieveAllReceptionists();
         List<String> usernames = new ArrayList<>();
         List<String> passwords = new ArrayList<>();
@@ -70,12 +72,12 @@ public class ReceptionistServiceImpl implements ReceptionistService{
 
         if (!usernameExist){
             System.out.println("Username does not exist in system");
-            // exception firlat
+            throw new InvalidReceptionistUsernameException("No receptionist account found for the provided username: " + username);
         }
 
         if (!pwExist){
             System.out.println("Password does not match with username");
-            // exception firlat
+            throw new InvalidReceptionistPasswordException("Username does not match with provided password: " + pw);
         }
     }
 }

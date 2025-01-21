@@ -1,5 +1,7 @@
 package com.mustafa.hotelreservationsystem.services;
 
+import com.mustafa.hotelreservationsystem.exceptions.general.InvalidAdminException;
+import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistException;
 import com.mustafa.hotelreservationsystem.models.Admin;
 import com.mustafa.hotelreservationsystem.models.Receptionist;
 
@@ -29,8 +31,18 @@ public class ServiceTests {
 //        aService.changePassword(17, "3-ucuncu");
 
         // validation of username and password of admin
-        aService.validateAdmin("dsaads", "musti123");
-        aService.validateAdmin("musti user", "sdadsa");
+        try {
+            aService.validateAdmin("dsaads", "musti123");
+        } catch (InvalidAdminException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            aService.validateAdmin("musti user", "sdadsa");;
+        } catch (InvalidAdminException e) {
+            System.out.println(e.getMessage());
+        }
+
 
     }
 
@@ -66,9 +78,28 @@ public class ServiceTests {
 //        rService.changePassword(6, "newmehmet123");
 
         // validation of username and password of receptionist
-        rService.validateReceptionist("dsasad", "dsasad");
-        rService.validateReceptionist("new user mehmet", "Mehmet123");
-        rService.validateReceptionist("new user mehmet", "newmehmet123");
+        try {
+            rService.validateReceptionist("dsasad", "dsasad");
+        }
+        catch (InvalidReceptionistException e){
+            System.out.println(e);
+        }
+
+        try {
+            rService.validateReceptionist("new user mehmet", "Mehmet123");
+        }
+        catch (InvalidReceptionistException e){
+            System.out.println(e);
+        }
+
+        try {
+            rService.validateReceptionist("new user mehmet", "newmehmet123");
+        }
+        catch (InvalidReceptionistException e){
+            System.out.println(e);
+        }
+
+
 
 
     }
