@@ -1,5 +1,6 @@
 package com.mustafa.hotelreservationsystem;
 
+import com.mustafa.hotelreservationsystem.services.ServiceTests;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,7 +22,8 @@ public class Main extends Application {
 //        DaoTests.receptionistDaoImplUnitTest();
 
 //        ServiceTests.adminServiceImplUnitTest();
-//        ServiceTests.ReceptionistServiceImplUnitTest();
+//        ServiceTests.receptionistServiceImplUnitTest();
+//        ServiceTests.featureServiceImplUnitTest();
     }
 
     public static void main(String[] args) {

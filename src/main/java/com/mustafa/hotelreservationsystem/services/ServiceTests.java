@@ -3,6 +3,7 @@ package com.mustafa.hotelreservationsystem.services;
 import com.mustafa.hotelreservationsystem.exceptions.general.InvalidAdminException;
 import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistException;
 import com.mustafa.hotelreservationsystem.models.Admin;
+import com.mustafa.hotelreservationsystem.models.Feature;
 import com.mustafa.hotelreservationsystem.models.Receptionist;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class ServiceTests {
 
     }
 
-    public static void ReceptionistServiceImplUnitTest(){
+    public static void receptionistServiceImplUnitTest(){
 
         ReceptionistService rService = new ReceptionistServiceImpl();
 
@@ -100,7 +101,36 @@ public class ServiceTests {
         }
 
 
+    }
 
 
+
+    public static void featureServiceImplUnitTest(){
+
+        FeatureService fService = new FeatureServiceImpl();
+
+        // creating new receptionist
+        Feature f1 = new Feature("f1", 101);
+        Feature f2 = new Feature("f2", 200);
+        fService.createFeature(f1);
+        fService.createFeature(f2);
+
+
+        // get all receptionists
+        List<Feature> allFeatures = fService.getAllFeatures();
+        for (Feature f : allFeatures){
+            System.out.println(f);
+        }
+
+            // updating admin
+
+        // changing feature's name
+        fService.changeFeatureName(12, "yeni yaptigim f1 feature");
+
+        // changing feature's price
+        fService.changePrice(13, 9999);
+
+        // delete feature
+        fService.deleteFeature(10);
     }
 }

@@ -69,12 +69,12 @@ public class AdminServiceImpl implements AdminService {
 
         if (!usernameExist){
             System.out.println("Username does not exist in system");
-            throw new InvalidAdminUsernameException("No admin account found for the provided username: " + username);
+            throw new InvalidAdminUsernameException("No admin account found for the provided username: " + username, username);
         }
 
         if (!pwExist){
             System.out.println("Password does not match with username");
-            throw new InvalidAdminPasswordException("Username does not match with provided password: " + pw);
+            throw new InvalidAdminPasswordException("Username does not match with provided password: " + pw, pw);
         }
 
     }

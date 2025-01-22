@@ -33,4 +33,36 @@ public class Room extends Entity{
         this.isReserved = isReserved;
         this.reservation = reservation;
     }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public boolean isReserved() {
+        return isReserved;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomName='" + roomName + '\'' +
+                ", capacity=" + capacity +
+                ", price=" + price +
+                ", isReserved=" + isReserved +
+                ", reservation=" + reservation +
+                ", id=" + id +
+                '}';
+    }
 }

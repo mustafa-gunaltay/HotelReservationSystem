@@ -4,8 +4,9 @@ public class InvalidReceptionistPasswordException extends InvalidReceptionistExc
 
     private String password;
 
-    public InvalidReceptionistPasswordException(String message) {
+    public InvalidReceptionistPasswordException(String message, String password) {
         super(message);
+        this.password = password;
     }
 
     public String getPassword() {

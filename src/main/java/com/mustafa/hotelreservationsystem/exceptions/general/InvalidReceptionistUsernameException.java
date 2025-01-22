@@ -4,8 +4,9 @@ public class InvalidReceptionistUsernameException extends InvalidReceptionistExc
 
     private String username;
 
-    public InvalidReceptionistUsernameException(String message) {
+    public InvalidReceptionistUsernameException(String message, String usernmae) {
         super(message);
+        this.username = usernmae;
     }
 
     public String getUsername() {
