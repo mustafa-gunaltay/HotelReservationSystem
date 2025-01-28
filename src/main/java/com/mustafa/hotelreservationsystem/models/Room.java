@@ -34,6 +34,9 @@ public class Room extends Entity{
         this.reservation = reservation;
     }
 
+
+
+
     public String getRoomName() {
         return roomName;
     }

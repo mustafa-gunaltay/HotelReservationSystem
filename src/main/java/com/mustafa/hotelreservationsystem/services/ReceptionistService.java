@@ -13,5 +13,7 @@ public interface ReceptionistService {
     void changePassword(long id, String newPassword);
     List<Receptionist> getAllReceptionists();
     void validateReceptionist(String username, String pw) throws InvalidReceptionistUsernameException, InvalidReceptionistPasswordException;
+    Receptionist deleteReceptionist(long id);
+    Receptionist getReceptionist(long id);
 
 }

@@ -31,4 +31,31 @@ public class Reservation extends Entity {
         this.bookingDate = bookingDate;
         this.receptionist = receptionist;
     }
+
+    public LocalDate getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public LocalDate getCheckInDate() {
+        return checkInDate;
+    }
+
+    public LocalDate getBookingDate() {
+        return bookingDate;
+    }
+
+    public Receptionist getReceptionist() {
+        return receptionist;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "checkInDate=" + checkInDate +
+                ", checkOutDate=" + checkOutDate +
+                ", bookingDate=" + bookingDate +
+                ", receptionist=" + receptionist +
+                ", id=" + id +
+                '}';
+    }
 }

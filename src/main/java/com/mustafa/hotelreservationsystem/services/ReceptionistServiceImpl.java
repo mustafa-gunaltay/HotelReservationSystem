@@ -5,6 +5,7 @@ import com.mustafa.hotelreservationsystem.dao.ReceptionistDaoImpl;
 import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistPasswordException;
 import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistUsernameException;
 import com.mustafa.hotelreservationsystem.models.Admin;
+import com.mustafa.hotelreservationsystem.models.Feature;
 import com.mustafa.hotelreservationsystem.models.Receptionist;
 
 import java.util.ArrayList;
@@ -78,6 +79,24 @@ public class ReceptionistServiceImpl implements ReceptionistService{
         if (!pwExist){
             System.out.println("Password does not match with username");
             throw new InvalidReceptionistPasswordException("Username does not match with provided password: " + pw, pw);
+        }
+    }
+
+    @Override
+    public Receptionist deleteReceptionist(long id) {
+        Receptionist deletedReceptionist = receptionistDao.delete(id);
+        return  deletedReceptionist;
+    }
+
+    @Override
+    public Receptionist getReceptionist(long id) {
+        Receptionist targetReceptionist = receptionistDao.retrieve(id);
+        if (targetReceptionist != null){
+            return targetReceptionist;
+        }
+        else{
+            System.out.println("public Receptionist getReceptionist(long id) -> returned null");
+            return null;
         }
     }
 }

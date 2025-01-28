@@ -1,6 +1,5 @@
 package com.mustafa.hotelreservationsystem.dao;
 
-import com.mustafa.hotelreservationsystem.models.Feature;
 import com.mustafa.hotelreservationsystem.models.Room;
 
 import java.util.List;
@@ -13,7 +12,10 @@ public interface RoomDao extends Crudable{
 
     List<Room> retrieveAllRooms();
     void updateSpecifiedRoomField(long id, String fieldName, Object fieldValue);
-    boolean linkRoomToReservation(long roomId, long resId);
-    boolean bindRoomAndFeature(long roomId, long featureId);
-    boolean bindRoomAndService(long roomId, long serviceId);
+    void linkRoomToReservation(long roomId, long resId);
+    void unlinkRoomFromReservation(long roomId);
+    void bindRoomAndFeature(long roomId, long featureId);
+    void unbindRoomAndFeature(long roomId, long featureId);
+    void bindRoomAndService(long roomId, long serviceId);
+    void unbindRoomAndService(long roomId, long serviceId);
 }

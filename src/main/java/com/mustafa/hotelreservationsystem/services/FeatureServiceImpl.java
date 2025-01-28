@@ -3,6 +3,7 @@ package com.mustafa.hotelreservationsystem.services;
 import com.mustafa.hotelreservationsystem.dao.FeatureDao;
 import com.mustafa.hotelreservationsystem.dao.FeatureDaoImpl;
 import com.mustafa.hotelreservationsystem.models.Feature;
+import com.mustafa.hotelreservationsystem.models.Reservation;
 
 import java.util.List;
 
@@ -31,13 +32,32 @@ public class FeatureServiceImpl implements FeatureService{
 
     @Override
     public Feature deleteFeature(long id) {
-        return featureDao.delete(id);
+        Feature deletedFeature = featureDao.delete(id);
+        return deletedFeature;
     }
 
 
     @Override
     public List<Feature> getAllFeatures() {
         List<Feature> allFeatures = featureDao.retrieveAllFeatures();
-        return  allFeatures;
+        if ( ! allFeatures.isEmpty() ){
+            return allFeatures;
+        }
+        else {
+            System.out.println("public List<Feature> getAllFeatures() -> returned empty list");
+            return allFeatures;
+        }
+    }
+
+    @Override
+    public Feature getFeature(long id) {
+        Feature targetFeature = featureDao.retrieve(id);
+        if (targetFeature != null){
+            return targetFeature;
+        }
+        else{
+            System.out.println("public Feature getFeature(long id) -> returned null");
+            return null;
+        }
     }
 }

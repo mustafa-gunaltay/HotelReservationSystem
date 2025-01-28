@@ -79,5 +79,29 @@ public class AdminServiceImpl implements AdminService {
 
     }
 
+    @Override
+    public Admin getAdmin(long id) {
+        Admin targetAdmin = adminDao.retrieve(id);
+        if (targetAdmin != null){
+            return targetAdmin;
+        }
+        else {
+            System.out.println("public Admin getAdmin(long id) returned null");
+            return null;
+        }
+    }
+
+    @Override
+    public List<Admin> getAllAdmins() {
+        List<Admin> allAdmins = adminDao.retrieveAllAdmins();
+        if ( ! allAdmins.isEmpty() ){
+            return allAdmins;
+        }
+        else {
+            System.out.println("public List<Admin> getAllAdmins() returned empty list");
+            return allAdmins;
+        }
+    }
+
 
 }

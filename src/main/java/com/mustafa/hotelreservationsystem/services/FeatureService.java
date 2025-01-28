@@ -10,6 +10,7 @@ public interface FeatureService {
     void changePrice(long id, int price);
     Feature deleteFeature(long id);
     List<Feature> getAllFeatures();
+    Feature getFeature(long id);
 
 
 }

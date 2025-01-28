@@ -3,7 +3,10 @@ package com.mustafa.hotelreservationsystem.dao;
 
 import com.mustafa.hotelreservationsystem.models.Feature;
 import com.mustafa.hotelreservationsystem.models.Receptionist;
+import com.mustafa.hotelreservationsystem.models.Reservation;
+import com.mustafa.hotelreservationsystem.models.Room;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class DaoTests {
@@ -108,6 +111,188 @@ public class DaoTests {
 
 
 
+    public static void roomDaoImplUnitTest(){
+
+        RoomDao roomDao = new RoomDaoImpl();
+
+        // creating room
+        Receptionist onlyReceptionist = new Receptionist(4, "must gun", "user must", "must123");
+
+        Reservation reservation1 = new Reservation(
+                8,
+                LocalDate.of(2024, 7, 15),
+                LocalDate.of(2024, 7, 20),
+                LocalDate.of(2024, 6, 30),
+                onlyReceptionist
+        );
+        Reservation reservation2 = new Reservation(
+                9,
+                LocalDate.of(2024, 7, 15),
+                LocalDate.of(2024, 7, 20),
+                LocalDate.of(2024, 6, 30),
+                onlyReceptionist
+        );
+        Reservation reservation3 = new Reservation(
+                10,
+                LocalDate.of(2024, 8, 5),
+                LocalDate.of(2024, 8, 12),
+                LocalDate.of(2024, 7, 20),
+                onlyReceptionist
+        );
+
+        // rezervasyonsuz oda - id olacak 4
+        Room room1 = new Room("r 1", 10, 1000, false, null);
+
+        // rezervasyonsuz oda - 5
+        Room room2 = new Room("r 2", 20, 2000, false, null);
+
+        // rezervasyonlu oda - 6
+        Room room3 = new Room("r 3", 30, 3000, true, reservation3);
+
+//        roomDao.save(room1); // rezervasyonsuz
+//        roomDao.save(room2); // rezervasyonsuz
+//        roomDao.save(room3); // rezervasyonlu
+
+
+        // retrieving all rooms
+//        List<Room> allRooms = roomDao.retrieveAllRooms();
+//        for (Room r : allRooms){
+//            System.out.println(r);
+//        }
+
+        // updating room
+//        Room roomToBeUpdated;
+//
+//        roomToBeUpdated = new Room(5, "new room 2", 21, 2001, true, reservation2);
+//        roomDao.update(roomToBeUpdated);
+//
+//        roomToBeUpdated = new Room(5, "newnew room 2", 22, 2002, false, null);
+//        roomDao.update(roomToBeUpdated);
+
+
+        // retireve one room by id
+//        Room temp;
+//        temp = roomDao.retrieve(5);
+//        System.out.println(temp);
+
+        // updating specified room field with specified value
+//        roomDao.updateSpecifiedRoomField(4, "price", 2003);
+
+
+        // linking room to reservation (hem yeni baglantilar icin hem de olan baglantilari guncelemek icin)
+//        roomDao.linkRoomToReservation(1, 1);
+//        roomDao.linkRoomToReservation(3, 10);
+
+        // unlinking room from reservation
+//        roomDao.unlinkRoomFromReservation(1);
+//        roomDao.unlinkRoomFromReservation(3);
+
+
+
+        // binding room and feature
+//        roomDao.bindRoomAndFeature(3, 11);
+
+        // unbinding room and feature
+//        roomDao.unbindRoomAndFeature(3, 11);
+
+        // binding room and service
+//        roomDao.bindRoomAndService(3, 1);
+
+        // unbinding room and service
+//        roomDao.unbindRoomAndService(3, 1);
+
+        // deleting room
+        Room deletedRoom = roomDao.delete(3);
+        System.out.println(deletedRoom);
+
+    }
+
+
+
+    public static void reservationDaoImplUnitTest(){
+
+        ReservationDao rDao = new ReservationDaoImpl();
+
+        // creating reservation
+        Receptionist receptionist1 = new Receptionist(5, "new ali kilic", "user ali", "ali123");
+        Receptionist receptionist2 = new Receptionist(6, "mehmet soylu", "new user mehmet", "newmehmet123");
+
+        Reservation reservation1 = new Reservation( // id'si 10 olacak
+                LocalDate.of(3024, 6, 1),
+                LocalDate.of(3024, 6, 10),
+                LocalDate.of(3024, 5, 15),
+                receptionist1
+        );
+
+        Reservation reservation2 = new Reservation( // 11
+                LocalDate.of(3024, 7, 15),
+                LocalDate.of(3024, 7, 20),
+                LocalDate.of(3024, 6, 30),
+                receptionist1
+        );
+
+        Reservation reservation3 = new Reservation( // 12
+                LocalDate.of(3024, 8, 5),
+                LocalDate.of(3024, 8, 12),
+                LocalDate.of(3024, 7, 20),
+                receptionist2
+        );
+
+//        rDao.save(reservation1);
+//        rDao.save(reservation2);
+//        rDao.save(reservation3);
+
+
+        // retrieving all reservations
+//        List<Reservation> allReservations = rDao.retrieveAllReservations();
+//        for (Reservation r : allReservations){
+//            System.out.println(r);
+//        }
+
+        // updating reservation
+        Reservation resToBeUpdated = new Reservation(
+                10,
+                LocalDate.of(3024, 6, 12),
+                LocalDate.of(3024, 6, 21),
+                LocalDate.of(3024, 5, 26),
+                receptionist1
+        );
+//        rDao.update(resToBeUpdated);
+
+        // retrieve one reservation
+//        Reservation temp;
+//        temp = rDao.retrieve(10);
+//        System.out.println(temp);
+
+        // updating specified reservation field with specified value
+//        rDao.updateSpecifiedReservationField(11, "checkInDate", LocalDate.of(2025, 8, 16));
+//        rDao.updateSpecifiedReservationField(11, "receptionistId", 6);
+        rDao.updateSpecifiedReservationField(8, "receptionistId", 4);
+
+
+        // binding reservation and customer
+//        rDao.bindReservationAndCustomer(12, 1);
+//        rDao.bindReservationAndCustomer(12, 2);
+//        rDao.bindReservationAndCustomer(11, 2);
+
+        // unbinding reservation and customer
+//        rDao.unbindReservationAndCustomer(12, 1);
+//        rDao.unbindReservationAndCustomer(12, 2);
+//        rDao.unbindReservationAndCustomer(11, 2);
+
+
+        // unlinking reservation from receptionist
+//        rDao.unlinkReservationFromReceptionist(11);
+//        rDao.unlinkReservationFromReceptionist(12);
+
+        // linking reservation to receptionist
+//        rDao.linkReservationToReceptionist(11, 5);
+//        rDao.linkReservationToReceptionist(12, 5);
+
+
+
+
+    }
 
 
 }

@@ -84,9 +84,11 @@ public class FeatureDaoImpl implements FeatureDao {
 
         String query = "SELECT id, featureName, price FROM feature WHERE id = ?";
 
-        try ( Connection conn = DriverManager.getConnection(URL, USER, PASSWORD))
+        try (
+                Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement ps = conn.prepareStatement(query);
+        )
         {
-            PreparedStatement ps = conn.prepareStatement(query);
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -109,7 +111,7 @@ public class FeatureDaoImpl implements FeatureDao {
     @Override
     public Feature delete(long id){
 
-        Feature deletedFeature = (Feature) retrieve(id);
+        Feature deletedFeature = retrieve(id);
 
         String query = "DELETE FROM feature WHERE id = ?";
 
@@ -140,9 +142,11 @@ public class FeatureDaoImpl implements FeatureDao {
 
         String query = "SELECT id, featureName, price FROM feature";
 
-        try ( Connection conn = DriverManager.getConnection(URL, USER, PASSWORD))
+        try (
+                Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement ps = conn.prepareStatement(query)
+        )
         {
-            PreparedStatement ps = conn.prepareStatement(query);
 
             ResultSet rs = ps.executeQuery();
 

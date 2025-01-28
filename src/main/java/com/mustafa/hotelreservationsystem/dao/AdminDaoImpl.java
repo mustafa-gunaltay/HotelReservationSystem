@@ -15,6 +15,8 @@ public class AdminDaoImpl implements AdminDao {
     private static final String PASSWORD = "karakama123--";
 
     // id'yi auto increment yapildigi icin paramtere kismina id almayan varlik kuruculari ile atama yapilmali
+
+    // ayni username'de baska bir admin varsa senaryosu (db de username -> unique)
     @Override
     public void save(Entity e){
 
@@ -47,6 +49,7 @@ public class AdminDaoImpl implements AdminDao {
 
 
     // o id'de bir entity yoksa nolacak senaryosu
+    // ayni username'de baska bir admin varsa senaryosu (db de username -> unique)
     @Override
     public void update(Entity e){
 
@@ -117,7 +120,7 @@ public class AdminDaoImpl implements AdminDao {
     @Override
     public Admin delete(long id){
 
-        // retriece den firlatilan exception i yonet veya firlat
+        // retrieve den firlatilan exception i yonet veya firlat
         Admin deletedAdmin = retrieve(id);
 
         String query = "DELETE FROM admin WHERE id = ?";
@@ -177,6 +180,7 @@ public class AdminDaoImpl implements AdminDao {
 
 
     // bu id de hic bir adminin olmamasi durumu
+    // fieldName username ise ayni username'de baska bir admin varsa senaryosu (db de username -> unique)
     @Override
     public void updateSpecifiedAdminField(long id, String fieldName, Object fieldValue) {
 
