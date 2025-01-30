@@ -15,4 +15,21 @@ public class Service extends Entity {
         this.serviceName = serviceName;
         this.price = price;
     }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    @Override
+    public String toString() {
+        return "Service{" +
+                "id=" + id +
+                ", serviceName='" + serviceName + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

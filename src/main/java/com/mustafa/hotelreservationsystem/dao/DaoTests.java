@@ -1,10 +1,7 @@
 package com.mustafa.hotelreservationsystem.dao;
 
 
-import com.mustafa.hotelreservationsystem.models.Feature;
-import com.mustafa.hotelreservationsystem.models.Receptionist;
-import com.mustafa.hotelreservationsystem.models.Reservation;
-import com.mustafa.hotelreservationsystem.models.Room;
+import com.mustafa.hotelreservationsystem.models.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -290,9 +287,84 @@ public class DaoTests {
 //        rDao.linkReservationToReceptionist(12, 5);
 
 
-
-
     }
 
+
+
+
+    public static void customerDaoImplUnitTest() {
+
+        CustomerDao cDao = new CustomerDaoImpl();
+
+
+        // creating customers
+        Customer customer1 = new Customer("Ahmet Yılmaz", "555-1234", LocalDate.of(1990, 5, 15), "Düzenli müşteri");
+        Customer customer2 = new Customer("Elif Kaya", "555-5678", LocalDate.of(1985, 8, 20), "VIP müşteri");
+        Customer customer3 = new Customer("Mehmet Demir", "555-9876", LocalDate.of(2000, 2, 10), "Yeni kayıt");
+
+        cDao.save(customer1);
+        cDao.save(customer2);
+        cDao.save(customer3);
+
+
+        // retrieving all customers
+        List<Customer> allCustomers = cDao.retrieveAllCustomers();
+        for (Customer c : allCustomers) {
+            System.out.println(c);
+        }
+
+        // updating customer (general update)
+        Customer customerToBeUpdated = new Customer(5, "Ahmet Dogan", "555-4321", LocalDate.of(1991, 6, 16), "Duzensiz müşteri");
+        cDao.update(customerToBeUpdated);
+
+        // retrieve one customer
+        Customer temp = cDao.retrieve(5);
+        System.out.println(temp);
+
+        // update specified customer field with specified value
+        cDao.updateSpecifiedCustomerField(6, "fullName", "Burak Kaya");
+
+        // delete customer
+        temp = cDao.delete(6);
+        System.out.println(temp);
+    }
+
+
+    public static void serviceDaoImplUnitTest() {
+
+        ServiceDao sDao = new ServiceDaoImpl();
+
+        // creating service
+        Service service1 = new Service("Web Hosting", 500);
+        Service service2 = new Service("SEO Optimizasyonu", 1200);
+        Service service3 = new Service("Mobil Uygulama Geliştirme", 5000);
+
+        sDao.save(service1);
+        sDao.save(service2);
+        sDao.save(service3);
+
+
+        // retrieving all services
+        List<Service> allServices = sDao.retrieveAllServices();
+        for (Service s : allServices) {
+            System.out.println(s);
+        }
+
+        // updating service (general update)
+        Service serviceToBeUpdated = new Service(4, "My Web Hosting", 600);
+        sDao.update(serviceToBeUpdated);
+
+        // retrieve one customer
+        Service temp = sDao.retrieve(4);
+        System.out.println(temp);
+
+        // update specified service field with specified value
+        sDao.updateSpecifiedServiceField(5, "price", 2000);
+
+        // delete service
+        Service deletedService = sDao.delete(5);
+        System.out.println(deletedService);
+
+    }
 
 }

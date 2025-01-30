@@ -23,7 +23,8 @@ public class Main extends Application {
 //        DaoTests.receptionistDaoImplUnitTest();
 //        DaoTests.roomDaoImplUnitTest();
 //        DaoTests.reservationDaoImplUnitTest();
-
+//        DaoTests.customerDaoImplUnitTest();
+//        DaoTests.serviceDaoImplUnitTest();
         
 //        ServiceTests.adminServiceImplUnitTest();
 //        ServiceTests.receptionistServiceImplUnitTest();
