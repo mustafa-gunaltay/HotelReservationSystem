@@ -42,7 +42,13 @@ public class ReceptionistServiceImpl implements ReceptionistService{
     @Override
     public List<Receptionist> getAllReceptionists() {
         List<Receptionist> allReceptionists = receptionistDao.retrieveAllReceptionists();
-        return  allReceptionists;
+        if ( ! allReceptionists.isEmpty() ){
+            return allReceptionists;
+        }
+        else {
+            System.out.println("public List<Receptionist> getAllReceptionists -> returned empty list");
+            return allReceptionists;
+        }
     }
 
     @Override

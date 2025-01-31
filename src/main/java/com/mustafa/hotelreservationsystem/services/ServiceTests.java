@@ -329,6 +329,87 @@ public class ServiceTests {
     }
 
 
+
+
+    public static void customerServiceImplUnitTest(){
+
+        CustomerService cService = new CustomerServiceImpl();
+
+        // create customer
+        Customer customer1 = new Customer("Zeynep Çelik", "555-1122", LocalDate.of(1995, 3, 25), "Sadık müşteri");
+        Customer customer2 = new Customer("Burak Aslan", "555-3344", LocalDate.of(1998, 7, 10), "Yeni üye");
+        Customer customer3 = new Customer("Gamze Arslan", "555-5566", LocalDate.of(1982, 12, 5), "Premium üye");
+
+//        cService.createCustomer(customer1);
+//        cService.createCustomer(customer2);
+//        cService.createCustomer(customer3);
+
+        // get all customer
+//        List<Customer> allCustomers = cService.getAllCustomers();
+//        for (Customer c : allCustomers) {
+//            System.out.println(c);
+//        }
+
+        // change full name
+//        cService.changeFullName(8, "Ahmet Celik");
+
+        // change phone number
+//        cService.changePhoneNumber(8, "555-5555");
+
+        // change birth date
+//        cService.changeBirthDate(8, LocalDate.of(1996, 4, 26));
+
+        // change description
+//        cService.changeDescription(8, "new description");
+
+        // get one customer
+//        Customer temp = cService.getCustomer(8);
+//        System.out.println(temp);
+
+        // delete customer
+        Customer deletedCustomer = cService.deleteCustomer(9);
+        System.out.println(deletedCustomer);
+
+    }
+
+
+
+    public static void serviceServiceImplUnitTest(){
+
+        ServiceService sService = new ServiceServiceImpl();
+
+        // create service
+        Service service1 = new Service("Grafik Tasarım", 800);
+        Service service2 = new Service("Sosyal Medya Yönetimi", 1500);
+        Service service3 = new Service("Veritabanı Optimizasyonu", 2000);
+
+        sService.createService(service1);
+        sService.createService(service2);
+        sService.createService(service3);
+
+        // get all services
+        List<Service> allServices = sService.getAllServices();
+        for (Service s : allServices){
+            System.out.println(s);
+        }
+
+        // change service name
+        sService.changeServiceName(7, "changed service");
+
+        // change price
+        sService.changePrice(7, 1000);
+
+        // get one service
+        Service temp = sService.getService(7);
+        System.out.println(temp);
+
+        // delete service
+        Service deletedService = sService.deleteService(8);
+        System.out.println(deletedService);
+
+    }
+
+
 }
 
 

@@ -31,6 +31,8 @@ public class Main extends Application {
 //        ServiceTests.featureServiceImplUnitTest();
 //        ServiceTests.reservationServiceImplUnitTest();
 //        ServiceTests.roomServiceImplUnitTest();
+//        ServiceTests.customerServiceImplUnitTest();
+//        ServiceTests.serviceServiceImplUnitTest();
     }
 
     public static void main(String[] args) {
