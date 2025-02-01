@@ -2,8 +2,10 @@ package com.mustafa.hotelreservationsystem.services;
 
 import com.mustafa.hotelreservationsystem.dao.ReceptionistDao;
 import com.mustafa.hotelreservationsystem.dao.ReceptionistDaoImpl;
+import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
 import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistPasswordException;
 import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistUsernameException;
+import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
 import com.mustafa.hotelreservationsystem.models.Admin;
 import com.mustafa.hotelreservationsystem.models.Feature;
 import com.mustafa.hotelreservationsystem.models.Receptionist;
@@ -20,23 +22,45 @@ public class ReceptionistServiceImpl implements ReceptionistService{
     }
 
     @Override
-    public void createReceptionist(Receptionist r){
-        receptionistDao.save(r);
+    public void createReceptionist(Receptionist r) throws SameEntityValueExistInDbException {
+
+        try{
+            receptionistDao.save(r);
+        } catch (DuplicateEntryException e) {
+            throw new SameEntityValueExistInDbException("Receptionist username already taken", e);
+        }
     }
 
     @Override
     public void changefullName(long id, String newFullName) {
-        receptionistDao.updateSpecifiedReceptionistField(id, "fullName", newFullName);
+        try{
+            receptionistDao.updateSpecifiedReceptionistField(id, "fullName", newFullName);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     @Override
-    public void changeUsername(long id, String newUsername) {
-        receptionistDao.updateSpecifiedReceptionistField(id, "username", newUsername);
+    public void changeUsername(long id, String newUsername) throws SameEntityValueExistInDbException{
+
+        try{
+            receptionistDao.updateSpecifiedReceptionistField(id, "username", newUsername);
+        } catch (DuplicateEntryException e) {
+            throw new SameEntityValueExistInDbException("Receptionist username already taken", e);
+        }
+
     }
 
     @Override
     public void changePassword(long id, String newPassword) {
-        receptionistDao.updateSpecifiedReceptionistField(id, "passwordd", newPassword);
+
+        try {
+            receptionistDao.updateSpecifiedReceptionistField(id, "passwordd", newPassword);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     @Override

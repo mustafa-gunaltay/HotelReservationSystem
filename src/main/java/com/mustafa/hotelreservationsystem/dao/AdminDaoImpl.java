@@ -1,5 +1,6 @@
 package com.mustafa.hotelreservationsystem.dao;
 
+import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
 import com.mustafa.hotelreservationsystem.models.Admin;
 import com.mustafa.hotelreservationsystem.models.Entity;
 
@@ -18,7 +19,7 @@ public class AdminDaoImpl implements AdminDao {
 
     // ayni username'de baska bir admin varsa senaryosu (db de username -> unique)
     @Override
-    public void save(Entity e){
+    public void save(Entity e) throws DuplicateEntryException{
 
         // id database'de AUTO_INCREMENT oldugundan harici olarak id'yi insert etmeye gerek yok
         Admin newAdmin = (Admin) e;
@@ -32,7 +33,12 @@ public class AdminDaoImpl implements AdminDao {
                 PreparedStatement ps = conn.prepareStatement(query)
             )
         {
-            ps.setString(1, fullName);
+            if (fullName != null) {
+                ps.setString(1, fullName);
+            }
+            else {
+                ps.setNull(1, java.sql.Types.VARCHAR);
+            }
             ps.setString(2, username);
             ps.setString(3, passwordd);
 
@@ -43,6 +49,11 @@ public class AdminDaoImpl implements AdminDao {
         }
         catch (SQLException ex){
             System.out.println(ex);
+            int errorCode = ex.getErrorCode();
+
+            if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
+                throw new DuplicateEntryException("Duplicate Entry for unique field", username);
+            }
         }
 
     }
@@ -51,7 +62,7 @@ public class AdminDaoImpl implements AdminDao {
     // o id'de bir entity yoksa nolacak senaryosu
     // ayni username'de baska bir admin varsa senaryosu (db de username -> unique)
     @Override
-    public void update(Entity e){
+    public void update(Entity e) throws DuplicateEntryException {
 
         Admin admin = (Admin) e;
         long idOfAdminToBeUpdated = admin.getId();
@@ -65,7 +76,12 @@ public class AdminDaoImpl implements AdminDao {
                 PreparedStatement ps = conn.prepareStatement(query)
             )
         {
-            ps.setString(1, fullName);
+            if (fullName != null) {
+                ps.setString(1, fullName);
+            }
+            else {
+                ps.setNull(1, java.sql.Types.VARCHAR);
+            }
             ps.setString(2, username);
             ps.setString(3, passwordd);
             ps.setLong(4, idOfAdminToBeUpdated);
@@ -76,12 +92,18 @@ public class AdminDaoImpl implements AdminDao {
         }
         catch (SQLException ex){
             System.out.println(ex);
+            int errorCode = ex.getErrorCode();
+
+            if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
+                throw new DuplicateEntryException("Duplicate Entry for unique field", username);
+            }
         }
 
     }
 
 
     // o id'de bir entity yoksa nolacak senaryosu
+    // (bunun icin bir exception yerine belki return'in null dondurup dondurmedigi kontrol edilebilir)
     @Override
     public Admin retrieve(long id){
 
@@ -98,7 +120,7 @@ public class AdminDaoImpl implements AdminDao {
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()){
+            if (rs.next()){
 
                 String fullName = rs.getString("fullName");
                 String username = rs.getString("username");
@@ -182,7 +204,7 @@ public class AdminDaoImpl implements AdminDao {
     // bu id de hic bir adminin olmamasi durumu
     // fieldName username ise ayni username'de baska bir admin varsa senaryosu (db de username -> unique)
     @Override
-    public void updateSpecifiedAdminField(long id, String fieldName, Object fieldValue) {
+    public void updateSpecifiedAdminField(long id, String fieldName, Object fieldValue) throws DuplicateEntryException{
 
         List<String> allowedFields = Arrays.asList("fullName", "username", "passwordd");
 
@@ -206,6 +228,14 @@ public class AdminDaoImpl implements AdminDao {
         }
         catch (SQLException ex) {
             System.out.println(ex);
+
+            int errorCode = ex.getErrorCode();
+
+            if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
+                if (fieldValue instanceof String && fieldName.equals("username")) {
+                    throw new DuplicateEntryException("Duplicate Entry for unique field", (String) fieldValue);
+                }
+            }
         }
     }
 

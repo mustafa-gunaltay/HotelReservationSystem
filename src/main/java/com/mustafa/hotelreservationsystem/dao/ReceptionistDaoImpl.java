@@ -1,5 +1,6 @@
 package com.mustafa.hotelreservationsystem.dao;
 
+import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
 import com.mustafa.hotelreservationsystem.models.Entity;
 import com.mustafa.hotelreservationsystem.models.Receptionist;
 
@@ -15,7 +16,7 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
     private static final String PASSWORD = "karakama123--";
 
     @Override
-    public void save(Entity e) {
+    public void save(Entity e) throws DuplicateEntryException {
         Receptionist r = (Receptionist) e;
         String fullName = r.getFullName();
         String username = r.getUsername();
@@ -27,7 +28,12 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
                 PreparedStatement ps = conn.prepareStatement(query)
             )
         {
-            ps.setString(1, fullName);
+            if (fullName != null) {
+                ps.setString(1, fullName);
+            }
+            else {
+                ps.setNull(1, java.sql.Types.VARCHAR);
+            }
             ps.setString(2, username);
             ps.setString(3, passwordd);
 
@@ -36,11 +42,16 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
         }
         catch (SQLException ex){
             System.out.println(ex);
+
+            int errorCode = ex.getErrorCode();
+            if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
+                throw new DuplicateEntryException("Duplicate Entry for unique field", username);
+            }
         }
     }
 
     @Override
-    public void update(Entity e) {
+    public void update(Entity e) throws DuplicateEntryException{
         Receptionist r = (Receptionist) e;
         long idOfReceptionistToBeUpdated = r.getId();
         String fullName = r.getFullName();
@@ -53,7 +64,12 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
                 PreparedStatement ps = conn.prepareStatement(query);
             )
         {
-            ps.setString(1, fullName);
+            if (fullName != null) {
+                ps.setString(1, fullName);
+            }
+            else {
+                ps.setNull(1, java.sql.Types.VARCHAR);
+            }
             ps.setString(2, username);
             ps.setString(3, passwordd);
             ps.setLong(4, idOfReceptionistToBeUpdated);
@@ -63,6 +79,11 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
         }
         catch (SQLException ex){
             System.out.println(ex);
+
+            int errorCode = ex.getErrorCode();
+            if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
+                throw new DuplicateEntryException("Duplicate Entry for unique field", username);
+            }
         }
 
     }
@@ -154,7 +175,7 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
     }
 
     @Override
-    public void updateSpecifiedReceptionistField(long id, String fieldName, Object fieldValue) {
+    public void updateSpecifiedReceptionistField(long id, String fieldName, Object fieldValue) throws DuplicateEntryException{
 
         List<String> allowedFieldNames = Arrays.asList("fullName", "username", "passwordd");
 
@@ -177,6 +198,13 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
         }
         catch (SQLException ex){
             System.out.println(ex);
+
+            int errorCode = ex.getErrorCode();
+            if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
+                if (fieldValue instanceof String && fieldName.equals("username")) {
+                    throw new DuplicateEntryException("Duplicate Entry for unique field", (String) fieldValue);
+                }
+            }
         }
     }
 }

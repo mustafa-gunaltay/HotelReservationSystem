@@ -41,12 +41,10 @@ public class LoginPageController {
             try {
                 aService.validateAdmin(username, password);
             }
-            catch (InvalidAdminUsernameException e){
+            catch (InvalidAdminException e){
                 AlertManager.showWarning("Warning", e.getMessage());
             }
-            catch (InvalidAdminPasswordException e){
-                AlertManager.showWarning("Warning", e.getMessage());
-            }
+
 
         }
         else if (radioButtonReceptionist.isSelected()) {
@@ -54,12 +52,10 @@ public class LoginPageController {
             try{
                 rService.validateReceptionist(username, password);
             }
-            catch (InvalidReceptionistUsernameException e) {
+            catch (InvalidReceptionistException e) {
                 AlertManager.showWarning("Warning", e.getMessage());
             }
-            catch (InvalidReceptionistPasswordException e) {
-                AlertManager.showWarning("Warning", e.getMessage());
-            }
+
 
         }
 

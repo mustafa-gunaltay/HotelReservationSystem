@@ -1,5 +1,6 @@
 package com.mustafa.hotelreservationsystem.dao;
 
+import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
 import com.mustafa.hotelreservationsystem.models.Customer;
 import com.mustafa.hotelreservationsystem.models.Entity;
 
@@ -15,8 +16,9 @@ public class CustomerDaoImpl implements CustomerDao{
     private static final String PASSWORD = "karakama123--";
 
 
+    // verilen phone number ile onceden sistemde kayitli baska bir phone number ayni ise (phoneNumber -> unique)
     @Override
-    public void save(Entity e) {
+    public void save(Entity e) throws DuplicateEntryException {
         Customer c = (Customer) e;
 
         String fullName = c.getFullName();
@@ -33,7 +35,12 @@ public class CustomerDaoImpl implements CustomerDao{
             ps.setString(1, fullName);
             ps.setString(2, phoneNumber);
             ps.setDate(3, Date.valueOf(birthDate));
-            ps.setString(4, description);
+            if (description != null) {
+                ps.setString(4, description);
+            }
+            else {
+                ps.setNull(4, Types.VARCHAR);
+            }
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
@@ -41,12 +48,18 @@ public class CustomerDaoImpl implements CustomerDao{
         }
         catch (SQLException ex){
             System.out.println(ex);
+
+            int errorCode = ex.getErrorCode();
+
+            if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
+                throw new DuplicateEntryException("Duplicate Entry for unique field", phoneNumber);
+            }
         }
 
     }
 
     @Override
-    public void update(Entity e) {
+    public void update(Entity e) throws DuplicateEntryException {
 
         Customer c = (Customer) e;
 
@@ -66,7 +79,12 @@ public class CustomerDaoImpl implements CustomerDao{
             ps.setString(1, fullName);
             ps.setString(2, phoneNumber);
             ps.setDate(3, Date.valueOf(birthDate));
-            ps.setString(4, description);
+            if (description != null) {
+                ps.setString(4, description);
+            }
+            else {
+                ps.setNull(4, Types.VARCHAR);
+            }
             ps.setLong(5, id);
 
             int rowsAffected = ps.executeUpdate();
@@ -74,6 +92,12 @@ public class CustomerDaoImpl implements CustomerDao{
         }
         catch (SQLException ex){
             System.out.println(ex);
+
+            int errorCode = ex.getErrorCode();
+
+            if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
+                throw new DuplicateEntryException("Duplicate Entry for unique field", phoneNumber);
+            }
         }
 
     }
@@ -169,7 +193,7 @@ public class CustomerDaoImpl implements CustomerDao{
     }
 
     @Override
-    public void updateSpecifiedCustomerField(long id, String fieldName, Object fieldValue) {
+    public void updateSpecifiedCustomerField(long id, String fieldName, Object fieldValue) throws DuplicateEntryException {
 
         List<String> allowedFields = List.of("fullName", "phoneNumber", "birthDate", "description");
 
@@ -192,6 +216,13 @@ public class CustomerDaoImpl implements CustomerDao{
         }
         catch (SQLException ex){
             System.out.println(ex);
+
+            int errorCode = ex.getErrorCode();
+            if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
+                if (fieldValue instanceof String && fieldName.equals("phoneNumber")) {
+                    throw new DuplicateEntryException("Duplicate Entry for unique field", (String) fieldValue);
+                }
+            }
         }
     }
 }

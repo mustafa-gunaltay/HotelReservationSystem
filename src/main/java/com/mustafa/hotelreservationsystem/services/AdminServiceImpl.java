@@ -2,9 +2,11 @@ package com.mustafa.hotelreservationsystem.services;
 
 import com.mustafa.hotelreservationsystem.dao.AdminDao;
 import com.mustafa.hotelreservationsystem.dao.AdminDaoImpl;
+import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
 import com.mustafa.hotelreservationsystem.exceptions.general.InvalidAdminException;
 import com.mustafa.hotelreservationsystem.exceptions.general.InvalidAdminPasswordException;
 import com.mustafa.hotelreservationsystem.exceptions.general.InvalidAdminUsernameException;
+import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
 import com.mustafa.hotelreservationsystem.models.Admin;
 
 import java.util.ArrayList;
@@ -20,23 +22,46 @@ public class AdminServiceImpl implements AdminService {
 
     // a Admin'inin icinde id degeri birr sey ifade etmeyecek cunku db kisminda auto_increment var
     @Override
-    public void createAdmin(Admin a) {
-        adminDao.save(a);
+    public void createAdmin(Admin a) throws SameEntityValueExistInDbException{
+
+        try{
+            adminDao.save(a);
+        } catch (DuplicateEntryException e) {
+            throw new SameEntityValueExistInDbException("Admin username already taken", e);
+        }
     }
 
     @Override
-    public void changefullName(long id, String newFullName) {
-        adminDao.updateSpecifiedAdminField(id, "fullName", newFullName);
+    public void changefullName(long id, String newFullName){
+
+        try{
+            adminDao.updateSpecifiedAdminField(id, "fullName", newFullName);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
     @Override
-    public void changeUsername(long id, String newUsername) {
-        adminDao.updateSpecifiedAdminField(id, "username", newUsername);
+    public void changeUsername(long id, String newUsername) throws SameEntityValueExistInDbException {
+
+        try{
+            adminDao.updateSpecifiedAdminField(id, "username", newUsername);
+        } catch (DuplicateEntryException e) {
+            throw new SameEntityValueExistInDbException("Admin username already taken", e);
+        }
+
     }
 
     @Override
     public void changePassword(long id, String newPassword) {
-        adminDao.updateSpecifiedAdminField(id, "passwordd", newPassword);
+
+        try{
+            adminDao.updateSpecifiedAdminField(id, "passwordd", newPassword);;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
 

@@ -2,6 +2,8 @@ package com.mustafa.hotelreservationsystem.services;
 
 import com.mustafa.hotelreservationsystem.dao.CustomerDao;
 import com.mustafa.hotelreservationsystem.dao.CustomerDaoImpl;
+import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
+import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
 import com.mustafa.hotelreservationsystem.models.Customer;
 
 import java.time.LocalDate;
@@ -16,8 +18,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void createCustomer(Customer c) {
-        customerDao.save(c);
+    public void createCustomer(Customer c) throws SameEntityValueExistInDbException{
+
+        try{
+            customerDao.save(c);
+        } catch (DuplicateEntryException e) {
+            throw new SameEntityValueExistInDbException("Phone number already taken", e);
+        }
     }
 
     @Override
@@ -52,22 +59,45 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void changeFullName(long id, String newFullName) {
-        customerDao.updateSpecifiedCustomerField(id, "fullName", newFullName);
+
+        try{
+            customerDao.updateSpecifiedCustomerField(id, "fullName", newFullName);
+        }
+        catch (Exception e){
+            System.out.println(e); // never throws exception because field name is not "phoneNumber"
+        }
     }
 
     @Override
-    public void changePhoneNumber(long id, String newPhoneNumber) {
-        customerDao.updateSpecifiedCustomerField(id, "phoneNumber", newPhoneNumber);
+    public void changePhoneNumber(long id, String newPhoneNumber) throws SameEntityValueExistInDbException{
+
+        try{
+            customerDao.updateSpecifiedCustomerField(id, "phoneNumber", newPhoneNumber);
+        } catch (DuplicateEntryException e) {
+            throw new SameEntityValueExistInDbException("Phone number already taken", e);
+        }
     }
 
     @Override
     public void changeBirthDate(long id, LocalDate birthDate) {
-        customerDao.updateSpecifiedCustomerField(id, "birthDate", birthDate);
+
+        try{
+            customerDao.updateSpecifiedCustomerField(id, "birthDate", birthDate);
+        }
+        catch (Exception e){
+            System.out.println(e); // never throws exception because field name is not "phoneNumber"
+        }
     }
 
     @Override
     public void changeDescription(long id, String newDescription) {
-        customerDao.updateSpecifiedCustomerField(id, "description", newDescription);
+
+        try{
+            customerDao.updateSpecifiedCustomerField(id, "description", newDescription);
+        }
+        catch (Exception e){
+            System.out.println(e); // never throws exception because field name is not "phoneNumber"
+        }
     }
 
 
