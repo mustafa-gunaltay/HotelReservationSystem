@@ -33,6 +33,7 @@ public class ServiceTests {
         // validation of username and password of admin
         try {
             aService.validateAdmin("dsaads", "musti123");
+            System.out.println("Successful Admin login");
         } catch (InvalidAdminException e) {
             System.out.println(e.getMessage());
         }
