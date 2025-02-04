@@ -2,6 +2,8 @@ package com.mustafa.hotelreservationsystem.services;
 
 import com.mustafa.hotelreservationsystem.dao.ServiceDao;
 import com.mustafa.hotelreservationsystem.dao.ServiceDaoImpl;
+import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
+import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdException;
 import com.mustafa.hotelreservationsystem.models.Service;
 
 import java.util.List;
@@ -20,15 +22,15 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public Service getService(long id) {
-        Service targetService = serviceDao.retrieve(id);
-        if (targetService != null){
+    public Service getService(long id) throws EntityNotFoundByIdException {
+
+        try{
+            Service targetService = serviceDao.retrieve(id);
             return targetService;
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Service not found by id", e);
         }
-        else {
-            System.out.println("public Service getService(long id) -> returned null");
-            return null;
-        }
+
     }
 
     @Override
@@ -44,18 +46,32 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public Service deleteService(long id) {
-        Service deletedService = serviceDao.delete(id);
-        return deletedService;
+    public Service deleteService(long id) throws EntityNotFoundByIdException {
+
+        try {
+            Service deletedService = serviceDao.delete(id);
+            return deletedService;
+        }
+        catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Service not found by id", e);
+        }
     }
 
     @Override
-    public void changeServiceName(long id, String newServiceName) {
-        serviceDao.updateSpecifiedServiceField(id, "serviceName", newServiceName);
+    public void changeServiceName(long id, String newServiceName) throws EntityNotFoundByIdException {
+        try {
+            serviceDao.updateSpecifiedServiceField(id, "serviceName", newServiceName);
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Service not found by id", e);
+        }
     }
 
     @Override
-    public void changePrice(long id, int newPrice) {
-        serviceDao.updateSpecifiedServiceField(id, "price", newPrice);
+    public void changePrice(long id, int newPrice) throws EntityNotFoundByIdException {
+        try {
+            serviceDao.updateSpecifiedServiceField(id, "price", newPrice);
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Service not found by id", e);
+        }
     }
 }

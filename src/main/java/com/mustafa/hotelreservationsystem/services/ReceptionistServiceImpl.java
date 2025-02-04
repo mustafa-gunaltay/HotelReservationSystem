@@ -3,11 +3,11 @@ package com.mustafa.hotelreservationsystem.services;
 import com.mustafa.hotelreservationsystem.dao.ReceptionistDao;
 import com.mustafa.hotelreservationsystem.dao.ReceptionistDaoImpl;
 import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
+import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
+import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdException;
 import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistPasswordException;
 import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistUsernameException;
 import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
-import com.mustafa.hotelreservationsystem.models.Admin;
-import com.mustafa.hotelreservationsystem.models.Feature;
 import com.mustafa.hotelreservationsystem.models.Receptionist;
 
 import java.util.ArrayList;
@@ -32,34 +32,40 @@ public class ReceptionistServiceImpl implements ReceptionistService{
     }
 
     @Override
-    public void changefullName(long id, String newFullName) {
+    public void changeFullName(long id, String newFullName) throws EntityNotFoundByIdException {
         try{
             receptionistDao.updateSpecifiedReceptionistField(id, "fullName", newFullName);
         }
-        catch (Exception e) {
-            System.out.println(e);
+        catch (DuplicateEntryException e) {
+            System.out.println(e); // never thrown
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Receptionist not found", e);
         }
     }
 
     @Override
-    public void changeUsername(long id, String newUsername) throws SameEntityValueExistInDbException{
+    public void changeUsername(long id, String newUsername) throws SameEntityValueExistInDbException, EntityNotFoundByIdException {
 
         try{
             receptionistDao.updateSpecifiedReceptionistField(id, "username", newUsername);
         } catch (DuplicateEntryException e) {
             throw new SameEntityValueExistInDbException("Receptionist username already taken", e);
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Receptionist not found", e);
         }
 
     }
 
     @Override
-    public void changePassword(long id, String newPassword) {
+    public void changePassword(long id, String newPassword) throws EntityNotFoundByIdException{
 
         try {
             receptionistDao.updateSpecifiedReceptionistField(id, "passwordd", newPassword);
         }
-        catch (Exception e) {
-            System.out.println(e);
+        catch (DuplicateEntryException e) {
+            System.out.println(e); // never thrown
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Receptionist not found", e);
         }
     }
 
@@ -113,20 +119,25 @@ public class ReceptionistServiceImpl implements ReceptionistService{
     }
 
     @Override
-    public Receptionist deleteReceptionist(long id) {
-        Receptionist deletedReceptionist = receptionistDao.delete(id);
-        return  deletedReceptionist;
+    public Receptionist deleteReceptionist(long id) throws EntityNotFoundByIdException{
+
+        try {
+            Receptionist deletedReceptionist = receptionistDao.delete(id);
+            return deletedReceptionist;
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Receptionist not found", e);
+        }
     }
 
     @Override
-    public Receptionist getReceptionist(long id) {
-        Receptionist targetReceptionist = receptionistDao.retrieve(id);
-        if (targetReceptionist != null){
+    public Receptionist getReceptionist(long id) throws EntityNotFoundByIdException {
+
+        try{
+            Receptionist targetReceptionist = receptionistDao.retrieve(id);
             return targetReceptionist;
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Receptionist not found", e);
         }
-        else{
-            System.out.println("public Receptionist getReceptionist(long id) -> returned null");
-            return null;
-        }
+
     }
 }

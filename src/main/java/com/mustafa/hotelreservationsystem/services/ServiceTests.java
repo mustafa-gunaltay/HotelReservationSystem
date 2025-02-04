@@ -22,7 +22,7 @@ public class ServiceTests {
 
 
         // changing admin's full name
-//        aService.changefullName(17, "1-birinci");
+//        aService.changeFullName(17, "1-birinci");
 
         // changing admin's username
 //        aService.changeUsername(17, "2-ikinci");
@@ -69,7 +69,7 @@ public class ServiceTests {
             // Not = Bir resepsiyonisti update edebilmek icin icinde o resepsiyoniste ait id bilinmeli
 
         //changing receptionist's full name
-//        rService.changefullName(5, "new ali kilic");
+//        rService.changeFullName(5, "new ali kilic");
 
         //changing receptionist's username
 //        rService.changeUsername(6, "new user mehmet");
@@ -189,12 +189,12 @@ public class ServiceTests {
 
 
         // add customer to reservation
-        reservationService.addCustomerToReservation(13, 1);
-        reservationService.addCustomerToReservation(14, 2);
+//        reservationService.addCustomerToReservation(13, 1);
+//        reservationService.addCustomerToReservation(14, 2);
 
         // change customer on reservation
-        reservationService.changeCustomerOnReservation(13, 10, 1);
-        reservationService.changeCustomerOnReservation(14, 11, 2);
+//        reservationService.changeCustomerOnReservation(13, 10, 1);
+//        reservationService.changeCustomerOnReservation(14, 11, 2);
 
         // delete customer from reservation
         reservationService.deleteCustomerFromReservation(10, 1);
@@ -279,12 +279,12 @@ public class ServiceTests {
 
 
         // add room to reservation
-        roomService.addRoomToReservation(7, 10);
-        roomService.addRoomToReservation(9, 12);
+//        roomService.addRoomToReservation(7, 10);
+//        roomService.addRoomToReservation(9, 12);
 
         // change room on reservation
-        roomService.changeRoomOnReservation(7, 8);
-        roomService.changeRoomOnReservation(9, 9);
+//        roomService.changeRoomOnReservation(7, 8);
+//        roomService.changeRoomOnReservation(9, 9);
 
         // delete room from reservation
         roomService.deleteRoomFromReservation(7);
@@ -293,12 +293,12 @@ public class ServiceTests {
 
 
         // add feature to room
-        roomService.addFeatureToRoom(11, 8);
-        roomService.addFeatureToRoom(12, 9);
+//        roomService.addFeatureToRoom(11, 8);
+//        roomService.addFeatureToRoom(12, 9);
 
         // change feature on room
-        roomService.changeFeatureOnRoom(11, 12,  8);
-        roomService.changeFeatureOnRoom(12, 13,  9);
+//        roomService.changeFeatureOnRoom(11, 12,  8);
+//        roomService.changeFeatureOnRoom(12, 13,  9);
 
 
         // delete feature from room
@@ -308,12 +308,12 @@ public class ServiceTests {
 
 
         // add service to room
-        roomService.addServiceToRoom(1, 7);
-        roomService.addServiceToRoom(2, 8);
+//        roomService.addServiceToRoom(1, 7);
+//        roomService.addServiceToRoom(2, 8);
 
         // change service on room
-        roomService.changeServiceOnRoom(1, 2, 7);
-        roomService.changeServiceOnRoom(2, 3, 8);
+//        roomService.changeServiceOnRoom(1, 2, 7);
+//        roomService.changeServiceOnRoom(2, 3, 8);
 
         // delete service from room
         roomService.deleteServiceFromRoom(2, 7);

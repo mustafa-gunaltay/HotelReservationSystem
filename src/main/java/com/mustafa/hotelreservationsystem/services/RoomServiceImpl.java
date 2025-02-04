@@ -2,6 +2,10 @@ package com.mustafa.hotelreservationsystem.services;
 
 import com.mustafa.hotelreservationsystem.dao.RoomDao;
 import com.mustafa.hotelreservationsystem.dao.RoomDaoImpl;
+import com.mustafa.hotelreservationsystem.exceptions.db.NoReferencedRowException;
+import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
+import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdException;
+import com.mustafa.hotelreservationsystem.exceptions.general.ReferencedEntityNotFoundException;
 import com.mustafa.hotelreservationsystem.models.Room;
 
 import java.util.List;
@@ -20,21 +24,27 @@ public class RoomServiceImpl implements RoomService{
     }
 
     @Override
-    public Room getRoom(long id) {
-        Room targetRoom = roomDao.retrieve(id);
-        if (targetRoom != null){
+    public Room getRoom(long id) throws EntityNotFoundByIdException {
+
+        try{
+            Room targetRoom = roomDao.retrieve(id);
             return targetRoom;
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Room not found by id", e);
         }
-        else {
-            System.out.println("public Room getRoom(long id) -> returned null");
-            return null;
-        }
+
     }
 
     @Override
-    public Room deleteRoom(long id) {
-        Room deletedRoom = roomDao.delete(id);
-        return deletedRoom;
+    public Room deleteRoom(long id) throws EntityNotFoundByIdException {
+
+        try {
+            Room deletedRoom = roomDao.delete(id);
+            return deletedRoom;
+        }
+        catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Room not found by id", e);
+        }
     }
 
     @Override
@@ -50,66 +60,146 @@ public class RoomServiceImpl implements RoomService{
     }
 
     @Override
-    public void changeRoomName(long id, String newRoomName) {
-        roomDao.updateSpecifiedRoomField(id, "roomName", newRoomName);
+    public void changeRoomName(long id, String newRoomName) throws EntityNotFoundByIdException {
+
+        try{
+            roomDao.updateSpecifiedRoomField(id, "roomName", newRoomName);
+        }
+        catch (NoReferencedRowException e){
+            System.out.println(e); // never thrown because it only throws exception when fieldName is "reservationId"
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Room not found by id", e);
+        }
     }
 
     @Override
-    public void changeCapacity(long id, long newCapacity) {
-        roomDao.updateSpecifiedRoomField(id, "capacity", newCapacity);
+    public void changeCapacity(long id, long newCapacity) throws EntityNotFoundByIdException {
+
+        try{
+            roomDao.updateSpecifiedRoomField(id, "capacity", newCapacity);
+        }
+        catch (NoReferencedRowException e){
+            System.out.println(e); // never thrown because it only throws exception when fieldName is "reservationId"
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Room not found by id", e);
+        }
     }
 
     @Override
-    public void changePrice(long id, long newPrice) {
-        roomDao.updateSpecifiedRoomField(id, "price", newPrice);
+    public void changePrice(long id, long newPrice) throws EntityNotFoundByIdException {
+
+        try{
+            roomDao.updateSpecifiedRoomField(id, "price", newPrice);
+        }
+        catch (NoReferencedRowException e){
+            System.out.println(e); // never thrown because it only throws exception when fieldName is "reservationId"
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Room not found by id", e);
+        }
     }
 
     @Override
-    public void addRoomToReservation(long roomId, long resId) {
-        roomDao.linkRoomToReservation(roomId, resId);
-        // isReserved is set true on linkRoomToReservation() method
+    public void addRoomToReservation(long roomId, long resId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException {
+
+        try{
+            roomDao.linkRoomToReservation(roomId, resId);
+            // isReserved is set true on linkRoomToReservation() method
+        } catch (NoReferencedRowException e) {
+            throw new ReferencedEntityNotFoundException("Reservation not found", e);
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Room not found by id", e);
+        }
+
     }
 
     @Override
-    public void deleteRoomFromReservation(long roomId) {
-        roomDao.unlinkRoomFromReservation(roomId);
-        // isReserved is set false on linkRoomToReservation() method
+    public void deleteRoomFromReservation(long roomId) throws EntityNotFoundByIdException{
+        try {
+            roomDao.unlinkRoomFromReservation(roomId);
+            // isReserved is set false on linkRoomToReservation() method
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Room not found by id", e);
+        }
+
     }
 
     @Override
-    public void changeRoomOnReservation(long roomId, long newResId) {
-        roomDao.linkRoomToReservation(roomId, newResId);
+    public void changeRoomOnReservation(long roomId, long newResId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException {
+
+        try{
+            roomDao.linkRoomToReservation(roomId, newResId);
+        } catch (NoReferencedRowException e) {
+            throw new ReferencedEntityNotFoundException("Reservation to be changed instead is not found", e);
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Room not found by id", e);
+        }
     }
 
     @Override
-    public void addFeatureToRoom(long featureId, long roomId) {
-        roomDao.bindRoomAndFeature(roomId, featureId);
+    public void addFeatureToRoom(long featureId, long roomId) throws ReferencedEntityNotFoundException {
+        try {
+            roomDao.bindRoomAndFeature(roomId, featureId);
+        } catch (NoReferencedRowException e) {
+            throw new ReferencedEntityNotFoundException("Room or Feature not found", e);
+        }
     }
 
     @Override
-    public void deleteFeatureFromRoom(long featureId, long roomId) {
-        roomDao.unbindRoomAndFeature(roomId, featureId);
+    public void deleteFeatureFromRoom(long featureId, long roomId) throws EntityNotFoundByIdException{
+        try {
+            roomDao.unbindRoomAndFeature(roomId, featureId);
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Room and Feature pair not found by their id", e);
+        }
     }
 
     @Override
-    public void changeFeatureOnRoom(long oldFeatureId, long newFeatureId, long roomId) {
-        roomDao.unbindRoomAndFeature(roomId, oldFeatureId);
-        roomDao.bindRoomAndFeature(roomId, newFeatureId);
+    public void changeFeatureOnRoom(long oldFeatureId, long newFeatureId, long roomId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException {
+
+        try {
+            roomDao.bindRoomAndFeature(roomId, newFeatureId);
+        } catch (NoReferencedRowException e) {
+            throw new ReferencedEntityNotFoundException("Feature that will be changed instead or Room is not found", e);
+        }
+
+        try {
+            roomDao.unbindRoomAndFeature(roomId, oldFeatureId);
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Room and Feature pair not found by their id", e);
+        }
     }
 
     @Override
-    public void addServiceToRoom(long serviceId, long roomId) {
-        roomDao.bindRoomAndService(roomId, serviceId);
+    public void addServiceToRoom(long serviceId, long roomId) throws ReferencedEntityNotFoundException {
+        try {
+            roomDao.bindRoomAndService(roomId, serviceId);
+        } catch (NoReferencedRowException e) {
+            throw new ReferencedEntityNotFoundException("Room or Service not found", e);
+        }
     }
 
     @Override
-    public void deleteServiceFromRoom(long serviceId, long roomId) {
-        roomDao.unbindRoomAndService(roomId, serviceId);
+    public void deleteServiceFromRoom(long serviceId, long roomId) throws EntityNotFoundByIdException{
+        try {
+            roomDao.unbindRoomAndService(roomId, serviceId);
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Room and Service pair not found by their id", e);
+        }
     }
 
     @Override
-    public void changeServiceOnRoom(long oldServiceId, long newServiceId, long roomId) {
-        roomDao.unbindRoomAndService(roomId, oldServiceId);
-        roomDao.bindRoomAndService(roomId, newServiceId);
+    public void changeServiceOnRoom(long oldServiceId, long newServiceId, long roomId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException {
+
+        try {
+            roomDao.bindRoomAndService(roomId, newServiceId);
+        } catch (NoReferencedRowException e) {
+            throw new ReferencedEntityNotFoundException("Service that will be changed instead or Room is not found", e);
+        }
+
+        try {
+            roomDao.unbindRoomAndService(roomId, oldServiceId);
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Room and Service pair not found by their id", e);
+        }
     }
 }

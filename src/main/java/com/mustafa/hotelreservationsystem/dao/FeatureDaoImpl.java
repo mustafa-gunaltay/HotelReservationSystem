@@ -1,6 +1,6 @@
 package com.mustafa.hotelreservationsystem.dao;
 
-import com.mustafa.hotelreservationsystem.models.Admin;
+import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.models.Entity;
 import com.mustafa.hotelreservationsystem.models.Feature;
 
@@ -48,7 +48,8 @@ public class FeatureDaoImpl implements FeatureDao {
 
     // o id'de bir entity yoksa nolacak senaryosu
     @Override
-    public void update(Entity e){
+    public void update(Entity e) throws ZeroRowsAffectedOrReturnedException {
+
         Feature feature = (Feature) e;
         long idOfEntityToBeUpdated = feature.getId();
         String featureName = feature.getFeatureName();
@@ -66,6 +67,9 @@ public class FeatureDaoImpl implements FeatureDao {
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1){
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", idOfEntityToBeUpdated);
+            }
 
         }
         catch (SQLException ex){
@@ -78,7 +82,7 @@ public class FeatureDaoImpl implements FeatureDao {
 
     // o id'de bir entity yoksa nolacak senaryosu
     @Override
-    public Feature retrieve(long id){
+    public Feature retrieve(long id) throws ZeroRowsAffectedOrReturnedException {
 
         Feature result = null;
 
@@ -92,7 +96,7 @@ public class FeatureDaoImpl implements FeatureDao {
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()){
+            if (rs.next()){
                 long targetId = rs.getLong("id");
                 String targetFeatureName = rs.getString("featureName");
                 int targetPrice = rs.getInt("price");
@@ -104,12 +108,18 @@ public class FeatureDaoImpl implements FeatureDao {
             System.out.println(ex);
         }
 
-        return result;
+        if (result == null){
+            throw new ZeroRowsAffectedOrReturnedException("Zero rows returned on SELECT", id);
+        }
+        else {
+            return result;
+        }
+
     }
 
     // o id'de bir entity yoksa nolacak senaryosu
     @Override
-    public Feature delete(long id){
+    public Feature delete(long id) throws ZeroRowsAffectedOrReturnedException{
 
         Feature deletedFeature = retrieve(id);
 
@@ -125,6 +135,9 @@ public class FeatureDaoImpl implements FeatureDao {
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1){
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on DELETE", id);
+            }
 
         }
         catch (SQLException ex){
@@ -168,7 +181,7 @@ public class FeatureDaoImpl implements FeatureDao {
 
 
     @Override
-    public void updateSpecifiedFeatureField(long id, String fieldName, Object fieldValue){
+    public void updateSpecifiedFeatureField(long id, String fieldName, Object fieldValue) throws ZeroRowsAffectedOrReturnedException {
 
         List<String> allowedFieldNames = Arrays.asList("featureName", "price");
 
@@ -187,6 +200,10 @@ public class FeatureDaoImpl implements FeatureDao {
 
             int rowsaffected = ps.executeUpdate();
             System.out.println(rowsaffected + " rows affected");
+            if (rowsaffected < 1){
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", id);
+            }
+
         }
         catch (SQLException ex){
             System.out.println(ex);

@@ -2,6 +2,7 @@ package com.mustafa.hotelreservationsystem.dao;
 
 
 import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
+import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.models.*;
 
 import java.time.LocalDate;
@@ -28,7 +29,11 @@ public class DaoTests {
 
 
         // updating specified attribute with specified value
-        fdao.updateSpecifiedFeatureField(9, "featureName", "new f1");
+        try {
+            fdao.updateSpecifiedFeatureField(9, "featureName", "new f1");
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new RuntimeException(e);
+        }
 
 
         // retrieving feature
@@ -51,17 +56,17 @@ public class DaoTests {
 //            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
 //        }
 
-        try {
-            aDao.save(new Admin("asdasd", "mamo", "pw2"));
-        } catch (DuplicateEntryException e) {
-            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
-        }
-
-        try {
-            aDao.save(new Admin("dasdas", "musti user", "musti123"));
-        } catch (DuplicateEntryException e) {
-            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
-        }
+//        try {
+//            aDao.save(new Admin(null, "kali user", "pwwww"));
+//        } catch (DuplicateEntryException e) {
+//            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+//        }
+//
+//        try {
+//            aDao.save(new Admin("dasdas", "musti user", "musti123"));
+//        } catch (DuplicateEntryException e) {
+//            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+//        }
 
 
         // retrieving all admins
@@ -72,23 +77,32 @@ public class DaoTests {
 
         // updating admin
         try {
-            aDao.update(new Admin(21, "asdasdasd", "musti user", "sadasdasd"));
+            aDao.update(new Admin(99, "asdasdasd", "musti user", "sadasdasd"));
         } catch (DuplicateEntryException e) {
             System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            System.out.println(e.getMessage() + " -  id: " + e.getId());
         }
 
 
         // updating specified attribute with specified value
         try {
-            aDao.updateSpecifiedAdminField(21, "username", "mamo");
+            aDao.updateSpecifiedAdminField(99, "username", "mamo");
         } catch (DuplicateEntryException e) {
             System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            System.out.println(e.getMessage() + " -  id: " + e.getId());
         }
 
 
         // retrieve admin
-//        Admin ra = aDao.retrieve(2);
-//        System.out.println("Retrieve admin whose id is 2: \n" + ra);
+        try {
+            Admin ra = aDao.retrieve(99);
+            System.out.println("Retrieve admin whose id is 2: \n" + ra);
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            System.out.println(e.getMessage() + " -  id: " + e.getId());
+        }
+
 
         // delete admin
 //        Admin da = aDao.delete(2);
@@ -102,30 +116,30 @@ public class DaoTests {
         ReceptionistDao rDao = new ReceptionistDaoImpl();
 
         // creating receptionist
-        Receptionist r1 = new Receptionist("dadsas", "user1", "dsadsa");
+        Receptionist r1 = new Receptionist(null, "userrrr1", "dsadsa");
         Receptionist r2 = new Receptionist("dsadas", "user ali", "ali123");
         Receptionist r3 = new Receptionist("dsasaadsads", "new user mehmet", "dsaasd");
 
-        try {
-            rDao.save(r1);
-        }
-        catch (DuplicateEntryException e) {
-            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
-        }
-
-        try {
-            rDao.save(r2);
-        }
-        catch (DuplicateEntryException e) {
-            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
-        }
-
-        try {
-            rDao.save(r3);
-        }
-        catch (DuplicateEntryException e) {
-            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
-        }
+//        try {
+//            rDao.save(r1);
+//        }
+//        catch (DuplicateEntryException e) {
+//            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+//        }
+//
+//        try {
+//            rDao.save(r2);
+//        }
+//        catch (DuplicateEntryException e) {
+//            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+//        }
+//
+//        try {
+//            rDao.save(r3);
+//        }
+//        catch (DuplicateEntryException e) {
+//            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+//        }
 
         // retrieving receptionists
 //        List<Receptionist> allReceptionist = rDao.retrieveAllReceptionists();
@@ -134,20 +148,22 @@ public class DaoTests {
 //        }
 
         // updatig receptionist
-        Receptionist rToBeUpdated = new Receptionist(7, "dsaads", "user ali", "sadasd");
-        try {
-            rDao.update(rToBeUpdated);
-        }
-        catch (DuplicateEntryException e) {
-            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
-        }
+        Receptionist rToBeUpdated = new Receptionist(7, null, "kaan veli", "sadasadsd");
+//        try {
+//            rDao.update(rToBeUpdated);
+//        }
+//        catch (DuplicateEntryException e) {
+//            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+//        }
 
         // updating specified attribute with specified value
         try {
-            rDao.updateSpecifiedReceptionistField(7, "username", "user must");
+            rDao.updateSpecifiedReceptionistField(5, "fullName", null);
         }
         catch (DuplicateEntryException e) {
             System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new RuntimeException(e);
         }
 
         // retrieve receptionist
@@ -352,27 +368,27 @@ public class DaoTests {
 
 
         // creating customers
-        Customer customer1 = new Customer("Ahmet Yılmaz", "555-9887", LocalDate.of(1990, 5, 15), "Düzenli müşteri");
+        Customer customer1 = new Customer("Ahmet Yılmaz", "123-9887", LocalDate.of(1990, 5, 15), null);
         Customer customer2 = new Customer("Elif Kaya", "555-5678", LocalDate.of(1985, 8, 20), "VIP müşteri");
         Customer customer3 = new Customer("Mehmet Demir", "555-9876", LocalDate.of(2000, 2, 10), "Yeni kayıt");
 
-        try{
-            cDao.save(customer1);
-        } catch (DuplicateEntryException e) {
-            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
-        }
+//        try{
+//            cDao.save(customer1);
+//        } catch (DuplicateEntryException e) {
+//            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+//        }
 
-        try{
-            cDao.save(customer2);
-        } catch (DuplicateEntryException e) {
-            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
-        }
-
-        try{
-            cDao.save(customer3);
-        } catch (DuplicateEntryException e) {
-            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
-        }
+//        try{
+//            cDao.save(customer2);
+//        } catch (DuplicateEntryException e) {
+//            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+//        }
+//
+//        try{
+//            cDao.save(customer3);
+//        } catch (DuplicateEntryException e) {
+//            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+//        }
 
 
         // retrieving all customers
@@ -382,8 +398,7 @@ public class DaoTests {
 //        }
 
         // updating customer (general update)
-        Customer customerToBeUpdated = new Customer(11, "Ahmet Dogan", "555-4321", LocalDate.of(1991, 6, 16), "Duzensiz müşteri");
-
+        Customer customerToBeUpdated = new Customer(11, "Ahmet Dogancan", "555-4321324", LocalDate.of(1991, 6, 16), null);
         try{
             cDao.update(customerToBeUpdated);
         }
@@ -396,12 +411,12 @@ public class DaoTests {
 //        System.out.println(temp);
 
         // update specified customer field with specified value
-        try{
-            cDao.updateSpecifiedCustomerField(11, "phoneNumber", "555-5555");
-        }
-        catch (DuplicateEntryException e) {
-            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
-        }
+//        try{
+//            cDao.updateSpecifiedCustomerField(5, "description", null);
+//        }
+//        catch (DuplicateEntryException e) {
+//            System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+//        }
 
         // delete customer
 //        temp = cDao.delete(6);
@@ -438,7 +453,11 @@ public class DaoTests {
         System.out.println(temp);
 
         // update specified service field with specified value
-        sDao.updateSpecifiedServiceField(5, "price", 2000);
+        try {
+            sDao.updateSpecifiedServiceField(5, "price", 2000);
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new RuntimeException(e);
+        }
 
         // delete service
         Service deletedService = sDao.delete(5);

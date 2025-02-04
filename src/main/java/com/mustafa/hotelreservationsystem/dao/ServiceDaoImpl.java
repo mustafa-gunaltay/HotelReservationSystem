@@ -1,5 +1,6 @@
 package com.mustafa.hotelreservationsystem.dao;
 
+import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.models.Entity;
 import com.mustafa.hotelreservationsystem.models.Service;
 
@@ -41,7 +42,7 @@ public class ServiceDaoImpl implements ServiceDao {
     }
 
     @Override
-    public void update(Entity e) {
+    public void update(Entity e) throws ZeroRowsAffectedOrReturnedException {
 
         Service s = (Service) e;
 
@@ -61,7 +62,10 @@ public class ServiceDaoImpl implements ServiceDao {
              ps.setLong(3, id);
 
              int rowsAffected = ps.executeUpdate();
-            System.out.println(rowsAffected + " rows affected");
+             System.out.println(rowsAffected + " rows affected");
+             if (rowsAffected < 1) {
+                 throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", id);
+             }
 
         }
         catch (SQLException ex){
@@ -72,7 +76,7 @@ public class ServiceDaoImpl implements ServiceDao {
 
 
     @Override
-    public Service retrieve(long id) {
+    public Service retrieve(long id) throws ZeroRowsAffectedOrReturnedException {
 
         Service result = null;
 
@@ -99,13 +103,19 @@ public class ServiceDaoImpl implements ServiceDao {
             System.out.println(ex);
         }
 
-        return result;
+        if (result == null) {
+            throw new ZeroRowsAffectedOrReturnedException("Zero rows returned on SELECT", id);
+        }
+        else{
+            return result;
+        }
+
 
     }
 
 
     @Override
-    public Service delete(long id) {
+    public Service delete(long id) throws ZeroRowsAffectedOrReturnedException {
 
         Service deletedService = retrieve(id);
 
@@ -120,6 +130,10 @@ public class ServiceDaoImpl implements ServiceDao {
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1) {
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on DELETE", id);
+            }
+
         }
         catch (SQLException ex){
             System.out.println(ex);
@@ -158,7 +172,7 @@ public class ServiceDaoImpl implements ServiceDao {
     }
 
     @Override
-    public void updateSpecifiedServiceField(long id, String fieldName, Object fieldValue) {
+    public void updateSpecifiedServiceField(long id, String fieldName, Object fieldValue) throws ZeroRowsAffectedOrReturnedException {
 
         List<String> allowedFields = List.of("serviceName", "price");
 
@@ -179,6 +193,10 @@ public class ServiceDaoImpl implements ServiceDao {
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1) {
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", id);
+            }
+
         }
         catch (SQLException ex){
             System.out.println(ex);

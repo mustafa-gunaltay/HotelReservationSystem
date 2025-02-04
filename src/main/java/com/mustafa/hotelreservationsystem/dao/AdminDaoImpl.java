@@ -1,6 +1,7 @@
 package com.mustafa.hotelreservationsystem.dao;
 
 import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
+import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.models.Admin;
 import com.mustafa.hotelreservationsystem.models.Entity;
 
@@ -49,8 +50,8 @@ public class AdminDaoImpl implements AdminDao {
         }
         catch (SQLException ex){
             System.out.println(ex);
-            int errorCode = ex.getErrorCode();
 
+            int errorCode = ex.getErrorCode();
             if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
                 throw new DuplicateEntryException("Duplicate Entry for unique field", username);
             }
@@ -62,7 +63,7 @@ public class AdminDaoImpl implements AdminDao {
     // o id'de bir entity yoksa nolacak senaryosu
     // ayni username'de baska bir admin varsa senaryosu (db de username -> unique)
     @Override
-    public void update(Entity e) throws DuplicateEntryException {
+    public void update(Entity e) throws DuplicateEntryException, ZeroRowsAffectedOrReturnedException {
 
         Admin admin = (Admin) e;
         long idOfAdminToBeUpdated = admin.getId();
@@ -88,6 +89,9 @@ public class AdminDaoImpl implements AdminDao {
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1) {
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", idOfAdminToBeUpdated);
+            }
 
         }
         catch (SQLException ex){
@@ -105,7 +109,7 @@ public class AdminDaoImpl implements AdminDao {
     // o id'de bir entity yoksa nolacak senaryosu
     // (bunun icin bir exception yerine belki return'in null dondurup dondurmedigi kontrol edilebilir)
     @Override
-    public Admin retrieve(long id){
+    public Admin retrieve(long id) throws ZeroRowsAffectedOrReturnedException{
 
         Admin result = null;
 
@@ -133,14 +137,20 @@ public class AdminDaoImpl implements AdminDao {
             System.out.println(ex);
         }
 
-        return result;
+        if (result == null) {
+            throw new ZeroRowsAffectedOrReturnedException("Zero rows returned on SELECT", id);
+        }
+        else {
+            return result;
+        }
+
     }
 
 
 
     // o id'de bir entity yoksa nolacak senaryosu
     @Override
-    public Admin delete(long id){
+    public Admin delete(long id) throws ZeroRowsAffectedOrReturnedException {
 
         // retrieve den firlatilan exception i yonet veya firlat
         Admin deletedAdmin = retrieve(id);
@@ -157,6 +167,9 @@ public class AdminDaoImpl implements AdminDao {
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1) {
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on DELETE", id);
+            }
 
         }
         catch (SQLException ex){
@@ -204,13 +217,14 @@ public class AdminDaoImpl implements AdminDao {
     // bu id de hic bir adminin olmamasi durumu
     // fieldName username ise ayni username'de baska bir admin varsa senaryosu (db de username -> unique)
     @Override
-    public void updateSpecifiedAdminField(long id, String fieldName, Object fieldValue) throws DuplicateEntryException{
+    public void updateSpecifiedAdminField(long id, String fieldName, Object fieldValue) throws DuplicateEntryException, ZeroRowsAffectedOrReturnedException{
 
         List<String> allowedFields = Arrays.asList("fullName", "username", "passwordd");
 
         if (!allowedFields.contains(fieldName)) {
             System.out.println("Field: " + fieldName + " is not match any table name of admin");
-            // exception firlat
+            return;
+            // istenirse runtime exception firlatilabilir - ornegin IllegalArgumentException
         }
 
         String query = "UPDATE admin SET " + fieldName + " = ? WHERE id = ?";
@@ -220,22 +234,28 @@ public class AdminDaoImpl implements AdminDao {
                 PreparedStatement ps = conn.prepareStatement(query)
             )
         {
-                ps.setObject(1, fieldValue);
-                ps.setLong(2, id);
 
-                int rows = ps.executeUpdate();
-                System.out.println(rows + " rows affected");
+            ps.setObject(1, fieldValue);
+            ps.setLong(2, id);
+
+            int rows = ps.executeUpdate();
+            System.out.println(rows + " rows affected");
+            if (rows < 1) {
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", id);
+            }
+
         }
         catch (SQLException ex) {
+
             System.out.println(ex);
 
             int errorCode = ex.getErrorCode();
-
             if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
                 if (fieldValue instanceof String && fieldName.equals("username")) {
                     throw new DuplicateEntryException("Duplicate Entry for unique field", (String) fieldValue);
                 }
             }
+
         }
     }
 

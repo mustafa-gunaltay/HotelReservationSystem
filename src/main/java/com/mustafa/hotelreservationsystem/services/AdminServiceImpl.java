@@ -3,10 +3,8 @@ package com.mustafa.hotelreservationsystem.services;
 import com.mustafa.hotelreservationsystem.dao.AdminDao;
 import com.mustafa.hotelreservationsystem.dao.AdminDaoImpl;
 import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
-import com.mustafa.hotelreservationsystem.exceptions.general.InvalidAdminException;
-import com.mustafa.hotelreservationsystem.exceptions.general.InvalidAdminPasswordException;
-import com.mustafa.hotelreservationsystem.exceptions.general.InvalidAdminUsernameException;
-import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
+import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
+import com.mustafa.hotelreservationsystem.exceptions.general.*;
 import com.mustafa.hotelreservationsystem.models.Admin;
 
 import java.util.ArrayList;
@@ -32,34 +30,40 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void changefullName(long id, String newFullName){
+    public void changeFullName(long id, String newFullName) throws EntityNotFoundByIdException {
 
         try{
             adminDao.updateSpecifiedAdminField(id, "fullName", newFullName);
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (DuplicateEntryException e) {
+            System.out.println(e); // never thrown
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Admin not found by id", e);
         }
 
     }
 
     @Override
-    public void changeUsername(long id, String newUsername) throws SameEntityValueExistInDbException {
+    public void changeUsername(long id, String newUsername) throws SameEntityValueExistInDbException, EntityNotFoundByIdException {
 
         try{
             adminDao.updateSpecifiedAdminField(id, "username", newUsername);
         } catch (DuplicateEntryException e) {
             throw new SameEntityValueExistInDbException("Admin username already taken", e);
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Admin not found by id", e);
         }
 
     }
 
     @Override
-    public void changePassword(long id, String newPassword) {
+    public void changePassword(long id, String newPassword) throws EntityNotFoundByIdException {
 
         try{
             adminDao.updateSpecifiedAdminField(id, "passwordd", newPassword);;
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (DuplicateEntryException e) {
+            System.out.println(e); // never thrown
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Admin not found by id", e);
         }
 
     }
@@ -105,15 +109,22 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin getAdmin(long id) {
-        Admin targetAdmin = adminDao.retrieve(id);
-        if (targetAdmin != null){
+    public Admin getAdmin(long id) throws EntityNotFoundByIdException{
+        try{
+            Admin targetAdmin = adminDao.retrieve(id);
             return targetAdmin;
         }
-        else {
-            System.out.println("public Admin getAdmin(long id) returned null");
-            return null;
+        catch (ZeroRowsAffectedOrReturnedException e){
+            throw new EntityNotFoundByIdException("Admin not found by id", e);
         }
+
+//        if (targetAdmin != null){
+//            return targetAdmin;
+//        }
+//        else {
+//            System.out.println("public Admin getAdmin(long id) returned null");
+//            return null;
+//        }
     }
 
     @Override

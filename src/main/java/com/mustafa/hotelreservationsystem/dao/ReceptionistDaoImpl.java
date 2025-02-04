@@ -1,6 +1,7 @@
 package com.mustafa.hotelreservationsystem.dao;
 
 import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
+import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.models.Entity;
 import com.mustafa.hotelreservationsystem.models.Receptionist;
 
@@ -51,7 +52,7 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
     }
 
     @Override
-    public void update(Entity e) throws DuplicateEntryException{
+    public void update(Entity e) throws DuplicateEntryException, ZeroRowsAffectedOrReturnedException{
         Receptionist r = (Receptionist) e;
         long idOfReceptionistToBeUpdated = r.getId();
         String fullName = r.getFullName();
@@ -76,6 +77,10 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1) {
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", idOfReceptionistToBeUpdated);
+            }
+
         }
         catch (SQLException ex){
             System.out.println(ex);
@@ -89,7 +94,7 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
     }
 
     @Override
-    public Receptionist retrieve(long id) {
+    public Receptionist retrieve(long id) throws ZeroRowsAffectedOrReturnedException {
 
         Receptionist result = null;
 
@@ -116,11 +121,17 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
             System.out.println(ex);
         }
 
-        return result;
+        if (result == null) {
+            throw new ZeroRowsAffectedOrReturnedException("Zero rows returned on SELECT", id);
+        }
+        else {
+            return result;
+        }
+
     }
 
     @Override
-    public Receptionist delete(long id) {
+    public Receptionist delete(long id) throws ZeroRowsAffectedOrReturnedException{
 
         Receptionist deletedReceptionist = retrieve(id);
 
@@ -135,6 +146,10 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1) {
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on DELETE", id);
+            }
+
         }
         catch (SQLException ex){
             System.out.println(ex);
@@ -175,12 +190,13 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
     }
 
     @Override
-    public void updateSpecifiedReceptionistField(long id, String fieldName, Object fieldValue) throws DuplicateEntryException{
+    public void updateSpecifiedReceptionistField(long id, String fieldName, Object fieldValue) throws DuplicateEntryException, ZeroRowsAffectedOrReturnedException {
 
         List<String> allowedFieldNames = Arrays.asList("fullName", "username", "passwordd");
 
         if (!allowedFieldNames.contains(fieldName)){
             System.out.println("Field: " + fieldName + " is not match any table name of receptionist");
+            return;
         }
 
         String query = "UPDATE receptionist SET " + fieldName + " = ? WHERE id = ?";
@@ -195,6 +211,9 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1) {
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", id);
+            }
         }
         catch (SQLException ex){
             System.out.println(ex);

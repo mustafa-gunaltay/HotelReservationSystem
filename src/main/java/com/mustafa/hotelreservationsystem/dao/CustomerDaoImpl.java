@@ -1,6 +1,7 @@
 package com.mustafa.hotelreservationsystem.dao;
 
 import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
+import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.models.Customer;
 import com.mustafa.hotelreservationsystem.models.Entity;
 
@@ -59,7 +60,7 @@ public class CustomerDaoImpl implements CustomerDao{
     }
 
     @Override
-    public void update(Entity e) throws DuplicateEntryException {
+    public void update(Entity e) throws DuplicateEntryException, ZeroRowsAffectedOrReturnedException {
 
         Customer c = (Customer) e;
 
@@ -89,6 +90,9 @@ public class CustomerDaoImpl implements CustomerDao{
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1) {
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", id);
+            }
         }
         catch (SQLException ex){
             System.out.println(ex);
@@ -103,7 +107,7 @@ public class CustomerDaoImpl implements CustomerDao{
     }
 
     @Override
-    public Customer retrieve(long id) {
+    public Customer retrieve(long id) throws ZeroRowsAffectedOrReturnedException {
 
         Customer result = null;
 
@@ -133,11 +137,17 @@ public class CustomerDaoImpl implements CustomerDao{
             System.out.println(ex);
         }
 
-        return result;
+        if (result == null) {
+            throw new ZeroRowsAffectedOrReturnedException("Zero rows returned on SELECT", id);
+        }
+        else{
+            return result;
+        }
+
     }
 
     @Override
-    public Customer delete(long id) {
+    public Customer delete(long id) throws ZeroRowsAffectedOrReturnedException {
 
         Customer deletedCustomer = retrieve(id);
 
@@ -152,6 +162,9 @@ public class CustomerDaoImpl implements CustomerDao{
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1) {
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on DELETE", id);
+            }
         }
         catch (SQLException ex){
             System.out.println(ex);
@@ -193,12 +206,13 @@ public class CustomerDaoImpl implements CustomerDao{
     }
 
     @Override
-    public void updateSpecifiedCustomerField(long id, String fieldName, Object fieldValue) throws DuplicateEntryException {
+    public void updateSpecifiedCustomerField(long id, String fieldName, Object fieldValue) throws DuplicateEntryException, ZeroRowsAffectedOrReturnedException {
 
         List<String> allowedFields = List.of("fullName", "phoneNumber", "birthDate", "description");
 
         if ( ! allowedFields.contains(fieldName)) {
             System.out.println("Field: " + fieldName + " is not match any table name of customer");
+            return;
         }
 
         String query = "UPDATE customer SET " + fieldName + " = ? WHERE id = ?";
@@ -213,6 +227,9 @@ public class CustomerDaoImpl implements CustomerDao{
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1) {
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", id);
+            }
         }
         catch (SQLException ex){
             System.out.println(ex);

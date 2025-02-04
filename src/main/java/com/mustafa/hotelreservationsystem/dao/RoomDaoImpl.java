@@ -1,5 +1,7 @@
 package com.mustafa.hotelreservationsystem.dao;
 
+import com.mustafa.hotelreservationsystem.exceptions.db.NoReferencedRowException;
+import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.models.Entity;
 import com.mustafa.hotelreservationsystem.models.Reservation;
 import com.mustafa.hotelreservationsystem.models.Room;
@@ -64,7 +66,7 @@ public class RoomDaoImpl implements RoomDao{
     // Gorevi = Tum odayi ayni anda gunceller (hem rezervasyonlu oda, hem rezervasyonsuz oda seklinde guncelleme yapabilir)
     // Exception = Verilen id'de oda yoksa
     @Override
-    public void update(Entity e) {
+    public void update(Entity e) throws NoReferencedRowException, ZeroRowsAffectedOrReturnedException {
         Room r = (Room) e;
         long id = r.getId();
         String roomName = r.getRoomName();
@@ -101,11 +103,20 @@ public class RoomDaoImpl implements RoomDao{
             }
             ps.setLong(6, id);
 
+
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1){
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", id);
+            }
         }
         catch (SQLException ex){
             System.out.println(ex);
+
+            int errorCode = ex.getErrorCode();
+            if (errorCode == MySqlErrors.FOREIGN_KEY_CONSTRAINT_VIOLATION.getCode()){
+                throw new NoReferencedRowException("No corresponding row in Reservation table - reservationId: " + reservationId);
+            }
         }
 
     }
@@ -118,7 +129,7 @@ public class RoomDaoImpl implements RoomDao{
     // Gorevi = verilen id'deki odayi getirir
     // Exception = verilen id'de oda yoksa
     @Override
-    public Room retrieve(long id) {
+    public Room retrieve(long id) throws ZeroRowsAffectedOrReturnedException{
 
         Room result = null;
 
@@ -141,7 +152,12 @@ public class RoomDaoImpl implements RoomDao{
                 if (isReserved) {
                     long reservationId = rs.getLong("reservationId");
                     ReservationDao reservationDao = new ReservationDaoImpl();
-                    reservation = reservationDao.retrieve(reservationId);
+                    try{
+                        reservation = reservationDao.retrieve(reservationId);
+                    } catch (ZeroRowsAffectedOrReturnedException e) {
+                        System.out.println("Reservation with 'id' is not found");
+                        reservation = null;
+                    }
                 } else {
                     reservation = null;
                 }
@@ -153,14 +169,19 @@ public class RoomDaoImpl implements RoomDao{
             System.out.println(ex);
         }
 
-        return result;
+        if (result == null){
+            throw new ZeroRowsAffectedOrReturnedException("Zero rows returned on SELECT", id);
+        }
+        else {
+            return result;
+        }
 
     }
 
     // Gorevi = id si verilen oda db'den silecek
     // Exception = verilen id'de oda yoksa
     @Override
-    public Room delete(long id) {
+    public Room delete(long id) throws ZeroRowsAffectedOrReturnedException{
 
         Room deletedRoom = retrieve(id);
 
@@ -175,6 +196,10 @@ public class RoomDaoImpl implements RoomDao{
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1){
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on DELETE", id);
+            }
+
         }
         catch (SQLException ex){
             System.out.println(ex);
@@ -214,7 +239,12 @@ public class RoomDaoImpl implements RoomDao{
                 if (isReserved) {
                     long reservationId = rs.getLong("reservationId");
                     ReservationDao reservationDao = new ReservationDaoImpl();
-                    reservation = reservationDao.retrieve(reservationId);
+                    try{
+                        reservation = reservationDao.retrieve(reservationId);
+                    } catch (ZeroRowsAffectedOrReturnedException e) {
+                        System.out.println("Reservation with 'reservationId' is not found");
+                        reservation = null;
+                    }
                 }
                 else {
                     reservation = null;
@@ -238,12 +268,13 @@ public class RoomDaoImpl implements RoomDao{
     // Exception = verilen id'de oda yoksa
     // Exception = verilen alan unique ise ve onceden olan bir deger tekrar atanmak istendiyse
     @Override
-    public void updateSpecifiedRoomField(long id, String fieldName, Object fieldValue) {
+    public void updateSpecifiedRoomField(long id, String fieldName, Object fieldValue) throws NoReferencedRowException, ZeroRowsAffectedOrReturnedException {
 
         List<String> allowedFieldNames = Arrays.asList("roomName", "capacity", "price", "isReserved", "reservationId");
 
         if (!allowedFieldNames.contains(fieldName)){
             System.out.println("Field: " + fieldName + " is not match any table name of room");
+            return;
         }
 
         String query = "UPDATE room SET " + fieldName + " = ? WHERE id = ?";
@@ -258,9 +289,18 @@ public class RoomDaoImpl implements RoomDao{
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1){
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", id);
+            }
+
         }
         catch (SQLException ex){
             System.out.println(ex);
+
+            int errorCode = ex.getErrorCode();
+            if (errorCode == MySqlErrors.FOREIGN_KEY_CONSTRAINT_VIOLATION.getCode() && fieldName.equals("reservationId")){
+                throw new NoReferencedRowException("No corresponding row in Reservation table - reservationId: " + fieldValue);
+            }
         }
     }
 
@@ -272,7 +312,7 @@ public class RoomDaoImpl implements RoomDao{
     // 1- roomId id'li bir oda bulunamazsa
     // 2- verilen resId reservation tablosunda olan bir rezervasyon id'si ile eslesmiyorsa
     @Override
-    public void linkRoomToReservation(long roomId, long resId) {
+    public void linkRoomToReservation(long roomId, long resId) throws NoReferencedRowException, ZeroRowsAffectedOrReturnedException {
 
         String query = "UPDATE room SET reservationId = ? WHERE id = ?";
 
@@ -286,12 +326,22 @@ public class RoomDaoImpl implements RoomDao{
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1){
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", roomId);
+            }
 
             updateSpecifiedRoomField(roomId, "isReserved", true);
 
         }
         catch (SQLException ex){
             System.out.println(ex);
+
+            int errorCode = ex.getErrorCode();
+            if (errorCode == MySqlErrors.FOREIGN_KEY_CONSTRAINT_VIOLATION.getCode()){
+                throw new NoReferencedRowException("No corresponding row in Reservation table - reservationId: " + resId);
+            }
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -300,7 +350,7 @@ public class RoomDaoImpl implements RoomDao{
     // Gorevi = Odayi, icinde oldugu rezervasyondan cikartir (rezervationId yi null yapar)
     // Exception = roomId id'li bir oda bulunamazsa
     @Override
-    public void unlinkRoomFromReservation(long roomId) {
+    public void unlinkRoomFromReservation(long roomId) throws ZeroRowsAffectedOrReturnedException {
 
         String query = "UPDATE room SET reservationId = ? WHERE id = ?";
 
@@ -314,8 +364,17 @@ public class RoomDaoImpl implements RoomDao{
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1){
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on UPDATE", roomId);
+            }
 
-            updateSpecifiedRoomField(roomId, "isReserved", false);
+
+            try{
+                updateSpecifiedRoomField(roomId, "isReserved", false);
+            }
+            catch (Exception e){
+                System.out.println(e); // never thrown because it only throws exception when fieldName is "reservationId"
+            }
 
         }
         catch (SQLException ex){
@@ -332,7 +391,7 @@ public class RoomDaoImpl implements RoomDao{
     // 2- Room tablosunda roomId li bir oda varligi yoksa
     // 3- Feature tablosunda featureId li bir ozellik varligi yoksa
     @Override
-    public void bindRoomAndFeature(long roomId, long featureId) {
+    public void bindRoomAndFeature(long roomId, long featureId) throws NoReferencedRowException {
 
         String query = "INSERT INTO room_feature (roomId, featureId) VALUES (?, ?)";
 
@@ -349,6 +408,11 @@ public class RoomDaoImpl implements RoomDao{
         }
         catch (SQLException ex){
             System.out.println(ex);
+
+            int errorCode = ex.getErrorCode();
+            if (errorCode == MySqlErrors.FOREIGN_KEY_CONSTRAINT_VIOLATION.getCode()){
+                throw new NoReferencedRowException("No corresponding row in Reservation table - roomId: " + roomId + " featureId: " + featureId);
+            }
         }
 
     }
@@ -357,7 +421,7 @@ public class RoomDaoImpl implements RoomDao{
     // Gorevi = room_feature ara tablosunda roomId ve featureId olan satiri siler
     // Exception = ara tabloda roomId ve featureId nin oldugu bir satir yoksa
     @Override
-    public void unbindRoomAndFeature(long roomId, long featureId) {
+    public void unbindRoomAndFeature(long roomId, long featureId) throws ZeroRowsAffectedOrReturnedException {
 
         String query = "DELETE FROM room_feature WHERE roomId = ? AND featureId = ?";
 
@@ -371,6 +435,9 @@ public class RoomDaoImpl implements RoomDao{
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1){
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on DELETE", roomId, featureId);
+            }
         }
         catch (SQLException ex){
             System.out.println(ex);
@@ -386,7 +453,7 @@ public class RoomDaoImpl implements RoomDao{
     // 2- Room tablosunda roomId li bir oda varligi yoksa
     // 3- Service tablosunda serviceId li bir servis varligi yoksa
     @Override
-    public void bindRoomAndService(long roomId, long serviceId) {
+    public void bindRoomAndService(long roomId, long serviceId) throws NoReferencedRowException {
 
         String query = "INSERT INTO room_service (roomId, serviceId) VALUES (?, ?)";
 
@@ -403,6 +470,11 @@ public class RoomDaoImpl implements RoomDao{
         }
         catch (SQLException ex){
             System.out.println(ex);
+
+            int errorCode = ex.getErrorCode();
+            if (errorCode == MySqlErrors.FOREIGN_KEY_CONSTRAINT_VIOLATION.getCode()){
+                throw new NoReferencedRowException("No corresponding row in Reservation table - roomId: " + roomId + " serviceId: " + serviceId);
+            }
         }
 
     }
@@ -411,7 +483,7 @@ public class RoomDaoImpl implements RoomDao{
     // Gorevi = room_service ara tablosunda roomId ve serviceId olan satiri siler
     // Exception = ara tabloda roomId ve serviceId nin oldugu bir satir yoksa
     @Override
-    public void unbindRoomAndService(long roomId, long serviceId) {
+    public void unbindRoomAndService(long roomId, long serviceId) throws ZeroRowsAffectedOrReturnedException {
 
         String query = "DELETE FROM room_service WHERE roomId = ? AND serviceId = ?";
 
@@ -425,6 +497,10 @@ public class RoomDaoImpl implements RoomDao{
 
             int rowsAffected = ps.executeUpdate();
             System.out.println(rowsAffected + " rows affected");
+            if (rowsAffected < 1){
+                throw new ZeroRowsAffectedOrReturnedException("Zero rows affected on DELETE", roomId, serviceId);
+            }
+
         }
         catch (SQLException ex){
             System.out.println(ex);

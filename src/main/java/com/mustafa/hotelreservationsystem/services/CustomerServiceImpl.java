@@ -3,6 +3,8 @@ package com.mustafa.hotelreservationsystem.services;
 import com.mustafa.hotelreservationsystem.dao.CustomerDao;
 import com.mustafa.hotelreservationsystem.dao.CustomerDaoImpl;
 import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
+import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
+import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdException;
 import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
 import com.mustafa.hotelreservationsystem.models.Customer;
 
@@ -28,14 +30,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomer(long id) {
-        Customer targetCustomer = customerDao.retrieve(id);
-        if (targetCustomer != null){
+    public Customer getCustomer(long id) throws EntityNotFoundByIdException {
+
+        try{
+            Customer targetCustomer = customerDao.retrieve(id);
             return targetCustomer;
-        }
-        else {
-            System.out.println("public Customer getCustomer(long id) -> returned null");
-            return null;
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Customer not found by id", e);
         }
     }
 
@@ -52,51 +53,64 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer deleteCustomer(long id) {
-        Customer deletedCustomer = customerDao.delete(id);
-        return deletedCustomer;
+    public Customer deleteCustomer(long id) throws EntityNotFoundByIdException{
+
+        try {
+            Customer deletedCustomer = customerDao.delete(id);
+            return deletedCustomer;
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Customer not found by id", e);
+        }
     }
 
     @Override
-    public void changeFullName(long id, String newFullName) {
+    public void changeFullName(long id, String newFullName) throws EntityNotFoundByIdException{
 
         try{
             customerDao.updateSpecifiedCustomerField(id, "fullName", newFullName);
         }
-        catch (Exception e){
+        catch (DuplicateEntryException e){
             System.out.println(e); // never throws exception because field name is not "phoneNumber"
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Customer not found by id", e);
         }
     }
 
     @Override
-    public void changePhoneNumber(long id, String newPhoneNumber) throws SameEntityValueExistInDbException{
+    public void changePhoneNumber(long id, String newPhoneNumber) throws SameEntityValueExistInDbException, EntityNotFoundByIdException {
 
         try{
             customerDao.updateSpecifiedCustomerField(id, "phoneNumber", newPhoneNumber);
         } catch (DuplicateEntryException e) {
             throw new SameEntityValueExistInDbException("Phone number already taken", e);
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Customer not found by id", e);
         }
     }
 
     @Override
-    public void changeBirthDate(long id, LocalDate birthDate) {
+    public void changeBirthDate(long id, LocalDate birthDate) throws EntityNotFoundByIdException {
 
         try{
             customerDao.updateSpecifiedCustomerField(id, "birthDate", birthDate);
         }
-        catch (Exception e){
+        catch (DuplicateEntryException e){
             System.out.println(e); // never throws exception because field name is not "phoneNumber"
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Customer not found by id", e);
         }
     }
 
     @Override
-    public void changeDescription(long id, String newDescription) {
+    public void changeDescription(long id, String newDescription) throws EntityNotFoundByIdException {
 
         try{
             customerDao.updateSpecifiedCustomerField(id, "description", newDescription);
         }
-        catch (Exception e){
+        catch (DuplicateEntryException e){
             System.out.println(e); // never throws exception because field name is not "phoneNumber"
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Customer not found by id", e);
         }
     }
 

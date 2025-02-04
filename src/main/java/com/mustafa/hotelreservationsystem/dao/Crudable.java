@@ -6,6 +6,6 @@ public interface Crudable {
 
     void save(Entity e) throws Exception;
     void update(Entity e) throws Exception;
-    Entity retrieve(long id);
-    Entity delete(long id);
+    Entity retrieve(long id) throws Exception;
+    Entity delete(long id) throws Exception;
 }
