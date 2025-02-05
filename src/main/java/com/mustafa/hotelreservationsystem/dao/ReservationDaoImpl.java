@@ -1,5 +1,6 @@
 package com.mustafa.hotelreservationsystem.dao;
 
+import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
 import com.mustafa.hotelreservationsystem.exceptions.db.NoReferencedRowException;
 import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.models.*;
@@ -292,7 +293,7 @@ public class ReservationDaoImpl implements ReservationDao{
     // 2- Reservation tablosunda resId li bir rezervasyon varligi yoksa
     // 3- Customer tablosunda cusId li bir musteri varligi yoksa
     @Override
-    public void bindReservationAndCustomer(long resId, long cusId) throws NoReferencedRowException{
+    public void bindReservationAndCustomer(long resId, long cusId) throws NoReferencedRowException, DuplicateEntryException{
 
         String query = "INSERT INTO reservation_customer (reservationId, customerId) VALUES (?, ?)";
 
@@ -313,6 +314,9 @@ public class ReservationDaoImpl implements ReservationDao{
             int errorCode = ex.getErrorCode();
             if (errorCode == MySqlErrors.FOREIGN_KEY_CONSTRAINT_VIOLATION.getCode()){
                 throw new NoReferencedRowException("No corresponding row in reservation or customer table - reservationId: " + resId + " customerId: " + cusId);
+            }
+            if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
+                throw new DuplicateEntryException("Duplicate entry for primary key set", "resId: " + resId + " -  cusId: " + cusId);
             }
         }
     }
@@ -345,8 +349,8 @@ public class ReservationDaoImpl implements ReservationDao{
 
 
     // Gorevi;
-    // 1- bir rezervasyona kayitli olmayan resespsiyonisti kayit etmek icin (bu durum sadece bir resepsiyonist silidniginde gerceklesebilir)
-    // 2- bir rezervasyona kayitli olan respsiyonisti baska bir baska bir respesiyonist ile degistirmek icin
+    // 1- bir resepsiyoniste kayitli olmayan rezervasyonu kayit etmek icin (bu durum sadece bir resepsiyonist silidniginde gerceklesebilir)
+    // 2- bir resepsinoiste kayitli olan rezervasyonu baska bir baska bir respesiyonist ile degistirmek icin
     // Exception;
     // 1- resId id'li bir rezervasyon bulunamazsa
     // 2- verilen recId receptionist tablosunda olan bir resepsiyonistin id'si ile eslesmiyorsa

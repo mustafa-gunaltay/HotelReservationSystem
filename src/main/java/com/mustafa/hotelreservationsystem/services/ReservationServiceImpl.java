@@ -2,10 +2,12 @@ package com.mustafa.hotelreservationsystem.services;
 
 import com.mustafa.hotelreservationsystem.dao.ReservationDao;
 import com.mustafa.hotelreservationsystem.dao.ReservationDaoImpl;
+import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
 import com.mustafa.hotelreservationsystem.exceptions.db.NoReferencedRowException;
 import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdException;
 import com.mustafa.hotelreservationsystem.exceptions.general.ReferencedEntityNotFoundException;
+import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
 import com.mustafa.hotelreservationsystem.models.Reservation;
 
 import java.time.LocalDate;
@@ -77,30 +79,35 @@ public class ReservationServiceImpl implements ReservationService{
 
     // Gorevi = Onceden sistemde olan bir customer'i bir rezervasyonun icine eklemek
     @Override
-    public void addCustomerToReservation(long resId, long idOfCusToBeAdded) throws ReferencedEntityNotFoundException {
+    public void addCustomerToReservation(long resId, long idOfCusToBeAdded) throws ReferencedEntityNotFoundException, SameEntityValueExistInDbException {
 
         try{
             reservationDao.bindReservationAndCustomer(resId, idOfCusToBeAdded);
         } catch (NoReferencedRowException e) {
             throw new ReferencedEntityNotFoundException("Reservation or Customer not found", e);
+        } catch (DuplicateEntryException e) {
+            throw new SameEntityValueExistInDbException("Reservation and Customer pair already exist", e);
         }
     }
 
     // Gorevi = Bir rezervasyondan musteri cikartilacak ve baska bir rezervasyona eklenecek
     @Override
-    public void changeCustomerOnReservation(long oldResId, long newResId, long idOfCusToBeChanged) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException {
+    public void changeCustomerOnReservation(long oldResId, long newResId, long idOfCusToBeChanged) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException, SameEntityValueExistInDbException {
 
         try{
             reservationDao.bindReservationAndCustomer(newResId, idOfCusToBeChanged);
         }
         catch (NoReferencedRowException e) {
             throw new ReferencedEntityNotFoundException("Reservation that will be changed instead or Customer not found", e);
+        } catch (DuplicateEntryException e) {
+            throw new SameEntityValueExistInDbException("Reservation and Customer pair already exist", e);
         }
 
         try{
             reservationDao.unbindReservationAndCustomer(oldResId, idOfCusToBeChanged);
         } catch (ZeroRowsAffectedOrReturnedException e) {
-            throw new EntityNotFoundByIdException("Reservation and Customer pair is not found by their id", e);
+            System.out.println("New reservation and customer pair added but old reservation and customer pair to be deleted is not found");
+            throw new EntityNotFoundByIdException("Reservation and Customer pair to be deleted is not found by their id", e);
         }
 
     }
@@ -111,7 +118,7 @@ public class ReservationServiceImpl implements ReservationService{
         try{
             reservationDao.unbindReservationAndCustomer(resId, idOfCusToBeRemoved);
         } catch (ZeroRowsAffectedOrReturnedException e) {
-            throw new EntityNotFoundByIdException("Reservation and Customer pair is not found by their id", e);
+            throw new EntityNotFoundByIdException("Reservation and Customer pair to be deleted is not found by their id", e);
         }
     }
 

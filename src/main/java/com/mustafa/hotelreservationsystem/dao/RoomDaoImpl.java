@@ -1,5 +1,6 @@
 package com.mustafa.hotelreservationsystem.dao;
 
+import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
 import com.mustafa.hotelreservationsystem.exceptions.db.NoReferencedRowException;
 import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.models.Entity;
@@ -340,8 +341,6 @@ public class RoomDaoImpl implements RoomDao{
             if (errorCode == MySqlErrors.FOREIGN_KEY_CONSTRAINT_VIOLATION.getCode()){
                 throw new NoReferencedRowException("No corresponding row in Reservation table - reservationId: " + resId);
             }
-        } catch (ZeroRowsAffectedOrReturnedException e) {
-            throw new RuntimeException(e);
         }
 
     }
@@ -391,7 +390,7 @@ public class RoomDaoImpl implements RoomDao{
     // 2- Room tablosunda roomId li bir oda varligi yoksa
     // 3- Feature tablosunda featureId li bir ozellik varligi yoksa
     @Override
-    public void bindRoomAndFeature(long roomId, long featureId) throws NoReferencedRowException {
+    public void bindRoomAndFeature(long roomId, long featureId) throws NoReferencedRowException, DuplicateEntryException {
 
         String query = "INSERT INTO room_feature (roomId, featureId) VALUES (?, ?)";
 
@@ -412,6 +411,9 @@ public class RoomDaoImpl implements RoomDao{
             int errorCode = ex.getErrorCode();
             if (errorCode == MySqlErrors.FOREIGN_KEY_CONSTRAINT_VIOLATION.getCode()){
                 throw new NoReferencedRowException("No corresponding row in Reservation table - roomId: " + roomId + " featureId: " + featureId);
+            }
+            if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
+                throw new DuplicateEntryException("Duplicate entry for primary key set", "roomId: " + roomId + " - featureId: " + featureId);
             }
         }
 
@@ -453,7 +455,7 @@ public class RoomDaoImpl implements RoomDao{
     // 2- Room tablosunda roomId li bir oda varligi yoksa
     // 3- Service tablosunda serviceId li bir servis varligi yoksa
     @Override
-    public void bindRoomAndService(long roomId, long serviceId) throws NoReferencedRowException {
+    public void bindRoomAndService(long roomId, long serviceId) throws NoReferencedRowException, DuplicateEntryException {
 
         String query = "INSERT INTO room_service (roomId, serviceId) VALUES (?, ?)";
 
@@ -475,6 +477,10 @@ public class RoomDaoImpl implements RoomDao{
             if (errorCode == MySqlErrors.FOREIGN_KEY_CONSTRAINT_VIOLATION.getCode()){
                 throw new NoReferencedRowException("No corresponding row in Reservation table - roomId: " + roomId + " serviceId: " + serviceId);
             }
+            if (errorCode == MySqlErrors.DUPLICATE_ENTRY.getCode()){
+                throw new DuplicateEntryException("Duplicate entry for primary key set", "roomId: " + roomId + " - serviceId: " + serviceId);
+            }
+
         }
 
     }

@@ -104,7 +104,7 @@ public class FeatureDaoImpl implements FeatureDao {
                 result = new Feature(targetId, targetFeatureName, targetPrice);
             }
         }
-        catch (SQLException ex){
+        catch (SQLException ex) {
             System.out.println(ex);
         }
 

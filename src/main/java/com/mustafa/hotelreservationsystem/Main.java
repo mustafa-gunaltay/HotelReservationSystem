@@ -30,7 +30,7 @@ public class Main extends Application {
 //        ServiceTests.receptionistServiceImplUnitTest();
 //        ServiceTests.featureServiceImplUnitTest();
 //        ServiceTests.reservationServiceImplUnitTest();
-//        ServiceTests.roomServiceImplUnitTest();
+        ServiceTests.roomServiceImplUnitTest();
 //        ServiceTests.customerServiceImplUnitTest();
 //        ServiceTests.serviceServiceImplUnitTest();
     }

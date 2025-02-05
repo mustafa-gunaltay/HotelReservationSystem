@@ -269,8 +269,8 @@ public class DaoTests {
 //        roomDao.unbindRoomAndService(3, 1);
 
         // deleting room
-        Room deletedRoom = roomDao.delete(3);
-        System.out.println(deletedRoom);
+//        Room deletedRoom = roomDao.delete(3);
+//        System.out.println(deletedRoom);
 
     }
 
@@ -327,9 +327,9 @@ public class DaoTests {
 //        rDao.update(resToBeUpdated);
 
         // retrieve one reservation
-        Reservation temp;
-        temp = rDao.retrieve(9);
-        System.out.println(temp);
+//        Reservation temp;
+//        temp = rDao.retrieve(9);
+//        System.out.println(temp);
 
         // updating specified reservation field with specified value
 //        rDao.updateSpecifiedReservationField(11, "checkInDate", LocalDate.of(2025, 8, 16));
@@ -404,6 +404,8 @@ public class DaoTests {
         }
         catch (DuplicateEntryException e) {
             System.out.println(e.getMessage() + " - " + e.getDuplicateEntryName());
+        } catch (ZeroRowsAffectedOrReturnedException e) {
+
         }
 
         // retrieve one customer
@@ -445,12 +447,12 @@ public class DaoTests {
         }
 
         // updating service (general update)
-        Service serviceToBeUpdated = new Service(4, "My Web Hosting", 600);
-        sDao.update(serviceToBeUpdated);
+//        Service serviceToBeUpdated = new Service(4, "My Web Hosting", 600);
+//        sDao.update(serviceToBeUpdated);
 
         // retrieve one customer
-        Service temp = sDao.retrieve(4);
-        System.out.println(temp);
+//        Service temp = sDao.retrieve(4);
+//        System.out.println(temp);
 
         // update specified service field with specified value
         try {
@@ -460,8 +462,8 @@ public class DaoTests {
         }
 
         // delete service
-        Service deletedService = sDao.delete(5);
-        System.out.println(deletedService);
+//        Service deletedService = sDao.delete(5);
+//        System.out.println(deletedService);
 
     }
 

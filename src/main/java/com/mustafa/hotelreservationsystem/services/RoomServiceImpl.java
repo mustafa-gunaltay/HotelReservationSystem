@@ -2,10 +2,12 @@ package com.mustafa.hotelreservationsystem.services;
 
 import com.mustafa.hotelreservationsystem.dao.RoomDao;
 import com.mustafa.hotelreservationsystem.dao.RoomDaoImpl;
+import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
 import com.mustafa.hotelreservationsystem.exceptions.db.NoReferencedRowException;
 import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdException;
 import com.mustafa.hotelreservationsystem.exceptions.general.ReferencedEntityNotFoundException;
+import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
 import com.mustafa.hotelreservationsystem.models.Room;
 
 import java.util.List;
@@ -136,11 +138,13 @@ public class RoomServiceImpl implements RoomService{
     }
 
     @Override
-    public void addFeatureToRoom(long featureId, long roomId) throws ReferencedEntityNotFoundException {
+    public void addFeatureToRoom(long featureId, long roomId) throws ReferencedEntityNotFoundException, SameEntityValueExistInDbException {
         try {
             roomDao.bindRoomAndFeature(roomId, featureId);
         } catch (NoReferencedRowException e) {
             throw new ReferencedEntityNotFoundException("Room or Feature not found", e);
+        } catch (DuplicateEntryException e) {
+            throw new SameEntityValueExistInDbException("Room and Feature pair already exist", e);
         }
     }
 
@@ -149,32 +153,38 @@ public class RoomServiceImpl implements RoomService{
         try {
             roomDao.unbindRoomAndFeature(roomId, featureId);
         } catch (ZeroRowsAffectedOrReturnedException e) {
-            throw new EntityNotFoundByIdException("Room and Feature pair not found by their id", e);
+            throw new EntityNotFoundByIdException("Room and Feature pair to be deleted not found by their id", e);
         }
     }
 
     @Override
-    public void changeFeatureOnRoom(long oldFeatureId, long newFeatureId, long roomId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException {
+    public void changeFeatureOnRoom(long oldFeatureId, long newFeatureId, long roomId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException, SameEntityValueExistInDbException {
 
         try {
             roomDao.bindRoomAndFeature(roomId, newFeatureId);
         } catch (NoReferencedRowException e) {
             throw new ReferencedEntityNotFoundException("Feature that will be changed instead or Room is not found", e);
         }
+        catch (DuplicateEntryException e) {
+            throw new SameEntityValueExistInDbException("Room and Feature pair already exist", e);
+        }
 
         try {
             roomDao.unbindRoomAndFeature(roomId, oldFeatureId);
         } catch (ZeroRowsAffectedOrReturnedException e) {
-            throw new EntityNotFoundByIdException("Room and Feature pair not found by their id", e);
+            System.out.println("New feature and room pair added but old feature and room pair to be deleted is not found");
+            throw new EntityNotFoundByIdException("Room and Feature pair to be deleted not found by their id", e);
         }
     }
 
     @Override
-    public void addServiceToRoom(long serviceId, long roomId) throws ReferencedEntityNotFoundException {
+    public void addServiceToRoom(long serviceId, long roomId) throws ReferencedEntityNotFoundException, SameEntityValueExistInDbException {
         try {
             roomDao.bindRoomAndService(roomId, serviceId);
         } catch (NoReferencedRowException e) {
             throw new ReferencedEntityNotFoundException("Room or Service not found", e);
+        } catch (DuplicateEntryException e) {
+            throw new SameEntityValueExistInDbException("Room and Service pair already exist", e);
         }
     }
 
@@ -183,23 +193,26 @@ public class RoomServiceImpl implements RoomService{
         try {
             roomDao.unbindRoomAndService(roomId, serviceId);
         } catch (ZeroRowsAffectedOrReturnedException e) {
-            throw new EntityNotFoundByIdException("Room and Service pair not found by their id", e);
+            throw new EntityNotFoundByIdException("Room and Service to be deleted pair not found by their id", e);
         }
     }
 
     @Override
-    public void changeServiceOnRoom(long oldServiceId, long newServiceId, long roomId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException {
+    public void changeServiceOnRoom(long oldServiceId, long newServiceId, long roomId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException, SameEntityValueExistInDbException {
 
         try {
             roomDao.bindRoomAndService(roomId, newServiceId);
         } catch (NoReferencedRowException e) {
             throw new ReferencedEntityNotFoundException("Service that will be changed instead or Room is not found", e);
+        } catch (DuplicateEntryException e) {
+            throw new SameEntityValueExistInDbException("Room and Service pair already exist", e);
         }
 
         try {
             roomDao.unbindRoomAndService(roomId, oldServiceId);
         } catch (ZeroRowsAffectedOrReturnedException e) {
-            throw new EntityNotFoundByIdException("Room and Service pair not found by their id", e);
+            System.out.println("New service and room pair added but old service and room pair to be deleted is not found");
+            throw new EntityNotFoundByIdException("Room and Service pair to be deleted not found by their id", e);
         }
     }
 }

@@ -2,6 +2,7 @@ package com.mustafa.hotelreservationsystem.services;
 
 import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdException;
 import com.mustafa.hotelreservationsystem.exceptions.general.ReferencedEntityNotFoundException;
+import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
 import com.mustafa.hotelreservationsystem.models.Room;
 
 import java.util.List;
@@ -19,12 +20,12 @@ public interface RoomService {
     void deleteRoomFromReservation(long roomId) throws EntityNotFoundByIdException;
     void changeRoomOnReservation(long roomId, long newResId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException;
 
-    void addFeatureToRoom(long featureId, long roomId) throws ReferencedEntityNotFoundException;
+    void addFeatureToRoom(long featureId, long roomId) throws ReferencedEntityNotFoundException, SameEntityValueExistInDbException;
     void deleteFeatureFromRoom(long featureId, long roomId) throws EntityNotFoundByIdException;
-    void changeFeatureOnRoom(long oldFeatureId, long newFeatureId, long roomId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException;
+    void changeFeatureOnRoom(long oldFeatureId, long newFeatureId, long roomId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException, SameEntityValueExistInDbException;
 
-    void addServiceToRoom(long serviceId, long roomId) throws ReferencedEntityNotFoundException;
+    void addServiceToRoom(long serviceId, long roomId) throws ReferencedEntityNotFoundException, SameEntityValueExistInDbException;
     void deleteServiceFromRoom(long serviceId, long roomId) throws EntityNotFoundByIdException;
-    void changeServiceOnRoom(long oldServiceId, long newServiceId, long roomId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException;
+    void changeServiceOnRoom(long oldServiceId, long newServiceId, long roomId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException, SameEntityValueExistInDbException;
 
 }

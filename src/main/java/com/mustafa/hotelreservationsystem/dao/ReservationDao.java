@@ -1,6 +1,7 @@
 package com.mustafa.hotelreservationsystem.dao;
 
 
+import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
 import com.mustafa.hotelreservationsystem.exceptions.db.NoReferencedRowException;
 import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.models.Entity;
@@ -20,7 +21,7 @@ public interface ReservationDao extends Crudable{
 
     List<Reservation> retrieveAllReservations();
     void updateSpecifiedReservationField(long id, String fieldName, Object fieldValue) throws NoReferencedRowException, ZeroRowsAffectedOrReturnedException;
-    void bindReservationAndCustomer(long resId, long cusId) throws NoReferencedRowException;
+    void bindReservationAndCustomer(long resId, long cusId) throws NoReferencedRowException, DuplicateEntryException;
     void unbindReservationAndCustomer(long resId, long cusId) throws ZeroRowsAffectedOrReturnedException;
     void linkReservationToReceptionist(long resId, long recId) throws NoReferencedRowException, ZeroRowsAffectedOrReturnedException;
     void unlinkReservationFromReceptionist(long resId) throws ZeroRowsAffectedOrReturnedException;
