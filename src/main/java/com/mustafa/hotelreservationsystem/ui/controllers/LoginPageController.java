@@ -1,16 +1,21 @@
 package com.mustafa.hotelreservationsystem.ui.controllers;
 
 import com.mustafa.hotelreservationsystem.exceptions.general.*;
+import com.mustafa.hotelreservationsystem.models.Admin;
 import com.mustafa.hotelreservationsystem.services.AdminService;
 import com.mustafa.hotelreservationsystem.services.AdminServiceImpl;
 import com.mustafa.hotelreservationsystem.services.ReceptionistService;
 import com.mustafa.hotelreservationsystem.services.ReceptionistServiceImpl;
 import com.mustafa.hotelreservationsystem.ui.utils.AlertManager;
+import com.mustafa.hotelreservationsystem.ui.utils.SceneInitializer;
+import com.mustafa.hotelreservationsystem.ui.utils.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+
+import java.util.List;
 
 public class LoginPageController {
 
@@ -56,9 +61,18 @@ public class LoginPageController {
                 AlertManager.showWarning("Warning", e.getMessage());
             }
 
-
         }
 
+
+        SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/AdminHomePage.fxml",
+                                         new SceneInitializer<AdminHomePageController>() {
+            @Override
+            public void initialize(AdminHomePageController controller) {
+                AdminService adminService = new AdminServiceImpl();
+                List<Admin> allAdmins = adminService.getAllAdmins();
+                controller.setTableView(allAdmins);
+            }
+        });
 
     }
 
