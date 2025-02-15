@@ -17,5 +17,6 @@ public interface ReceptionistService {
     void validateReceptionist(String username, String pw) throws InvalidReceptionistUsernameException, InvalidReceptionistPasswordException;
     Receptionist deleteReceptionist(long id) throws EntityNotFoundByIdException;
     Receptionist getReceptionist(long id) throws EntityNotFoundByIdException;
+    boolean isUsernameTaken(String username);
 
 }

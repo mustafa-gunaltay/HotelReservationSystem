@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 public class Utils {
 
 
-    public static <T> void setupTableViewSelection(TableView<T> tableView) {
+    public static <T> void setupTableViewSelectionMultiple(TableView<T> tableView) {
         // Çoklu seçim modunu aktifleştir
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 

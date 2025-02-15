@@ -11,13 +11,16 @@ import com.mustafa.hotelreservationsystem.ui.utils.SceneInitializer;
 import com.mustafa.hotelreservationsystem.ui.utils.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class LoginPageController {
+public class LoginPageController implements Initializable {
 
     @FXML
     TextField textFieldUsername;
@@ -76,6 +79,16 @@ public class LoginPageController {
 
     }
 
+    private void otomatikDoldur(){
+        textFieldUsername.setText("mamo");
+        textFieldPassword.setText("mamo123");
+
+        radioButtonAdmin.setSelected(true);
+    }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        otomatikDoldur();
+    }
 }

@@ -140,4 +140,18 @@ public class ReceptionistServiceImpl implements ReceptionistService{
         }
 
     }
+
+    @Override
+    public boolean isUsernameTaken(String username){
+        List<Receptionist> allReceptionists = receptionistDao.retrieveAllReceptionists();
+        for (Receptionist r : allReceptionists){
+            if (r.getUsername().equals(username)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
 }

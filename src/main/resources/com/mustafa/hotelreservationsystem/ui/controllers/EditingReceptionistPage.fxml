@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="532.0" prefWidth="779.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.EditingReceptionistPageController">
+   <children>
+      <TableView fx:id="tvReceptionist" layoutX="40.0" layoutY="32.0" prefHeight="200.0" prefWidth="420.0">
+        <columns>
+          <TableColumn fx:id="tblClmId" prefWidth="98.39997100830078" text="Receptionist Id" />
+          <TableColumn fx:id="tblClmFullName" prefWidth="121.60003662109375" text="Full Name" />
+            <TableColumn fx:id="tblClmUsername" prefWidth="86.4000244140625" text="Username" />
+            <TableColumn fx:id="tblClmPassword" prefWidth="111.19998168945312" text="Password" />
+        </columns>
+      </TableView>
+      <Label fx:id="lblInformation" layoutX="52.0" layoutY="256.0" prefHeight="27.0" prefWidth="291.0" text="Add New Receptionist">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfFullName" layoutX="52.0" layoutY="308.0" />
+      <Label fx:id="lblFullName" layoutX="52.0" layoutY="291.0" prefHeight="18.0" prefWidth="74.0" text="Full Name" />
+      <PasswordField fx:id="tfPassword" layoutX="52.0" layoutY="419.0" />
+      <Label fx:id="lblPassword" layoutX="52.0" layoutY="402.0" text="Password" />
+      <Label fx:id="lblUsername" layoutX="52.0" layoutY="345.0" text="Username" />
+      <Button fx:id="btnAdd" layoutX="51.0" layoutY="460.0" mnemonicParsing="false" onAction="#onButtonAddClicked" prefHeight="37.0" prefWidth="102.0" text="Add" />
+      <RadioButton fx:id="rbAdd" layoutX="364.0" layoutY="289.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonAddClicked" text="Add">
+         <toggleGroup>
+            <ToggleGroup fx:id="Crud" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rbUpdate" layoutX="364.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonUpdateClicked" text="Update" toggleGroup="$Crud" />
+      <RadioButton fx:id="rbDelete" layoutX="364.0" layoutY="343.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonDeleteClicked" text="Delete" toggleGroup="$Crud" />
+      <Label layoutX="357.0" layoutY="257.0" prefHeight="27.0" prefWidth="150.0" text="Select Process">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnUpdate" layoutX="51.0" layoutY="460.0" mnemonicParsing="false" onAction="#onButtonUpdateClicked" prefHeight="37.0" prefWidth="102.0" text="Update" />
+      <Button fx:id="btnDelete" layoutX="51.0" layoutY="290.0" mnemonicParsing="false" onAction="#onButtonDeleteClicked" prefHeight="37.0" prefWidth="102.0" text="Delete" />
+      <TextField fx:id="tfUsername" layoutX="51.0" layoutY="363.0" />
+      <Label fx:id="lblAddProcessFeedBack" layoutX="51.0" layoutY="498.0" prefHeight="18.0" prefWidth="125.0" text="Add Information Label" />
+      <Label fx:id="lblUpdateProcessFeedBack" layoutX="49.0" layoutY="498.0" text="Update Information Label" />
+      <Label fx:id="lblDeleteProcessFeedBack" layoutX="51.0" layoutY="326.0" text="Delete Information Label" />
+   </children>
+</AnchorPane>

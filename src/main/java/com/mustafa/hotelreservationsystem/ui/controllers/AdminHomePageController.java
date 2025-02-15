@@ -1,6 +1,11 @@
 package com.mustafa.hotelreservationsystem.ui.controllers;
 
 import com.mustafa.hotelreservationsystem.models.Admin;
+import com.mustafa.hotelreservationsystem.models.Receptionist;
+import com.mustafa.hotelreservationsystem.services.ReceptionistService;
+import com.mustafa.hotelreservationsystem.services.ReceptionistServiceImpl;
+import com.mustafa.hotelreservationsystem.ui.utils.SceneInitializer;
+import com.mustafa.hotelreservationsystem.ui.utils.SceneManager;
 import com.mustafa.hotelreservationsystem.ui.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,11 +45,28 @@ public class AdminHomePageController implements Initializable {
         tblClmUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
         tblClmPassword.setCellValueFactory(new PropertyValueFactory<>("passwordd"));
 
-        Utils.setupTableViewSelection(tvAdmin);
+        Utils.setupTableViewSelectionMultiple(tvAdmin);
     }
 
     public void setTableView(List<Admin> admins) {
         ObservableList<Admin> data = FXCollections.observableList(admins);
         tvAdmin.setItems(data);
     }
+
+    @FXML
+    public void onEditReceptionistClick() {
+
+        SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/EditingReceptionistPage.fxml",
+                new SceneInitializer<EditingReceptionistPageController>() {
+                    @Override
+                    public void initialize(EditingReceptionistPageController controller) {
+                        ReceptionistService receptionistService = new ReceptionistServiceImpl();
+                        List<Receptionist> allReceptionists = receptionistService.getAllReceptionists();
+                        controller.setTableView(allReceptionists);
+                    }
+                });
+
+    }
+
+
 }
