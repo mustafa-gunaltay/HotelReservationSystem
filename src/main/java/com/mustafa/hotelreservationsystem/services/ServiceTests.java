@@ -543,26 +543,26 @@ public class ServiceTests {
 
 
         // delete customer from reservation
-        try{
-            reservationService.deleteCustomerFromReservation(99, 1); // -
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id1: " + z.getId() + " -  id2: " + z.getSecondId());
-        }
+//        try{
+//            reservationService.deleteCustomerFromReservation(99, 1); // -
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id1: " + z.getId() + " -  id2: " + z.getSecondId());
+//        }
+//
+//        try{
+//            reservationService.deleteCustomerFromReservation(11, 99); // -
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id1: " + z.getId() + " -  id2: " + z.getSecondId());
+//        }
 
-        try{
-            reservationService.deleteCustomerFromReservation(11, 99); // -
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id1: " + z.getId() + " -  id2: " + z.getSecondId());
-        }
-
-        try {
-            reservationService.deleteCustomerFromReservation(15, 8); // -
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id1: " + z.getId() + " -  id2: " + z.getSecondId());
-        }
+//        try {
+//            reservationService.deleteCustomerFromReservation(15, 8); // -
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id1: " + z.getId() + " -  id2: " + z.getSecondId());
+//        }
 
 
 
@@ -583,6 +583,12 @@ public class ServiceTests {
 //            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
 //        }
 
+
+        // get all reservations one by one with its customers and rooms
+        List<ReservationWithCustomerAndRoom> allReservationsWithItsCustomers =  reservationService.getAllReservationsWithItsCustomersAndItsRooms();
+        for (ReservationWithCustomerAndRoom reservationWithCustomer : allReservationsWithItsCustomers) {
+            System.out.println(reservationWithCustomer);
+        }
 
 
     }

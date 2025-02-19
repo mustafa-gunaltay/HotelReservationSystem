@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="625.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.ReceptionistHomePageController">
+   <children>
+      <Button layoutX="23.0" layoutY="22.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="108.0" text="Rooms" />
+      <Button layoutX="131.0" layoutY="22.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="108.0" text="Features" />
+      <Button layoutX="239.0" layoutY="22.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="108.0" text="Services" />
+      <Button layoutX="347.0" layoutY="22.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="108.0" text="Customers" />
+      <TableView fx:id="tvReceptionistHomePage" layoutX="122.0" layoutY="228.0" prefHeight="200.0" prefWidth="572.0">
+        <columns>
+          <TableColumn fx:id="tblClmReservationId" prefWidth="104.80005264282227" text="Reservation Id" />
+          <TableColumn fx:id="tblClmRoomsNames" prefWidth="108.79998779296875" text="Room Names" />
+            <TableColumn fx:id="tblClmCheckInDate" prefWidth="99.99992370605469" text="Check-In Date" />
+            <TableColumn fx:id="tblClmCheckOutDate" prefWidth="108.7999267578125" text="Check-Out Date" />
+            <TableColumn fx:id="tblClmCustomersNames" prefWidth="148.0" text="Customers" />
+        </columns>
+      </TableView>
+      <Button layoutX="37.0" layoutY="523.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="126.0" text="New Reservation" />
+      <Button layoutX="185.0" layoutY="523.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="126.0" text="Update Reservation" />
+      <Button layoutX="332.0" layoutY="523.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="126.0" text="Delete Reservation" />
+      <Button layoutX="495.0" layoutY="523.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="151.0" text="Edit Room Customization" />
+      <DatePicker layoutX="122.0" layoutY="125.0" />
+      <DatePicker layoutX="359.0" layoutY="125.0" />
+      <TextField layoutX="622.0" layoutY="125.0" />
+      <Label layoutX="29.0" layoutY="124.0" text="Filter By">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="122.0" layoutY="104.0" text="Check-In Date From">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="359.0" layoutY="104.0" text="Check-Out Date To">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="622.0" layoutY="106.0" text="Room Name" />
+      <Button layoutX="728.0" layoutY="179.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="67.0" text="Search" />
+   </children>
+</AnchorPane>

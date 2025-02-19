@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="532.0" prefWidth="779.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.EditingReceptionistPageController">
    <children>
       <TableView fx:id="tvReceptionist" layoutX="40.0" layoutY="32.0" prefHeight="200.0" prefWidth="420.0">
@@ -51,5 +50,6 @@
       <Label fx:id="lblAddProcessFeedBack" layoutX="51.0" layoutY="498.0" prefHeight="18.0" prefWidth="125.0" text="Add Information Label" />
       <Label fx:id="lblUpdateProcessFeedBack" layoutX="49.0" layoutY="498.0" text="Update Information Label" />
       <Label fx:id="lblDeleteProcessFeedBack" layoutX="51.0" layoutY="326.0" text="Delete Information Label" />
+      <Button layoutX="581.0" layoutY="455.0" mnemonicParsing="false" onAction="#onGoBackAdminHomePageClicked" prefHeight="46.0" prefWidth="167.0" text="Go Back Admin Home Page" />
    </children>
 </AnchorPane>

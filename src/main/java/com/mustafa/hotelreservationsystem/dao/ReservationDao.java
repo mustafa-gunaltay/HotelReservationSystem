@@ -6,6 +6,7 @@ import com.mustafa.hotelreservationsystem.exceptions.db.NoReferencedRowException
 import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.models.Entity;
 import com.mustafa.hotelreservationsystem.models.Reservation;
+import com.mustafa.hotelreservationsystem.models.ReservationWithCustomerAndRoom;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface ReservationDao extends Crudable{
     void unbindReservationAndCustomer(long resId, long cusId) throws ZeroRowsAffectedOrReturnedException;
     void linkReservationToReceptionist(long resId, long recId) throws NoReferencedRowException, ZeroRowsAffectedOrReturnedException;
     void unlinkReservationFromReceptionist(long resId) throws ZeroRowsAffectedOrReturnedException;
+
+    List<ReservationWithCustomerAndRoom> retrieveAllReservationsWithItsCustomersAndRooms();
 }

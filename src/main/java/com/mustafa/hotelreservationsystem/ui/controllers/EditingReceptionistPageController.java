@@ -310,4 +310,23 @@ public class EditingReceptionistPageController implements Initializable {
 
     }
 
+
+    @FXML
+    public void onGoBackAdminHomePageClicked() {
+
+        SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/AdminHomePage.fxml",
+                new SceneInitializer<AdminHomePageController>() {
+                    @Override
+                    public void initialize(AdminHomePageController controller) {
+                        AdminService adminService = new AdminServiceImpl();
+                        List<Admin> allAdmins = adminService.getAllAdmins();
+                        controller.setTableView(allAdmins);
+                    }
+
+                }
+        );
+
+
+    }
+
 }

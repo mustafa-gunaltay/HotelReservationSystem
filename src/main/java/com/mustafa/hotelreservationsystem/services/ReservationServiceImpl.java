@@ -9,6 +9,7 @@ import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdE
 import com.mustafa.hotelreservationsystem.exceptions.general.ReferencedEntityNotFoundException;
 import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
 import com.mustafa.hotelreservationsystem.models.Reservation;
+import com.mustafa.hotelreservationsystem.models.ReservationWithCustomerAndRoom;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -155,6 +156,19 @@ public class ReservationServiceImpl implements ReservationService{
         else{
             System.out.println("public List<Reservation> getAllReservations() -> returned empty list");
             return allReservations;
+        }
+    }
+
+    // ReceptionistHomePage'deki tableview icin olusturuldu
+    @Override
+    public List<ReservationWithCustomerAndRoom> getAllReservationsWithItsCustomersAndItsRooms() {
+        List<ReservationWithCustomerAndRoom> allReservationsWithItsCustomersAndRooms = reservationDao.retrieveAllReservationsWithItsCustomersAndRooms();
+        if ( ! allReservationsWithItsCustomersAndRooms.isEmpty()){
+            return allReservationsWithItsCustomersAndRooms;
+        }
+        else{
+            System.out.println("List<ReservationWithCustomerAndRoom> getAllReservationsWithItsCustomersAndItsRooms() -> returned empty list");
+            return allReservationsWithItsCustomersAndRooms;
         }
     }
 }

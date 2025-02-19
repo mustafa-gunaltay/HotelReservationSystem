@@ -4,6 +4,7 @@ import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdE
 import com.mustafa.hotelreservationsystem.exceptions.general.ReferencedEntityNotFoundException;
 import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
 import com.mustafa.hotelreservationsystem.models.Reservation;
+import com.mustafa.hotelreservationsystem.models.ReservationWithCustomerAndRoom;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,5 +24,6 @@ public interface ReservationService {
 
     void addReceptionistToReservation(long resId, long recId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException;
 
+    List<ReservationWithCustomerAndRoom> getAllReservationsWithItsCustomersAndItsRooms();
 
 }

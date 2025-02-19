@@ -410,4 +410,74 @@ public class ReservationDaoImpl implements ReservationDao{
         }
 
     }
+
+
+    @Override
+    public List<ReservationWithCustomerAndRoom> retrieveAllReservationsWithItsCustomersAndRooms(){
+
+        List<ReservationWithCustomerAndRoom> allReservationsWithItsCustomersAndRooms = new ArrayList<>();
+
+        String query = "SELECT reservation.id AS reservationId, reservation.checkInDate, reservation.checkOutDate, reservation.bookingDate, reservation.receptionistId, \n" +
+                "customer.id AS customerId, customer.fullName, customer.phoneNumber, customer.birthDate, customer.description, \n" +
+                "room.id AS roomId, room.roomName, room.capacity, room.price, room.isReserved\n" +
+                "FROM reservation\n" +
+                "INNER JOIN reservation_customer ON reservation.id = reservation_customer.reservationId\n" +
+                "INNER JOIN customer ON customer.id = reservation_customer.customerId\n" +
+                "INNER JOIN room ON room.reservationId = reservation.id;";
+
+        try (
+                Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement ps = conn.prepareStatement(query)
+        )
+        {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                long reservationId = rs.getLong("reservationId");
+                LocalDate checkInDate = rs.getDate("checkInDate").toLocalDate();
+                LocalDate checkOutDate = rs.getDate("checkOutDate").toLocalDate();
+                LocalDate bookingDate = rs.getDate("bookingDate").toLocalDate();
+                Receptionist receptionist;
+                long receptionistId = rs.getLong("receptionistId");
+                if (rs.wasNull()){
+                    receptionist = null;
+                }
+                else{
+                    ReceptionistDao rDao = new ReceptionistDaoImpl();
+
+                    try{
+                        receptionist = rDao.retrieve(receptionistId);
+                    }
+                    catch (ZeroRowsAffectedOrReturnedException e){
+                        System.out.println("Receptionist with 'receptionistId' is not found");
+                        receptionist = null;
+                    }
+                }
+
+                long customerId = rs.getLong("customerId");
+                String fullName = rs.getString("fullName");
+                String phoneNumber = rs.getString("phoneNumber");
+                LocalDate birthDate = rs.getDate("birthDate").toLocalDate();
+                String description = rs.getString("description");
+
+                long roomId = rs.getLong("roomId");
+                String roomName = rs.getString("roomName");
+                int capacity = rs.getInt("capacity");
+                int price = rs.getInt("price");
+                boolean isReserved = rs.getBoolean("isReserved");
+
+                allReservationsWithItsCustomersAndRooms.add(
+                        new ReservationWithCustomerAndRoom
+                                (reservationId, checkInDate, checkOutDate, bookingDate, receptionist,
+                                customerId, fullName, phoneNumber, birthDate, description,
+                                roomId, roomName, capacity, price, isReserved)
+                );
+            }
+        }
+        catch (SQLException ex){
+            System.out.println(ex);
+        }
+
+        return allReservationsWithItsCustomersAndRooms;
+    }
 }
