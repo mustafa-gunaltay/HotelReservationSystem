@@ -8,7 +8,9 @@ import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturn
 import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdException;
 import com.mustafa.hotelreservationsystem.exceptions.general.ReferencedEntityNotFoundException;
 import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
+import com.mustafa.hotelreservationsystem.models.ReservationWithCustomerAndRoom;
 import com.mustafa.hotelreservationsystem.models.Room;
+import com.mustafa.hotelreservationsystem.models.RoomWithFeatureAndService;
 
 import java.util.List;
 
@@ -213,6 +215,20 @@ public class RoomServiceImpl implements RoomService{
         } catch (ZeroRowsAffectedOrReturnedException e) {
             System.out.println("New service and room pair added but old service and room pair to be deleted is not found");
             throw new EntityNotFoundByIdException("Room and Service pair to be deleted not found by their id", e);
+        }
+    }
+
+
+    @Override
+    public List<RoomWithFeatureAndService> getAllRoomsWithTheirFeaturesAndServices() {
+
+        List<RoomWithFeatureAndService> allRoomsWithTheirFeaturesAndServices = roomDao.retrieveAllRoomsWithTheirFeaturesAndServices();
+        if ( ! allRoomsWithTheirFeaturesAndServices.isEmpty()){
+            return allRoomsWithTheirFeaturesAndServices;
+        }
+        else{
+            System.out.println("List<RoomWithFeatureAndService> getAllRoomsWithTheirFeaturesAndServices() -> returned empty list");
+            return allRoomsWithTheirFeaturesAndServices;
         }
     }
 }

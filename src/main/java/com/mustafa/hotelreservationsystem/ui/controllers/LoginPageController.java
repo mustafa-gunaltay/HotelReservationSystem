@@ -2,6 +2,7 @@ package com.mustafa.hotelreservationsystem.ui.controllers;
 
 import com.mustafa.hotelreservationsystem.exceptions.general.*;
 import com.mustafa.hotelreservationsystem.models.Admin;
+import com.mustafa.hotelreservationsystem.models.ReceptionistHomePageTableViewModel;
 import com.mustafa.hotelreservationsystem.models.ReservationWithCustomerAndRoom;
 import com.mustafa.hotelreservationsystem.services.*;
 import com.mustafa.hotelreservationsystem.ui.utils.AlertManager;
@@ -74,12 +75,13 @@ public class LoginPageController implements Initializable {
                             @Override
                             public void initialize(ReceptionistHomePageController controller) {
                                 ReservationService reservationService = new ReservationServiceImpl();
-                                List<ReservationWithCustomerAndRoom> all = reservationService.getAllReservationsWithItsCustomersAndItsRooms();
+                                List<ReservationWithCustomerAndRoom> all = reservationService.getAllReservationsWithTheirCustomersAndRooms();
 
-                                controller.setTableView(Utils.transformInnerJoinResultToTableViewModelFormat(all));
+                                controller.setTableView(ReceptionistHomePageTableViewModel.transformInnerJoinResultToTableViewModelFormat(all));
 
                             }
-                        });
+                        }
+                );
             }
             catch (InvalidReceptionistException e) {
                 AlertManager.showWarning("Warning", e.getMessage());
@@ -111,4 +113,7 @@ public class LoginPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) { // test icin
         otomatikDoldur2();
     }
+
+
+
 }

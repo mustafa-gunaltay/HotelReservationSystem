@@ -585,7 +585,7 @@ public class ServiceTests {
 
 
         // get all reservations one by one with its customers and rooms
-        List<ReservationWithCustomerAndRoom> allReservationsWithItsCustomers =  reservationService.getAllReservationsWithItsCustomersAndItsRooms();
+        List<ReservationWithCustomerAndRoom> allReservationsWithItsCustomers =  reservationService.getAllReservationsWithTheirCustomersAndRooms();
         for (ReservationWithCustomerAndRoom reservationWithCustomer : allReservationsWithItsCustomers) {
             System.out.println(reservationWithCustomer);
         }
@@ -639,332 +639,339 @@ public class ServiceTests {
 
 
         // changing roomName
-        try{
-            roomService.changeRoomName(99, "New Deluxe Room");
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        }
+//        try{
+//            roomService.changeRoomName(99, "New Deluxe Room");
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        }
 
         // changing capacity
-        try{
-            roomService.changeCapacity(99, 160);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        }
+//        try{
+//            roomService.changeCapacity(99, 160);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        }
 
         // changing price
-        try{
-            roomService.changePrice(99, 80);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        }
+//        try{
+//            roomService.changePrice(99, 80);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        }
 
         // get room
-        Room temp;
-        try {
-            temp = roomService.getRoom(8);
-            System.out.println(temp);
-        }
-        catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        }
-
-        try {
-            temp = roomService.getRoom(99);
-            System.out.println(temp);
-        }
-        catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        }
+//        Room temp;
+//        try {
+//            temp = roomService.getRoom(8);
+//            System.out.println(temp);
+//        }
+//        catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        }
+//
+//        try {
+//            temp = roomService.getRoom(99);
+//            System.out.println(temp);
+//        }
+//        catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        }
 
 
 
         // get all rooms
-        List<Room> allRooms = roomService.getAllRooms();
-        if ( ! allRooms.isEmpty()) {
-            for (Room r : allRooms) {
-                System.out.println(r);
-            }
-        }
+//        List<Room> allRooms = roomService.getAllRooms();
+//        if ( ! allRooms.isEmpty()) {
+//            for (Room r : allRooms) {
+//                System.out.println(r);
+//            }
+//        }
 
 
 
         // add room to reservation
-        try{
-            roomService.addRoomToReservation(99, 11);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        }
-
-        try{
-            roomService.addRoomToReservation(9, 88);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        }
-
-        try{
-            roomService.addRoomToReservation(6, 13);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        }
+//        try{
+//            roomService.addRoomToReservation(99, 11);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        }
+//
+//        try{
+//            roomService.addRoomToReservation(9, 88);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        }
+//
+//        try{
+//            roomService.addRoomToReservation(6, 13);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        }
 
 
         // change room on reservation
-        try{
-            roomService.changeRoomOnReservation(99, 11);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        }
-
-
-        try{
-            roomService.changeRoomOnReservation(9, 88);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        }
+//        try{
+//            roomService.changeRoomOnReservation(99, 11);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        }
+//
+//
+//        try{
+//            roomService.changeRoomOnReservation(9, 88);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        }
 
 
 
 
         // delete room from reservation
-        try{
-            roomService.deleteRoomFromReservation(99);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        }
-
-        try{
-            roomService.deleteRoomFromReservation(8);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        }
+//        try{
+//            roomService.deleteRoomFromReservation(99);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        }
+//
+//        try{
+//            roomService.deleteRoomFromReservation(8);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        }
 
 
 
 
         // add feature to room
-        try{
-            roomService.addFeatureToRoom(99, 8);
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        } catch (SameEntityValueExistInDbException e) {
-            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
-        }
-
-        try{
-            roomService.addFeatureToRoom(12, 99);
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        } catch (SameEntityValueExistInDbException e) {
-            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
-        }
-
-        try{
-            roomService.addFeatureToRoom(12, 5);
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        } catch (SameEntityValueExistInDbException e) {
-            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
-        }
+//        try{
+//            roomService.addFeatureToRoom(99, 8);
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        } catch (SameEntityValueExistInDbException e) {
+//            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
+//        }
+//
+//        try{
+//            roomService.addFeatureToRoom(12, 99);
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        } catch (SameEntityValueExistInDbException e) {
+//            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
+//        }
+//
+//        try{
+//            roomService.addFeatureToRoom(12, 5);
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        } catch (SameEntityValueExistInDbException e) {
+//            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
+//        }
 
 
         // change feature on room
-        try{
-            roomService.changeFeatureOnRoom(12, 13,  99);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        } catch (SameEntityValueExistInDbException e) {
-            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
-        }
-
-
-        try{
-            roomService.changeFeatureOnRoom(11, 12,  8);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        } catch (SameEntityValueExistInDbException e) {
-            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
-        }
-
-
-        try{
-            roomService.changeFeatureOnRoom(99, 14,  6);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        } catch (SameEntityValueExistInDbException e) {
-            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
-        }
+//        try{
+//            roomService.changeFeatureOnRoom(12, 13,  99);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        } catch (SameEntityValueExistInDbException e) {
+//            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
+//        }
+//
+//
+//        try{
+//            roomService.changeFeatureOnRoom(11, 12,  8);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        } catch (SameEntityValueExistInDbException e) {
+//            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
+//        }
+//
+//
+//        try{
+//            roomService.changeFeatureOnRoom(99, 14,  6);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        } catch (SameEntityValueExistInDbException e) {
+//            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
+//        }
 
 
 
 
 
         // delete feature from room
-        try{
-            roomService.deleteFeatureFromRoom(14, 6);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        }
-
-        try{
-            roomService.deleteFeatureFromRoom(20, 50);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        }
+//        try{
+//            roomService.deleteFeatureFromRoom(14, 6);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        }
+//
+//        try{
+//            roomService.deleteFeatureFromRoom(20, 50);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        }
 
 
 
         // add service to room
-        try{
-            roomService.addServiceToRoom(1, 7);
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        } catch (SameEntityValueExistInDbException e) {
-            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
-        }
+//        try{
+//            roomService.addServiceToRoom(1, 7);
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        } catch (SameEntityValueExistInDbException e) {
+//            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
+//        }
 
-        try{
-            roomService.addServiceToRoom(99, 8);
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        } catch (SameEntityValueExistInDbException e) {
-            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
-        }
-
-        try{
-            roomService.addServiceToRoom(4, 5);
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        } catch (SameEntityValueExistInDbException e) {
-            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
-        }
+//        try{
+//            roomService.addServiceToRoom(99, 8);
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        } catch (SameEntityValueExistInDbException e) {
+//            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
+//        }
+//
+//        try{
+//            roomService.addServiceToRoom(4, 5);
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        } catch (SameEntityValueExistInDbException e) {
+//            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
+//        }
 
 
 
         // change service on room
-        try{
-            roomService.changeServiceOnRoom(2, 3, 8);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        } catch (SameEntityValueExistInDbException e) {
-            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
-        }
-
-
-        try{
-            roomService.changeServiceOnRoom(2, 3, 99);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        } catch (SameEntityValueExistInDbException e) {
-            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
-        }
-
-
-        try{
-            roomService.changeServiceOnRoom(99, 3, 7);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        } catch (ReferencedEntityNotFoundException e) {
-            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
-        } catch (SameEntityValueExistInDbException e) {
-            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
-        }
+//        try{
+//            roomService.changeServiceOnRoom(2, 3, 8);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        } catch (SameEntityValueExistInDbException e) {
+//            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
+//        }
+//
+//
+//        try{
+//            roomService.changeServiceOnRoom(2, 3, 99);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        } catch (SameEntityValueExistInDbException e) {
+//            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
+//        }
+//
+//
+//        try{
+//            roomService.changeServiceOnRoom(99, 3, 7);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        } catch (ReferencedEntityNotFoundException e) {
+//            NoReferencedRowException ne = (NoReferencedRowException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " -  " + ne.getMessage());
+//        } catch (SameEntityValueExistInDbException e) {
+//            DuplicateEntryException de = (DuplicateEntryException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - " + de.getDuplicateEntryName());
+//        }
 
 
 
         // delete service from room
-        try{
-            roomService.deleteServiceFromRoom(4, 5);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        }
-
-        try{
-            roomService.deleteServiceFromRoom(30, 89);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
-        }
+//        try{
+//            roomService.deleteServiceFromRoom(4, 5);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        }
+//
+//        try{
+//            roomService.deleteServiceFromRoom(30, 89);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        }
 
 
 
         // delete room
-        try {
-            Room deletedRoom = roomService.deleteRoom(99);
-            System.out.println(deletedRoom);
-        } catch (EntityNotFoundByIdException e) {
-            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
-            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        try {
+//            Room deletedRoom = roomService.deleteRoom(99);
+//            System.out.println(deletedRoom);
+//        } catch (EntityNotFoundByIdException e) {
+//            ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
+//            System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+//        }
+
+
+        // get all rooms woth their features and services
+        List<RoomWithFeatureAndService> all = roomService.getAllRoomsWithTheirFeaturesAndServices();
+        for (RoomWithFeatureAndService roomWithFeatureAndService : all) {
+            System.out.println(roomWithFeatureAndService);
         }
 
 

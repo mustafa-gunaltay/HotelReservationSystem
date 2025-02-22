@@ -27,5 +27,5 @@ public interface ReservationDao extends Crudable{
     void linkReservationToReceptionist(long resId, long recId) throws NoReferencedRowException, ZeroRowsAffectedOrReturnedException;
     void unlinkReservationFromReceptionist(long resId) throws ZeroRowsAffectedOrReturnedException;
 
-    List<ReservationWithCustomerAndRoom> retrieveAllReservationsWithItsCustomersAndRooms();
+    List<ReservationWithCustomerAndRoom> retrieveAllReservationsWithTheirCustomersAndRooms();
 }

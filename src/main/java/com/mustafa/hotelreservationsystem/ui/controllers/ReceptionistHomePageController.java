@@ -1,8 +1,9 @@
 package com.mustafa.hotelreservationsystem.ui.controllers;
 
-import com.mustafa.hotelreservationsystem.models.Receptionist;
-import com.mustafa.hotelreservationsystem.models.ReceptionistHomePageTableViewModel;
-import com.mustafa.hotelreservationsystem.models.ReservationWithCustomerAndRoom;
+import com.mustafa.hotelreservationsystem.models.*;
+import com.mustafa.hotelreservationsystem.services.*;
+import com.mustafa.hotelreservationsystem.ui.utils.SceneInitializer;
+import com.mustafa.hotelreservationsystem.ui.utils.SceneManager;
 import com.mustafa.hotelreservationsystem.ui.utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,5 +49,28 @@ public class ReceptionistHomePageController implements Initializable {
     public void setTableView(List<ReceptionistHomePageTableViewModel> tableViewModel) {
         data.setAll(tableViewModel);
         tvReceptionistHomePage.setItems(data);
+    }
+
+    @FXML
+    public void onEditRoomCustomizationClicked(){
+
+        SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/EditingRoomCustomizationPage.fxml",
+                new SceneInitializer<EditingRoomCustomizationPageController>() {
+                    @Override
+                    public void initialize(EditingRoomCustomizationPageController controller) {
+                        FeatureService featureService = new FeatureServiceImpl();
+                        ServiceService serviceService = new ServiceServiceImpl();
+                        RoomService roomService = new RoomServiceImpl();
+
+                        List<Feature> allFeatures = featureService.getAllFeatures();
+                        List<Service> allServices = serviceService.getAllServices();
+                        List<RoomWithFeatureAndService> allRooms = roomService.getAllRoomsWithTheirFeaturesAndServices();
+
+                        controller.setTableView(allFeatures, allServices, EditingRoomCustomizationPageTableViewModel.transformInnerJoinResultToTableViewModelFormat(allRooms));
+
+                    }
+                }
+        );
+
     }
 }

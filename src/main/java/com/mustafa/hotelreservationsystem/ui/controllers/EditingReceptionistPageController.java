@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class EditingReceptionistPageController implements Initializable {
+public class EditingReceptionistPageController implements Initializable, HomePageReturnable {
 
     @FXML
     private TableView<Receptionist> tvReceptionist;
@@ -311,9 +311,10 @@ public class EditingReceptionistPageController implements Initializable {
     }
 
 
-    @FXML
-    public void onGoBackAdminHomePageClicked() {
 
+    @FXML
+    @Override
+    public void goBackHomePage() {
         SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/AdminHomePage.fxml",
                 new SceneInitializer<AdminHomePageController>() {
                     @Override
@@ -325,8 +326,5 @@ public class EditingReceptionistPageController implements Initializable {
 
                 }
         );
-
-
     }
-
 }

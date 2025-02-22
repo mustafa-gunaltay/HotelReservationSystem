@@ -161,8 +161,8 @@ public class ReservationServiceImpl implements ReservationService{
 
     // ReceptionistHomePage'deki tableview icin olusturuldu
     @Override
-    public List<ReservationWithCustomerAndRoom> getAllReservationsWithItsCustomersAndItsRooms() {
-        List<ReservationWithCustomerAndRoom> allReservationsWithItsCustomersAndRooms = reservationDao.retrieveAllReservationsWithItsCustomersAndRooms();
+    public List<ReservationWithCustomerAndRoom> getAllReservationsWithTheirCustomersAndRooms() {
+        List<ReservationWithCustomerAndRoom> allReservationsWithItsCustomersAndRooms = reservationDao.retrieveAllReservationsWithTheirCustomersAndRooms();
         if ( ! allReservationsWithItsCustomersAndRooms.isEmpty()){
             return allReservationsWithItsCustomersAndRooms;
         }

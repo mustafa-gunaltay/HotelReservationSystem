@@ -4,6 +4,7 @@ import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdE
 import com.mustafa.hotelreservationsystem.exceptions.general.ReferencedEntityNotFoundException;
 import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
 import com.mustafa.hotelreservationsystem.models.Room;
+import com.mustafa.hotelreservationsystem.models.RoomWithFeatureAndService;
 
 import java.util.List;
 
@@ -28,4 +29,5 @@ public interface RoomService {
     void deleteServiceFromRoom(long serviceId, long roomId) throws EntityNotFoundByIdException;
     void changeServiceOnRoom(long oldServiceId, long newServiceId, long roomId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException, SameEntityValueExistInDbException;
 
+    List<RoomWithFeatureAndService> getAllRoomsWithTheirFeaturesAndServices();
 }

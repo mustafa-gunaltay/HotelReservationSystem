@@ -413,7 +413,7 @@ public class ReservationDaoImpl implements ReservationDao{
 
 
     @Override
-    public List<ReservationWithCustomerAndRoom> retrieveAllReservationsWithItsCustomersAndRooms(){
+    public List<ReservationWithCustomerAndRoom> retrieveAllReservationsWithTheirCustomersAndRooms(){
 
         List<ReservationWithCustomerAndRoom> allReservationsWithItsCustomersAndRooms = new ArrayList<>();
 

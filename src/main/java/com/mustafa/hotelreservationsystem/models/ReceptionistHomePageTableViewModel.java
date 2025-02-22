@@ -1,6 +1,8 @@
 package com.mustafa.hotelreservationsystem.models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReceptionistHomePageTableViewModel {
     private long reservationId;
@@ -78,5 +80,87 @@ public class ReceptionistHomePageTableViewModel {
 
     public void setCustomersNames(String customersNames) {
         this.customersNames = customersNames;
+    }
+
+
+    public static List<ReceptionistHomePageTableViewModel> transformInnerJoinResultToTableViewModelFormat
+            (List<ReservationWithCustomerAndRoom> allReservationsWithCustomerAndRoom) {
+
+        /*
+         * res cus room
+         * 13  4   6
+         * 13  5   9
+         * 14  5   10
+         * 14  5   11
+         * */
+
+
+        List<Long> differentReservationIds = new ArrayList<>();
+        for (ReservationWithCustomerAndRoom eachInnerJoinRow : allReservationsWithCustomerAndRoom) {
+
+            long reservationId = eachInnerJoinRow.getReservationId();
+
+            if ( ! differentReservationIds.contains(reservationId)) {
+                differentReservationIds.add(reservationId);
+            }
+        }
+
+        // ayni reservationId ye sahip satirlari grup olarak iceren liste
+        List<List<ReservationWithCustomerAndRoom>> differentRowsByReservationId = new ArrayList<>();
+        for (int i = 0; i < differentReservationIds.size(); i++) {
+            List<ReservationWithCustomerAndRoom> reservationsForThisId = new ArrayList<>(); // Yeni bir liste oluştur
+
+            for (ReservationWithCustomerAndRoom eachInnerJoinRow : allReservationsWithCustomerAndRoom) {
+                if (eachInnerJoinRow.getReservationId() == differentReservationIds.get(i)) {
+                    reservationsForThisId.add(eachInnerJoinRow); // Listeye eleman ekle
+                }
+            }
+            differentRowsByReservationId.add(reservationsForThisId); // Dış listeye ekle
+        }
+
+
+        List<Long> differentCustomerIds = new ArrayList<>();
+        List<Long> differentRoomIds = new ArrayList<>();
+        List<ReceptionistHomePageTableViewModel> result = new ArrayList<>();
+
+        for ( int i=0 ; i < differentRowsByReservationId.size(); i++ ) {
+
+            List<ReservationWithCustomerAndRoom> eachListThatHasSameReservationId = differentRowsByReservationId.get(i);
+
+            long reservationId = eachListThatHasSameReservationId.getFirst().getReservationId();
+            LocalDate checkInDate = eachListThatHasSameReservationId.getFirst().getCheckInDate();
+            LocalDate checkOutDate = eachListThatHasSameReservationId.getFirst().getCheckOutDate();
+
+            ReceptionistHomePageTableViewModel oneTableViewRow = new ReceptionistHomePageTableViewModel();
+            oneTableViewRow.setReservationId(reservationId);
+            oneTableViewRow.setCheckInDate(checkInDate);
+            oneTableViewRow.setCheckOutDate(checkOutDate);
+
+            for (int j=0 ; j < eachListThatHasSameReservationId.size() ; j++ ) {
+
+                ReservationWithCustomerAndRoom oneRow = eachListThatHasSameReservationId.get(j);
+
+                if ( ! differentCustomerIds.contains(oneRow.getCustomerId()) ) {
+                    String currentNames = oneTableViewRow.getCustomersNamesDefault();
+                    oneTableViewRow.setCustomersNames(currentNames + ", " + oneRow.getFullName());
+
+                    differentCustomerIds.add(oneRow.getCustomerId());
+                }
+
+                if ( ! differentRoomIds.contains(oneRow.getRoomId()) ) {
+                    String currentRoomNames = oneTableViewRow.getRoomsNamesDefault();
+                    oneTableViewRow.setRoomsNames(currentRoomNames + ", " + oneRow.getRoomName());
+
+                    differentRoomIds.add(oneRow.getRoomId());
+                }
+
+            }
+            differentCustomerIds.clear();
+            differentRoomIds.clear();
+
+            result.add(oneTableViewRow);
+        }
+
+        return result;
     }
 }

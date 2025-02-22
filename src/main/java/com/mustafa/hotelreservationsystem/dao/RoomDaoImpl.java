@@ -6,6 +6,7 @@ import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturn
 import com.mustafa.hotelreservationsystem.models.Entity;
 import com.mustafa.hotelreservationsystem.models.Reservation;
 import com.mustafa.hotelreservationsystem.models.Room;
+import com.mustafa.hotelreservationsystem.models.RoomWithFeatureAndService;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -513,4 +514,49 @@ public class RoomDaoImpl implements RoomDao{
         }
 
     }
+
+
+    @Override
+    public List<RoomWithFeatureAndService> retrieveAllRoomsWithTheirFeaturesAndServices() {
+
+        List<RoomWithFeatureAndService> result = new ArrayList<>();
+
+        String query = "SELECT room.Id as roomId, room.roomName, room.capacity, room.price, feature.id AS featureId, feature.featureName, service.id AS serviceId, service.serviceName\n" +
+                "FROM room\n" +
+                "INNER JOIN room_feature ON room.id = room_feature.roomId\n" +
+                "INNER JOIN feature ON feature.id = room_feature.featureId\n" +
+                "INNER JOIN room_service ON room.id = room_service.roomId\n" +
+                "INNER JOIN service ON service.id = room_service.serviceId\n" +
+                "WHERE room.isReserved = 0;";
+
+        try (
+                Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement ps = conn.prepareStatement(query)
+        )
+        {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                long roomId = rs.getLong("roomId");
+                String roomName = rs.getString("roomName");
+                int capacity = rs.getInt("capacity");
+                int price = rs.getInt("price");
+                long featureId = rs.getLong("featureId");
+                String featureName = rs.getString("featureName");
+                long serviceId = rs.getLong("serviceId");
+                String serviceName = rs.getString("serviceName");
+
+                result.add(new RoomWithFeatureAndService(roomId, roomName, capacity, price, featureId, featureName, serviceId, serviceName));
+            }
+
+        }
+        catch (SQLException ex){
+            System.out.println(ex);
+        }
+
+        return result;
+
+    }
+
+
 }

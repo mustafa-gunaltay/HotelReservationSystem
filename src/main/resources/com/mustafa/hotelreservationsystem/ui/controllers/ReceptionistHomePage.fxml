@@ -27,7 +27,7 @@
       <Button layoutX="37.0" layoutY="523.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="126.0" text="New Reservation" />
       <Button layoutX="185.0" layoutY="523.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="126.0" text="Update Reservation" />
       <Button layoutX="332.0" layoutY="523.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="126.0" text="Delete Reservation" />
-      <Button layoutX="495.0" layoutY="523.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="151.0" text="Edit Room Customization" />
+      <Button layoutX="495.0" layoutY="523.0" mnemonicParsing="false" onAction="#onEditRoomCustomizationClicked" prefHeight="36.0" prefWidth="151.0" text="Edit Room Customization" />
       <DatePicker layoutX="122.0" layoutY="125.0" />
       <DatePicker layoutX="359.0" layoutY="125.0" />
       <TextField layoutX="622.0" layoutY="125.0" />

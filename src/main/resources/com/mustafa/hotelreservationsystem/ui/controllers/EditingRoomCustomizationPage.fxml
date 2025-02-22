@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="646.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.EditingRoomCustomizationPageController">
+   <children>
+      <Label fx:id="lblServiceTableInformation" layoutX="479.0" layoutY="54.0" prefHeight="34.0" prefWidth="290.0" text="Select Services To Be Added">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFeatureTableInformation" layoutX="70.0" layoutY="54.0" prefHeight="34.0" prefWidth="290.0" text="Select Features To Be Added">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvFeatures" layoutX="70.0" layoutY="89.0" prefHeight="200.0" prefWidth="290.0">
+        <columns>
+          <TableColumn fx:id="tblClmFeatureId" prefWidth="75.0" text="Feature Id" />
+          <TableColumn fx:id="tblClmFeatureName" prefWidth="115.20001220703125" text="Feature Name" />
+            <TableColumn fx:id="tblClmFeaturePrice" prefWidth="98.39999999999998" text="Feature Price" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tvServices" layoutX="480.0" layoutY="89.0" prefHeight="200.0" prefWidth="302.0">
+         <columns>
+            <TableColumn fx:id="tblClmServiceId" prefWidth="75.0" text="Service Id" />
+            <TableColumn fx:id="tblClmServiceName" prefWidth="115.20001220703125" text="Service Name" />
+            <TableColumn fx:id="tblClmServicePrice" prefWidth="98.39999999999998" text="Service Price" />
+         </columns>
+      </TableView>
+      <TableView fx:id="tvRoomsWithTheirFeaturesAndServices" layoutX="21.0" layoutY="362.0" prefHeight="200.0" prefWidth="640.0">
+         <columns>
+            <TableColumn fx:id="tblClmRoomId" prefWidth="75.0" text="Room Id" />
+            <TableColumn fx:id="tblClmRoomName" prefWidth="85.60003662109375" text="Room Name" />
+            <TableColumn fx:id="tblClmRoomCapacity" prefWidth="84.80000305175781" text="Capacity" />
+            <TableColumn fx:id="tblClmRoomUnitPrice" text="Unit Price" />
+            <TableColumn fx:id="tblClmFeatureNames" prefWidth="151.20001220703125" text="Features" />
+            <TableColumn fx:id="tblClmServiceNames" prefWidth="160.0" text="Services" />
+         </columns>
+      </TableView>
+      <Label fx:id="lblRoomTableInformation" layoutX="69.0" layoutY="323.0" prefHeight="18.0" prefWidth="544.0" text="Select Available Room(s) to Add Selected Features And Services">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnAddition" layoutX="21.0" layoutY="569.0" mnemonicParsing="false" onAction="#onApplyAdditionClicked" prefHeight="42.0" prefWidth="148.0" text="Apply Addition" />
+      <Button layoutX="660.0" layoutY="590.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="42.0" prefWidth="196.0" text="Go Back Receptionist Home Page" />
+      <Label fx:id="lblAddFeedBack" layoutX="21.0" layoutY="611.0" text="Label" />
+      <Label layoutX="325.0" layoutY="14.0" prefHeight="34.0" prefWidth="186.0" text="Room Customization">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="rbAdd" layoutX="702.0" layoutY="357.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonAddClicked" text="Add">
+         <toggleGroup>
+            <ToggleGroup fx:id="Crud" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rbDelete" layoutX="702.0" layoutY="382.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonDeleteClicked" text="Delete" toggleGroup="$Crud" />
+      <Label layoutX="695.0" layoutY="325.0" prefHeight="27.0" prefWidth="150.0" text="Select Process">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnDeletion" layoutX="21.0" layoutY="569.0" mnemonicParsing="false" onAction="#onApplyDeletionClicked" prefHeight="42.0" prefWidth="148.0" text="Apply Deletion" />
+      <Label fx:id="lblDeleteFeedBack" layoutX="21.0" layoutY="611.0" text="Label" />
+   </children>
+</AnchorPane>
