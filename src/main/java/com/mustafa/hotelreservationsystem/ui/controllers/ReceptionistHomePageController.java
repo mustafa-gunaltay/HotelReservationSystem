@@ -21,19 +21,19 @@ import java.util.ResourceBundle;
 public class ReceptionistHomePageController implements Initializable {
 
     @FXML
-    private TableView<ReceptionistHomePageTableViewModel> tvReceptionistHomePage;
+    private TableView<ReservationWithCustomerAndRoomTableViewModel> tvReceptionistHomePage;
     @FXML
-    private TableColumn<ReceptionistHomePageTableViewModel, String> tblClmReservationId;
+    private TableColumn<ReservationWithCustomerAndRoomTableViewModel, String> tblClmReservationId;
     @FXML
-    private TableColumn<ReceptionistHomePageTableViewModel, String> tblClmRoomsNames;
+    private TableColumn<ReservationWithCustomerAndRoomTableViewModel, String> tblClmRoomsNames;
     @FXML
-    private TableColumn<ReceptionistHomePageTableViewModel, LocalDate> tblClmCheckInDate;
+    private TableColumn<ReservationWithCustomerAndRoomTableViewModel, LocalDate> tblClmCheckInDate;
     @FXML
-    private TableColumn<ReceptionistHomePageTableViewModel, LocalDate> tblClmCheckOutDate;
+    private TableColumn<ReservationWithCustomerAndRoomTableViewModel, LocalDate> tblClmCheckOutDate;
     @FXML
-    private TableColumn<ReceptionistHomePageTableViewModel, String> tblClmCustomersNames;
+    private TableColumn<ReservationWithCustomerAndRoomTableViewModel, String> tblClmCustomersNames;
 
-    private ObservableList<ReceptionistHomePageTableViewModel> data = FXCollections.observableArrayList();
+    private ObservableList<ReservationWithCustomerAndRoomTableViewModel> data = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,7 +46,7 @@ public class ReceptionistHomePageController implements Initializable {
         Utils.setupTableViewSelectionMultiple(tvReceptionistHomePage);
     }
 
-    public void setTableView(List<ReceptionistHomePageTableViewModel> tableViewModel) {
+    public void setTableView(List<ReservationWithCustomerAndRoomTableViewModel> tableViewModel) {
         data.setAll(tableViewModel);
         tvReceptionistHomePage.setItems(data);
     }
@@ -66,11 +66,37 @@ public class ReceptionistHomePageController implements Initializable {
                         List<Service> allServices = serviceService.getAllServices();
                         List<RoomWithFeatureAndService> allRooms = roomService.getAllRoomsWithTheirFeaturesAndServices();
 
-                        controller.setTableView(allFeatures, allServices, EditingRoomCustomizationPageTableViewModel.transformInnerJoinResultToTableViewModelFormat(allRooms));
+                        controller.setTableView(allFeatures, allServices, RoomWithFeatureAndServiceTableViewModel.transformInnerJoinResultToTableViewModelFormat(allRooms));
 
                     }
                 }
         );
 
+    }
+
+
+    @FXML
+    public void onCreateOrDeleteReservationClicked(){
+
+        SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/NewReservationAndDeleteReservationPage.fxml",
+                new SceneInitializer<NewReservationAndDeleteReservationPageController>() {
+                    @Override
+                    public void initialize(NewReservationAndDeleteReservationPageController controller) {
+
+                        CustomerService customerService = new CustomerServiceImpl();
+                        RoomService roomService = new RoomServiceImpl();
+                        ReservationService reservationService = new ReservationServiceImpl();
+
+                        List<Customer> allCustomers = customerService.getAllCustomers();
+                        List<RoomWithFeatureAndService> allRoomsWithTheirFeaturesAndServices = roomService.getAllRoomsWithTheirFeaturesAndServices();
+                        List<ReservationWithCustomerAndRoom> allReservationsWithTheirRoomsAndCustomers = reservationService.getAllReservationsWithTheirCustomersAndRooms();
+
+                        List<RoomWithFeatureAndServiceTableViewModel> allRoomsWithTheirFeaturesAndServicesOnTableViewModelFormat = RoomWithFeatureAndServiceTableViewModel.transformInnerJoinResultToTableViewModelFormat(allRoomsWithTheirFeaturesAndServices);
+                        List<ReservationWithCustomerAndRoomTableViewModel> allReservationsWithTheirRoomsAndCustomersOnTableViewModelFormat = ReservationWithCustomerAndRoomTableViewModel.transformInnerJoinResultToTableViewModelFormat(allReservationsWithTheirRoomsAndCustomers);
+
+                        controller.setTableView(allCustomers, allRoomsWithTheirFeaturesAndServicesOnTableViewModelFormat, allReservationsWithTheirRoomsAndCustomersOnTableViewModelFormat);
+                    }
+                }
+        );
     }
 }

@@ -153,5 +153,15 @@ public class ReceptionistServiceImpl implements ReceptionistService{
         return false;
     }
 
+    @Override
+    public Receptionist getReceptionistByUsername(String username) throws EntityNotFoundByIdException {
 
+        try{
+            Receptionist result = receptionistDao.retrieveReceptionistByUsername(username);
+            return result;
+        }
+        catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Receptionist not found", e);
+        }
+    }
 }

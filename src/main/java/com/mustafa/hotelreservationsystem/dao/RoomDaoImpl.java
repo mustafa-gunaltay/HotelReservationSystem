@@ -521,12 +521,12 @@ public class RoomDaoImpl implements RoomDao{
 
         List<RoomWithFeatureAndService> result = new ArrayList<>();
 
-        String query = "SELECT room.Id as roomId, room.roomName, room.capacity, room.price, feature.id AS featureId, feature.featureName, service.id AS serviceId, service.serviceName\n" +
+        String query = "SELECT DISTINCT room.Id as roomId, room.roomName, room.capacity, room.price, feature.id AS featureId, feature.featureName, service.id AS serviceId, service.serviceName\n" +
                 "FROM room\n" +
-                "INNER JOIN room_feature ON room.id = room_feature.roomId\n" +
-                "INNER JOIN feature ON feature.id = room_feature.featureId\n" +
-                "INNER JOIN room_service ON room.id = room_service.roomId\n" +
-                "INNER JOIN service ON service.id = room_service.serviceId\n" +
+                "LEFT JOIN room_feature ON room.id = room_feature.roomId\n" +
+                "LEFT JOIN feature ON feature.id = room_feature.featureId\n" +
+                "LEFT JOIN room_service ON room.id = room_service.roomId\n" +
+                "LEFT JOIN service ON service.id = room_service.serviceId\n" +
                 "WHERE room.isReserved = 0;";
 
         try (
@@ -542,9 +542,18 @@ public class RoomDaoImpl implements RoomDao{
                 int capacity = rs.getInt("capacity");
                 int price = rs.getInt("price");
                 long featureId = rs.getLong("featureId");
+
                 String featureName = rs.getString("featureName");
+                if (rs.wasNull()){
+                   featureName = "";
+                }
+
                 long serviceId = rs.getLong("serviceId");
+
                 String serviceName = rs.getString("serviceName");
+                if (rs.wasNull()){
+                    serviceName = "";
+                }
 
                 result.add(new RoomWithFeatureAndService(roomId, roomName, capacity, price, featureId, featureName, serviceId, serviceName));
             }

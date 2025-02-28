@@ -117,6 +117,7 @@ public class ServiceTests {
 
         ReceptionistService rService = new ReceptionistServiceImpl();
 
+
         // creating new receptionist
         Receptionist r1 = new Receptionist(null, "yeni kullanici", "kullanici123");
         Receptionist r2 = new Receptionist("ali kilic", "user ali", "ali123");
@@ -245,6 +246,26 @@ public class ServiceTests {
         catch(EntityNotFoundByIdException e){
             ZeroRowsAffectedOrReturnedException z = (ZeroRowsAffectedOrReturnedException) e.getCause();
             System.out.println("x - " + e.getMessage() + " - id: " + z.getId());
+        }
+
+
+
+        // get receptionist by username
+
+        try{
+            Receptionist result = rService.getReceptionistByUsername("ozy");
+            System.out.println(result);
+        }
+        catch(EntityNotFoundByIdException e){
+            System.out.println(e.getMessage());
+        }
+
+        try{
+            Receptionist result = rService.getReceptionistByUsername("fafdsawd");
+            System.out.println(result);
+        }
+        catch(EntityNotFoundByIdException e){
+            System.out.println(e.getMessage());
         }
 
     }
@@ -585,12 +606,20 @@ public class ServiceTests {
 
 
         // get all reservations one by one with its customers and rooms
-        List<ReservationWithCustomerAndRoom> allReservationsWithItsCustomers =  reservationService.getAllReservationsWithTheirCustomersAndRooms();
-        for (ReservationWithCustomerAndRoom reservationWithCustomer : allReservationsWithItsCustomers) {
-            System.out.println(reservationWithCustomer);
+//        List<ReservationWithCustomerAndRoom> allReservationsWithItsCustomers =  reservationService.getAllReservationsWithTheirCustomersAndRooms();
+//        for (ReservationWithCustomerAndRoom reservationWithCustomer : allReservationsWithItsCustomers) {
+//            System.out.println(reservationWithCustomer);
+//        }
+
+
+        // get last reservation
+        try{
+            Reservation lastReservation = reservationService.getLastReservation();
+            System.out.println(lastReservation);
         }
-
-
+        catch (EntityNotFoundByIdException e){
+            System.out.println("x - " + e.getMessage());
+        }
     }
 
 

@@ -1,9 +1,13 @@
 package com.mustafa.hotelreservationsystem.models;
 
+import com.mustafa.hotelreservationsystem.dao.ReceptionistDao;
+
 public class Receptionist extends Entity{
     private String fullName;
     private String username;
     private String passwordd;
+
+    public static Receptionist currentReceptionist;
 
     public Receptionist(long id, String fullName, String username, String password) {
         super(id);

@@ -2,13 +2,13 @@ package com.mustafa.hotelreservationsystem.ui.controllers;
 
 import com.mustafa.hotelreservationsystem.exceptions.general.*;
 import com.mustafa.hotelreservationsystem.models.Admin;
-import com.mustafa.hotelreservationsystem.models.ReceptionistHomePageTableViewModel;
+import com.mustafa.hotelreservationsystem.models.Receptionist;
+import com.mustafa.hotelreservationsystem.models.ReservationWithCustomerAndRoomTableViewModel;
 import com.mustafa.hotelreservationsystem.models.ReservationWithCustomerAndRoom;
 import com.mustafa.hotelreservationsystem.services.*;
 import com.mustafa.hotelreservationsystem.ui.utils.AlertManager;
 import com.mustafa.hotelreservationsystem.ui.utils.SceneInitializer;
 import com.mustafa.hotelreservationsystem.ui.utils.SceneManager;
-import com.mustafa.hotelreservationsystem.ui.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.RadioButton;
@@ -69,6 +69,11 @@ public class LoginPageController implements Initializable {
             ReceptionistService rService = new ReceptionistServiceImpl();
             try{
                 rService.validateReceptionist(username, password);
+                try{
+                    Receptionist.currentReceptionist = rService.getReceptionistByUsername(username);
+                } catch (EntityNotFoundByIdException e) {
+                    // never throws exception
+                }
 
                 SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/ReceptionistHomePage.fxml",
                         new SceneInitializer<ReceptionistHomePageController>() {
@@ -77,7 +82,7 @@ public class LoginPageController implements Initializable {
                                 ReservationService reservationService = new ReservationServiceImpl();
                                 List<ReservationWithCustomerAndRoom> all = reservationService.getAllReservationsWithTheirCustomersAndRooms();
 
-                                controller.setTableView(ReceptionistHomePageTableViewModel.transformInnerJoinResultToTableViewModelFormat(all));
+                                controller.setTableView(ReservationWithCustomerAndRoomTableViewModel.transformInnerJoinResultToTableViewModelFormat(all));
 
                             }
                         }

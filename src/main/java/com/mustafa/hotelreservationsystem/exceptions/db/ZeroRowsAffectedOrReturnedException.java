@@ -5,6 +5,10 @@ public class ZeroRowsAffectedOrReturnedException extends Exception {
     private long id;
     private long secondId; // for unbind methods
 
+    public ZeroRowsAffectedOrReturnedException(String message) {
+        super(message);
+    }
+
     public ZeroRowsAffectedOrReturnedException(String message, long id) {
         super(message);
         this.id = id;

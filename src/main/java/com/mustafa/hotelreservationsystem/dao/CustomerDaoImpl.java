@@ -127,7 +127,11 @@ public class CustomerDaoImpl implements CustomerDao{
                 String fullName = rs.getString("fullName");
                 String phoneNumber = rs.getString("phoneNumber");
                 LocalDate birthDate = rs.getDate("birthDate").toLocalDate();
+
                 String description = rs.getString("description");
+                if (rs.wasNull()) {
+                    description = "";
+                }
 
                 result = new Customer(targetId, fullName, phoneNumber, birthDate, description);
             }
@@ -192,7 +196,11 @@ public class CustomerDaoImpl implements CustomerDao{
                 String fullName = rs.getString("fullName");
                 String phoneNumber = rs.getString("phoneNumber");
                 LocalDate birthDate = rs.getDate("birthDate").toLocalDate();
+
                 String description = rs.getString("description");
+                if (rs.wasNull()){
+                    description = "";
+                }
 
                 allCustomers.add(new Customer(id, fullName, phoneNumber, birthDate, description));
             }

@@ -20,4 +20,5 @@ public interface ReceptionistDao extends Crudable{
 
     List<Receptionist> retrieveAllReceptionists();
     void updateSpecifiedReceptionistField(long id, String fieldName, Object fieldValue) throws DuplicateEntryException, ZeroRowsAffectedOrReturnedException;
+    Receptionist retrieveReceptionistByUsername(String username) throws ZeroRowsAffectedOrReturnedException;
 }

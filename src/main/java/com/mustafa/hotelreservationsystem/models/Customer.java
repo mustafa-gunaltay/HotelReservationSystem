@@ -21,7 +21,7 @@ public class Customer extends Entity{
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;
-        this.description = null;
+        this.description = "";
     }
 
     public Customer(String fullName, String phoneNumber, LocalDate birthDate, String description) {

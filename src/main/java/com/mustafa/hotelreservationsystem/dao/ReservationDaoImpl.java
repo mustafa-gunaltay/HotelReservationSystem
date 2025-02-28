@@ -480,4 +480,53 @@ public class ReservationDaoImpl implements ReservationDao{
 
         return allReservationsWithItsCustomersAndRooms;
     }
+
+
+    @Override
+    public Reservation retrieveLastReservation() throws ZeroRowsAffectedOrReturnedException {
+
+        Reservation lastReservation = null;
+
+        String query = "SELECT id, checkInDate, checkOutDate, bookingDate, receptionistId FROM reservation ORDER BY id DESC LIMIT 1;";
+
+        try (
+                Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement ps = conn.prepareStatement(query)
+        )
+        {
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                long id = rs.getLong("id");
+                LocalDate checkInDate = rs.getDate("checkInDate").toLocalDate();
+                LocalDate checkOutDate = rs.getDate("checkOutDate").toLocalDate();
+                LocalDate bookingDate = rs.getDate("bookingDate").toLocalDate();
+
+                Receptionist receptionist;
+                long receptionistId = rs.getLong("receptionistId");
+                ReceptionistDao receptionistDao = new ReceptionistDaoImpl();
+                try{
+                    receptionist = receptionistDao.retrieve(receptionistId);
+                }
+                catch (ZeroRowsAffectedOrReturnedException e){
+                    receptionist = null;
+                }
+
+                lastReservation = new Reservation(id, checkInDate, checkOutDate, bookingDate, receptionist);
+
+            }
+
+        }
+        catch (SQLException ex){
+            System.out.println(ex);
+        }
+
+
+        if (lastReservation == null){
+            throw new ZeroRowsAffectedOrReturnedException("Zero rows returned on SELECT");
+        }
+        else {
+            return lastReservation;
+        }
+
+    }
 }

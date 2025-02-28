@@ -28,7 +28,7 @@ public class EditingRoomCustomizationPageController implements Initializable, Ho
     @FXML
     private TableView<Service> tvServices;
     @FXML
-    private TableView<EditingRoomCustomizationPageTableViewModel> tvRoomsWithTheirFeaturesAndServices;
+    private TableView<RoomWithFeatureAndServiceTableViewModel> tvRoomsWithTheirFeaturesAndServices;
     @FXML
     private TableColumn<Feature, Long> tblClmFeatureId;
     @FXML
@@ -42,17 +42,17 @@ public class EditingRoomCustomizationPageController implements Initializable, Ho
     @FXML
     private TableColumn<Service, Integer> tblClmServicePrice;
     @FXML
-    private TableColumn<EditingRoomCustomizationPageTableViewModel, Long> tblClmRoomId;
+    private TableColumn<RoomWithFeatureAndServiceTableViewModel, Long> tblClmRoomId;
     @FXML
-    private TableColumn<EditingRoomCustomizationPageTableViewModel, String> tblClmRoomName;
+    private TableColumn<RoomWithFeatureAndServiceTableViewModel, String> tblClmRoomName;
     @FXML
-    private TableColumn<EditingRoomCustomizationPageTableViewModel, Integer> tblClmRoomCapacity;
+    private TableColumn<RoomWithFeatureAndServiceTableViewModel, Integer> tblClmRoomCapacity;
     @FXML
-    private TableColumn<EditingRoomCustomizationPageTableViewModel, String> tblClmRoomUnitPrice;
+    private TableColumn<RoomWithFeatureAndServiceTableViewModel, String> tblClmRoomUnitPrice;
     @FXML
-    private TableColumn<EditingRoomCustomizationPageTableViewModel, String> tblClmFeatureNames;
+    private TableColumn<RoomWithFeatureAndServiceTableViewModel, String> tblClmFeatureNames;
     @FXML
-    private TableColumn<EditingRoomCustomizationPageTableViewModel, String> tblClmServiceNames;
+    private TableColumn<RoomWithFeatureAndServiceTableViewModel, String> tblClmServiceNames;
 
 
     @FXML
@@ -74,7 +74,7 @@ public class EditingRoomCustomizationPageController implements Initializable, Ho
 
     private ObservableList<Feature> featureData = FXCollections.observableArrayList();
     private ObservableList<Service> serviceData = FXCollections.observableArrayList();
-    private ObservableList<EditingRoomCustomizationPageTableViewModel> roomDataWithFeaturesAndServices = FXCollections.observableArrayList();
+    private ObservableList<RoomWithFeatureAndServiceTableViewModel> roomDataWithFeaturesAndServices = FXCollections.observableArrayList();
 
     @FXML
     @Override
@@ -86,7 +86,7 @@ public class EditingRoomCustomizationPageController implements Initializable, Ho
                         ReservationService reservationService = new ReservationServiceImpl();
                         List<ReservationWithCustomerAndRoom> all = reservationService.getAllReservationsWithTheirCustomersAndRooms();
 
-                        controller.setTableView(ReceptionistHomePageTableViewModel.transformInnerJoinResultToTableViewModelFormat(all));
+                        controller.setTableView(ReservationWithCustomerAndRoomTableViewModel.transformInnerJoinResultToTableViewModelFormat(all));
                     }
 
                 }
@@ -155,7 +155,7 @@ public class EditingRoomCustomizationPageController implements Initializable, Ho
     }
 
 
-    public void setTableView(List<Feature> features, List<Service> services, List<EditingRoomCustomizationPageTableViewModel> roomsWithFeaturesAndServices) {
+    public void setTableView(List<Feature> features, List<Service> services, List<RoomWithFeatureAndServiceTableViewModel> roomsWithFeaturesAndServices) {
 
         featureData.setAll(features);
         tvFeatures.setItems(featureData);
@@ -172,7 +172,7 @@ public class EditingRoomCustomizationPageController implements Initializable, Ho
     @FXML
     public void onApplyAdditionClicked(){
 
-        ObservableList<EditingRoomCustomizationPageTableViewModel> selectedRooms;
+        ObservableList<RoomWithFeatureAndServiceTableViewModel> selectedRooms;
         if ( ! tvRoomsWithTheirFeaturesAndServices.getSelectionModel().isEmpty()) {
             selectedRooms = tvRoomsWithTheirFeaturesAndServices.getSelectionModel().getSelectedItems();
         }
@@ -195,7 +195,7 @@ public class EditingRoomCustomizationPageController implements Initializable, Ho
         if ( ! tvFeatures.getSelectionModel().isEmpty()){
 
             ObservableList<Feature> selectedFeatures = tvFeatures.getSelectionModel().getSelectedItems();
-            for (EditingRoomCustomizationPageTableViewModel room : selectedRooms){
+            for (RoomWithFeatureAndServiceTableViewModel room : selectedRooms){
                 for (Feature feature : selectedFeatures){
                     try {
                         roomService.addFeatureToRoom(feature.getId(), room.getRoomId());
@@ -220,7 +220,7 @@ public class EditingRoomCustomizationPageController implements Initializable, Ho
 
             ObservableList<Service> selectedServices = tvServices.getSelectionModel().getSelectedItems();
             for (Service service : selectedServices){
-                for (EditingRoomCustomizationPageTableViewModel room : selectedRooms){
+                for (RoomWithFeatureAndServiceTableViewModel room : selectedRooms){
                     try {
                         roomService.addServiceToRoom(service.getId(), room.getRoomId());
                         refreshRoomWithFeaturesAndServicesTable();
@@ -246,7 +246,7 @@ public class EditingRoomCustomizationPageController implements Initializable, Ho
     @FXML
     public void onApplyDeletionClicked(){
 
-        ObservableList<EditingRoomCustomizationPageTableViewModel> selectedRooms;
+        ObservableList<RoomWithFeatureAndServiceTableViewModel> selectedRooms;
         if ( ! tvRoomsWithTheirFeaturesAndServices.getSelectionModel().isEmpty()) {
             selectedRooms = tvRoomsWithTheirFeaturesAndServices.getSelectionModel().getSelectedItems();
         }
@@ -268,7 +268,7 @@ public class EditingRoomCustomizationPageController implements Initializable, Ho
 
         if ( ! tvFeatures.getSelectionModel().isEmpty()){
             ObservableList<Feature> selectedFeatures = tvFeatures.getSelectionModel().getSelectedItems();
-            for (EditingRoomCustomizationPageTableViewModel room : selectedRooms){
+            for (RoomWithFeatureAndServiceTableViewModel room : selectedRooms){
                 for (Feature feature : selectedFeatures){
                     try {
                         roomService.deleteFeatureFromRoom(feature.getId(), room.getRoomId());
@@ -288,7 +288,7 @@ public class EditingRoomCustomizationPageController implements Initializable, Ho
 
             ObservableList<Service> selectedServices = tvServices.getSelectionModel().getSelectedItems();
             for (Service service : selectedServices){
-                for (EditingRoomCustomizationPageTableViewModel room : selectedRooms){
+                for (RoomWithFeatureAndServiceTableViewModel room : selectedRooms){
                     try {
                         roomService.deleteServiceFromRoom(service.getId(), room.getRoomId());
                         refreshRoomWithFeaturesAndServicesTable();
@@ -313,7 +313,7 @@ public class EditingRoomCustomizationPageController implements Initializable, Ho
     private void refreshRoomWithFeaturesAndServicesTable() {
         // Veritabanından güncel verileri al
         RoomService roomService = new RoomServiceImpl();
-        List<EditingRoomCustomizationPageTableViewModel> updatedRooms = EditingRoomCustomizationPageTableViewModel.transformInnerJoinResultToTableViewModelFormat(roomService.getAllRoomsWithTheirFeaturesAndServices());
+        List<RoomWithFeatureAndServiceTableViewModel> updatedRooms = RoomWithFeatureAndServiceTableViewModel.transformInnerJoinResultToTableViewModelFormat(roomService.getAllRoomsWithTheirFeaturesAndServices());
 
         // UI üzerinde tabloyu güncelle
         Platform.runLater(() -> {

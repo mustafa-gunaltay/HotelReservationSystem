@@ -226,4 +226,41 @@ public class ReceptionistDaoImpl implements ReceptionistDao{
             }
         }
     }
+
+
+    @Override
+    public Receptionist retrieveReceptionistByUsername(String username) throws ZeroRowsAffectedOrReturnedException {
+
+        Receptionist result = null;
+
+        String query = "SELECT id, fullName, username, passwordd FROM receptionist WHERE username = ?";
+
+        try (
+                Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement ps = conn.prepareStatement(query)
+        )
+        {
+            ps.setString(1, username);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                long id = rs.getLong("id");
+                String fullName = rs.getString("fullName");
+                String passwordd = rs.getString("passwordd");
+
+                result = new Receptionist(id, fullName, username, passwordd);
+            }
+
+        }
+        catch (SQLException ex){
+            System.out.println(ex);
+        }
+
+        if (result == null) {
+            throw new ZeroRowsAffectedOrReturnedException("Zero rows returned on SELECT");
+        }
+        else {
+            return result;
+        }
+    }
 }

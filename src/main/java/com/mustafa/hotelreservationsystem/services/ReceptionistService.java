@@ -18,5 +18,6 @@ public interface ReceptionistService {
     Receptionist deleteReceptionist(long id) throws EntityNotFoundByIdException;
     Receptionist getReceptionist(long id) throws EntityNotFoundByIdException;
     boolean isUsernameTaken(String username);
+    Receptionist getReceptionistByUsername(String username) throws EntityNotFoundByIdException;
 
 }

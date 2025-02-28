@@ -171,4 +171,17 @@ public class ReservationServiceImpl implements ReservationService{
             return allReservationsWithItsCustomersAndRooms;
         }
     }
+
+
+    @Override
+    public Reservation getLastReservation() throws EntityNotFoundByIdException {
+
+        try{
+            Reservation lastReservation = reservationDao.retrieveLastReservation();
+            return lastReservation;
+        }
+        catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByIdException("Last reservation is not exist, reservation table is empty", e);
+        }
+    }
 }

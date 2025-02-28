@@ -25,5 +25,6 @@ public interface ReservationService {
     void addReceptionistToReservation(long resId, long recId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException;
 
     List<ReservationWithCustomerAndRoom> getAllReservationsWithTheirCustomersAndRooms();
+    Reservation getLastReservation() throws EntityNotFoundByIdException;
 
 }

@@ -11,12 +11,12 @@
 
 <AnchorPane prefHeight="646.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.EditingRoomCustomizationPageController">
    <children>
-      <Label fx:id="lblServiceTableInformation" layoutX="479.0" layoutY="54.0" prefHeight="34.0" prefWidth="290.0" text="Select Services To Be Added">
+      <Label fx:id="lblServiceTableInformation" layoutX="479.0" layoutY="54.0" prefHeight="34.0" prefWidth="290.0" text="Select Service(s) To Be Added">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblFeatureTableInformation" layoutX="70.0" layoutY="54.0" prefHeight="34.0" prefWidth="290.0" text="Select Features To Be Added">
+      <Label fx:id="lblFeatureTableInformation" layoutX="70.0" layoutY="54.0" prefHeight="34.0" prefWidth="290.0" text="Select Feature(s) To Be Added">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -45,7 +45,7 @@
             <TableColumn fx:id="tblClmServiceNames" prefWidth="160.0" text="Services" />
          </columns>
       </TableView>
-      <Label fx:id="lblRoomTableInformation" layoutX="69.0" layoutY="323.0" prefHeight="18.0" prefWidth="544.0" text="Select Available Room(s) to Add Selected Features And Services">
+      <Label fx:id="lblRoomTableInformation" layoutX="48.0" layoutY="325.0" prefHeight="27.0" prefWidth="585.0" text="Select Available Room(s) to Add Selected Features And Services">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

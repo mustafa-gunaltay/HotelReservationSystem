@@ -5,7 +5,7 @@ package com.mustafa.hotelreservationsystem.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditingRoomCustomizationPageTableViewModel {
+public class RoomWithFeatureAndServiceTableViewModel {
 
     private long roomId;
     private String roomName;
@@ -15,7 +15,7 @@ public class EditingRoomCustomizationPageTableViewModel {
     private String featureNames;
     private String serviceNames;
 
-    public EditingRoomCustomizationPageTableViewModel() {
+    public RoomWithFeatureAndServiceTableViewModel() {
         this.roomId = 0;
         this.roomName = null;
         this.capacity = 0;
@@ -79,7 +79,19 @@ public class EditingRoomCustomizationPageTableViewModel {
         return roomUnitPrice;
     }
 
-    public static List<EditingRoomCustomizationPageTableViewModel> transformInnerJoinResultToTableViewModelFormat(
+    @Override
+    public String toString() {
+        return "RoomWithFeatureAndServiceTableViewModel{" +
+                "roomId=" + roomId +
+                ", roomName='" + roomName + '\'' +
+                ", capacity=" + capacity +
+                ", roomUnitPrice=" + roomUnitPrice +
+                ", featureNames='" + featureNames + '\'' +
+                ", serviceNames='" + serviceNames + '\'' +
+                '}';
+    }
+
+    public static List<RoomWithFeatureAndServiceTableViewModel> transformInnerJoinResultToTableViewModelFormat(
             List<RoomWithFeatureAndService> allRoomsWithFeatureAndService) {
 
         /*
@@ -116,7 +128,7 @@ public class EditingRoomCustomizationPageTableViewModel {
 
         List<Long> differentFeatureIds = new ArrayList<>();
         List<Long> differentServiceIds = new ArrayList<>();
-        List<EditingRoomCustomizationPageTableViewModel> result = new ArrayList<>();
+        List<RoomWithFeatureAndServiceTableViewModel> result = new ArrayList<>();
         for (int i = 0; i < differentRowsByRoomId.size(); i++) {
 
             List<RoomWithFeatureAndService> rowsThatHasSameRoomId = differentRowsByRoomId.get(i);
@@ -126,7 +138,7 @@ public class EditingRoomCustomizationPageTableViewModel {
             int capacity = rowsThatHasSameRoomId.getFirst().getRoomCapacity();
             int roomUnitPrice = rowsThatHasSameRoomId.getFirst().getRoomUnitPrice();
 
-            EditingRoomCustomizationPageTableViewModel oneTableViewRow = new EditingRoomCustomizationPageTableViewModel();
+            RoomWithFeatureAndServiceTableViewModel oneTableViewRow = new RoomWithFeatureAndServiceTableViewModel();
             oneTableViewRow.setRoomId(roomId);
             oneTableViewRow.setRoomName(roomName);
             oneTableViewRow.setCapacity(capacity);

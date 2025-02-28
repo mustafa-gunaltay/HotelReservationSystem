@@ -1,18 +1,10 @@
 package com.mustafa.hotelreservationsystem.ui.utils;
 
-import com.mustafa.hotelreservationsystem.models.EditingRoomCustomizationPageTableViewModel;
-import com.mustafa.hotelreservationsystem.models.ReceptionistHomePageTableViewModel;
-import com.mustafa.hotelreservationsystem.models.ReservationWithCustomerAndRoom;
-import com.mustafa.hotelreservationsystem.models.RoomWithFeatureAndService;
 import javafx.scene.Node;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Utils {
 

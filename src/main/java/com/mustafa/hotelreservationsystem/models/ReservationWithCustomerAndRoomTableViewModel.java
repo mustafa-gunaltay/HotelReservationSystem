@@ -4,14 +4,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReceptionistHomePageTableViewModel {
+public class ReservationWithCustomerAndRoomTableViewModel {
     private long reservationId;
     private String roomsNames;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private String customersNames;
 
-    public ReceptionistHomePageTableViewModel() {
+    public ReservationWithCustomerAndRoomTableViewModel() {
         this.reservationId = 0;
         this.roomsNames = "";
         this.checkInDate = null;
@@ -83,7 +83,7 @@ public class ReceptionistHomePageTableViewModel {
     }
 
 
-    public static List<ReceptionistHomePageTableViewModel> transformInnerJoinResultToTableViewModelFormat
+    public static List<ReservationWithCustomerAndRoomTableViewModel> transformInnerJoinResultToTableViewModelFormat
             (List<ReservationWithCustomerAndRoom> allReservationsWithCustomerAndRoom) {
 
         /*
@@ -121,7 +121,7 @@ public class ReceptionistHomePageTableViewModel {
 
         List<Long> differentCustomerIds = new ArrayList<>();
         List<Long> differentRoomIds = new ArrayList<>();
-        List<ReceptionistHomePageTableViewModel> result = new ArrayList<>();
+        List<ReservationWithCustomerAndRoomTableViewModel> result = new ArrayList<>();
 
         for ( int i=0 ; i < differentRowsByReservationId.size(); i++ ) {
 
@@ -131,7 +131,7 @@ public class ReceptionistHomePageTableViewModel {
             LocalDate checkInDate = eachListThatHasSameReservationId.getFirst().getCheckInDate();
             LocalDate checkOutDate = eachListThatHasSameReservationId.getFirst().getCheckOutDate();
 
-            ReceptionistHomePageTableViewModel oneTableViewRow = new ReceptionistHomePageTableViewModel();
+            ReservationWithCustomerAndRoomTableViewModel oneTableViewRow = new ReservationWithCustomerAndRoomTableViewModel();
             oneTableViewRow.setReservationId(reservationId);
             oneTableViewRow.setCheckInDate(checkInDate);
             oneTableViewRow.setCheckOutDate(checkOutDate);
