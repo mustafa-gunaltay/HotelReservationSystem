@@ -2,6 +2,7 @@ package com.mustafa.hotelreservationsystem.ui.controllers;
 
 import com.mustafa.hotelreservationsystem.models.*;
 import com.mustafa.hotelreservationsystem.services.*;
+import com.mustafa.hotelreservationsystem.ui.utils.AlertManager;
 import com.mustafa.hotelreservationsystem.ui.utils.SceneInitializer;
 import com.mustafa.hotelreservationsystem.ui.utils.SceneManager;
 import com.mustafa.hotelreservationsystem.ui.utils.Utils;
@@ -9,12 +10,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -33,7 +37,15 @@ public class ReceptionistHomePageController implements Initializable {
     @FXML
     private TableColumn<ReservationWithCustomerAndRoomTableViewModel, String> tblClmCustomersNames;
 
+    @FXML
+    private DatePicker dpCheckInDate;
+    @FXML
+    private DatePicker dpCheckOutDate;
+    @FXML
+    private TextField tfTargetRoomName;
+
     private ObservableList<ReservationWithCustomerAndRoomTableViewModel> data = FXCollections.observableArrayList();
+    private List<ReservationWithCustomerAndRoomTableViewModel> allReservations = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -49,6 +61,8 @@ public class ReceptionistHomePageController implements Initializable {
     public void setTableView(List<ReservationWithCustomerAndRoomTableViewModel> tableViewModel) {
         data.setAll(tableViewModel);
         tvReceptionistHomePage.setItems(data);
+
+        allReservations = tableViewModel;
     }
 
     @FXML
@@ -98,5 +112,89 @@ public class ReceptionistHomePageController implements Initializable {
                     }
                 }
         );
+    }
+
+
+    @FXML
+    public void onSearchClicked(){
+
+        String targetRoomName = tfTargetRoomName.getText();
+        LocalDate targetCheckInDate = dpCheckInDate.getValue();
+        LocalDate targetCheckOutDate = dpCheckOutDate.getValue();
+
+        List<ReservationWithCustomerAndRoomTableViewModel> result = FXCollections.observableArrayList();
+
+        if (targetRoomName.isEmpty() && targetCheckInDate == null && targetCheckOutDate == null) {
+            result.addAll(allReservations);
+        }
+
+
+        if (targetCheckInDate != null && targetCheckOutDate != null && targetRoomName.isEmpty()) {
+
+            for (ReservationWithCustomerAndRoomTableViewModel reservation : allReservations) {
+
+                LocalDate checkInDate = reservation.getCheckInDate();
+                LocalDate checkOutDate = reservation.getCheckOutDate();
+
+                if ( (checkInDate.isAfter(targetCheckInDate) || checkInDate.isEqual(targetCheckInDate) ) &&
+                     ( checkOutDate.isBefore(targetCheckOutDate) || checkOutDate.isEqual(targetCheckOutDate) ) )
+                {
+                    result.add(reservation);
+
+                }
+            }
+
+        }
+
+        if (targetCheckInDate == null && targetCheckOutDate == null && ! targetRoomName.isEmpty()) {
+
+            for (ReservationWithCustomerAndRoomTableViewModel reservation : allReservations) {
+                if (reservation.getRoomsNames().contains(targetRoomName)) {
+                    result.add(reservation);
+                }
+            }
+        }
+
+
+        if (targetCheckInDate != null && targetCheckOutDate != null && ! targetRoomName.isEmpty()) {
+
+            for (ReservationWithCustomerAndRoomTableViewModel reservation : allReservations) {
+
+                LocalDate checkInDate = reservation.getCheckInDate();
+                LocalDate checkOutDate = reservation.getCheckOutDate();
+
+                if ( (checkInDate.isAfter(targetCheckInDate) || checkInDate.isEqual(targetCheckInDate) ) &&
+                   ( checkOutDate.isBefore(targetCheckOutDate) || checkOutDate.isEqual(targetCheckOutDate) ) &&
+                     reservation.getRoomsNames().contains(targetRoomName) )
+                {
+                    result.add(reservation);
+                }
+            }
+        }
+
+        data.setAll(result);
+    }
+
+
+    @FXML
+    public void onClearAllFiltersClicked(){
+        onCheckInDateClearClicked();
+        onCheckOutDateClearClicked();
+        onRoomNameClearClicked();
+    }
+
+    @FXML
+    public void onCheckInDateClearClicked(){
+        dpCheckInDate.setValue(null);
+    }
+
+    @FXML
+    public void onCheckOutDateClearClicked(){
+        dpCheckOutDate.setValue(null);
+    }
+
+    @FXML
+    public void onRoomNameClearClicked(){
+        tfTargetRoomName.clear();
     }
 }

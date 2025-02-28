@@ -26,9 +26,9 @@
       </TableView>
       <Button layoutX="131.0" layoutY="523.0" mnemonicParsing="false" onAction="#onCreateOrDeleteReservationClicked" prefHeight="36.0" prefWidth="186.0" text="Create/Delete Reservation" />
       <Button layoutX="342.0" layoutY="523.0" mnemonicParsing="false" onAction="#onEditRoomCustomizationClicked" prefHeight="36.0" prefWidth="151.0" text="Edit Room Customization" />
-      <DatePicker layoutX="122.0" layoutY="125.0" />
-      <DatePicker layoutX="359.0" layoutY="125.0" />
-      <TextField layoutX="622.0" layoutY="125.0" />
+      <DatePicker fx:id="dpCheckInDate" editable="false" layoutX="122.0" layoutY="125.0" />
+      <DatePicker fx:id="dpCheckOutDate" editable="false" layoutX="359.0" layoutY="125.0" />
+      <TextField fx:id="tfTargetRoomName" layoutX="622.0" layoutY="125.0" />
       <Label layoutX="29.0" layoutY="124.0" text="Filter By">
          <font>
             <Font name="System Bold" size="18.0" />
@@ -45,6 +45,10 @@
          </font>
       </Label>
       <Label layoutX="622.0" layoutY="106.0" text="Room Name" />
-      <Button layoutX="728.0" layoutY="179.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="67.0" text="Search" />
+      <Button layoutX="728.0" layoutY="179.0" mnemonicParsing="false" onAction="#onSearchClicked" prefHeight="27.0" prefWidth="67.0" text="Search" />
+      <Button layoutX="17.0" layoutY="166.0" mnemonicParsing="false" onAction="#onClearAllFiltersClicked" text="Clear All Filters" />
+      <Button layoutX="122.0" layoutY="154.0" mnemonicParsing="false" onAction="#onCheckInDateClearClicked" text="Clear" />
+      <Button layoutX="359.0" layoutY="154.0" mnemonicParsing="false" onAction="#onCheckOutDateClearClicked" text="Clear" />
+      <Button layoutX="622.0" layoutY="153.0" mnemonicParsing="false" onAction="#onRoomNameClearClicked" text="Clear" />
    </children>
 </AnchorPane>
