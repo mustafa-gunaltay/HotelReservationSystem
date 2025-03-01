@@ -18,9 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ReceptionistHomePageController implements Initializable {
 
@@ -78,7 +76,7 @@ public class ReceptionistHomePageController implements Initializable {
 
                         List<Feature> allFeatures = featureService.getAllFeatures();
                         List<Service> allServices = serviceService.getAllServices();
-                        List<RoomWithFeatureAndService> allRooms = roomService.getAllRoomsWithTheirFeaturesAndServices();
+                        List<RoomWithFeatureAndService> allRooms = roomService.getAllRoomsWithTheirFeaturesAndServices(false);
 
                         controller.setTableView(allFeatures, allServices, RoomWithFeatureAndServiceTableViewModel.transformInnerJoinResultToTableViewModelFormat(allRooms));
 
@@ -102,7 +100,7 @@ public class ReceptionistHomePageController implements Initializable {
                         ReservationService reservationService = new ReservationServiceImpl();
 
                         List<Customer> allCustomers = customerService.getAllCustomers();
-                        List<RoomWithFeatureAndService> allRoomsWithTheirFeaturesAndServices = roomService.getAllRoomsWithTheirFeaturesAndServices();
+                        List<RoomWithFeatureAndService> allRoomsWithTheirFeaturesAndServices = roomService.getAllRoomsWithTheirFeaturesAndServices(false);
                         List<ReservationWithCustomerAndRoom> allReservationsWithTheirRoomsAndCustomers = reservationService.getAllReservationsWithTheirCustomersAndRooms();
 
                         List<RoomWithFeatureAndServiceTableViewModel> allRoomsWithTheirFeaturesAndServicesOnTableViewModelFormat = RoomWithFeatureAndServiceTableViewModel.transformInnerJoinResultToTableViewModelFormat(allRoomsWithTheirFeaturesAndServices);
@@ -165,5 +163,24 @@ public class ReceptionistHomePageController implements Initializable {
     @FXML
     public void onRoomNameClearClicked(){
         tfTargetRoomName.clear();
+    }
+
+    @FXML
+    public void onRoomsInfoClicked(){
+
+        SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/RoomsInfoPage.fxml",
+                new SceneInitializer<RoomsInfoPageController>() {
+                    @Override
+                    public void initialize(RoomsInfoPageController controller) {
+                        RoomService roomService = new RoomServiceImpl();
+
+                        List<RoomWithFeatureAndService> allRooms = roomService.getAllRoomsWithTheirFeaturesAndServices(false);
+                        allRooms.addAll(roomService.getAllRoomsWithTheirFeaturesAndServices(true));
+
+                        controller.setTableView(RoomWithFeatureAndServiceTableViewModel.transformInnerJoinResultToTableViewModelFormat(allRooms));
+
+                    }
+                }
+        );
     }
 }

@@ -3,6 +3,7 @@ package com.mustafa.hotelreservationsystem.models;
 // EditingRoomCustomizationPage'deki inner join ile olusturulan room ile alakali TableView in kullanacagi model sinif
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class RoomWithFeatureAndServiceTableViewModel {
@@ -169,6 +170,7 @@ public class RoomWithFeatureAndServiceTableViewModel {
 
         }
 
+        result.sort(Comparator.comparing(RoomWithFeatureAndServiceTableViewModel::getRoomId));
         return result;
     }
 }

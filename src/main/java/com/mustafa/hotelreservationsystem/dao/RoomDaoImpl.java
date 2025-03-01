@@ -517,7 +517,7 @@ public class RoomDaoImpl implements RoomDao{
 
 
     @Override
-    public List<RoomWithFeatureAndService> retrieveAllRoomsWithTheirFeaturesAndServices() {
+    public List<RoomWithFeatureAndService> retrieveAllRoomsWithTheirFeaturesAndServices(boolean mustReserved) {
 
         List<RoomWithFeatureAndService> result = new ArrayList<>();
 
@@ -527,13 +527,20 @@ public class RoomDaoImpl implements RoomDao{
                 "LEFT JOIN feature ON feature.id = room_feature.featureId\n" +
                 "LEFT JOIN room_service ON room.id = room_service.roomId\n" +
                 "LEFT JOIN service ON service.id = room_service.serviceId\n" +
-                "WHERE room.isReserved = 0;";
+                "WHERE room.isReserved = ?;";
 
         try (
                 Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 PreparedStatement ps = conn.prepareStatement(query)
         )
         {
+            if (mustReserved) {
+                ps.setInt(1, 1);
+            }
+            else{
+                ps.setInt(1, 0);
+            }
+
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()){

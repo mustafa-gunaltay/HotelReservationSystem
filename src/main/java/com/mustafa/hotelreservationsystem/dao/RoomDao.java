@@ -28,5 +28,5 @@ public interface RoomDao extends Crudable{
     void bindRoomAndService(long roomId, long serviceId) throws NoReferencedRowException, DuplicateEntryException;
     void unbindRoomAndService(long roomId, long serviceId) throws ZeroRowsAffectedOrReturnedException;
 
-    List<RoomWithFeatureAndService> retrieveAllRoomsWithTheirFeaturesAndServices();
+    List<RoomWithFeatureAndService> retrieveAllRoomsWithTheirFeaturesAndServices(boolean mustReserved);
 }

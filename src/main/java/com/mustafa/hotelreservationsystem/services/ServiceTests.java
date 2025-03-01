@@ -998,7 +998,7 @@ public class ServiceTests {
 
 
         // get all rooms woth their features and services
-        List<RoomWithFeatureAndService> all = roomService.getAllRoomsWithTheirFeaturesAndServices();
+        List<RoomWithFeatureAndService> all = roomService.getAllRoomsWithTheirFeaturesAndServices(false);
         for (RoomWithFeatureAndService roomWithFeatureAndService : all) {
             System.out.println(roomWithFeatureAndService);
         }

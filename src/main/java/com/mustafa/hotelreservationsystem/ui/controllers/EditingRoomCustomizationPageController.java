@@ -313,7 +313,7 @@ public class EditingRoomCustomizationPageController implements Initializable, Ho
     private void refreshRoomWithFeaturesAndServicesTable() {
         // Veritabanından güncel verileri al
         RoomService roomService = new RoomServiceImpl();
-        List<RoomWithFeatureAndServiceTableViewModel> updatedRooms = RoomWithFeatureAndServiceTableViewModel.transformInnerJoinResultToTableViewModelFormat(roomService.getAllRoomsWithTheirFeaturesAndServices());
+        List<RoomWithFeatureAndServiceTableViewModel> updatedRooms = RoomWithFeatureAndServiceTableViewModel.transformInnerJoinResultToTableViewModelFormat(roomService.getAllRoomsWithTheirFeaturesAndServices(false));
 
         // UI üzerinde tabloyu güncelle
         Platform.runLater(() -> {

@@ -29,5 +29,5 @@ public interface RoomService {
     void deleteServiceFromRoom(long serviceId, long roomId) throws EntityNotFoundByIdException;
     void changeServiceOnRoom(long oldServiceId, long newServiceId, long roomId) throws ReferencedEntityNotFoundException, EntityNotFoundByIdException, SameEntityValueExistInDbException;
 
-    List<RoomWithFeatureAndService> getAllRoomsWithTheirFeaturesAndServices();
+    List<RoomWithFeatureAndService> getAllRoomsWithTheirFeaturesAndServices(boolean mustReserved);
 }

@@ -220,9 +220,9 @@ public class RoomServiceImpl implements RoomService{
 
 
     @Override
-    public List<RoomWithFeatureAndService> getAllRoomsWithTheirFeaturesAndServices() {
+    public List<RoomWithFeatureAndService> getAllRoomsWithTheirFeaturesAndServices(boolean mustReserved) {
 
-        List<RoomWithFeatureAndService> allRoomsWithTheirFeaturesAndServices = roomDao.retrieveAllRoomsWithTheirFeaturesAndServices();
+        List<RoomWithFeatureAndService> allRoomsWithTheirFeaturesAndServices = roomDao.retrieveAllRoomsWithTheirFeaturesAndServices(mustReserved);
         if ( ! allRoomsWithTheirFeaturesAndServices.isEmpty()){
             return allRoomsWithTheirFeaturesAndServices;
         }

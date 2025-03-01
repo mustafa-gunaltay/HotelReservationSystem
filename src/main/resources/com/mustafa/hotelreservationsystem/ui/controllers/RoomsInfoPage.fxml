@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="508.0" prefWidth="718.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.RoomsInfoPageController">
+   <children>
+      <TableView fx:id="tvRoomsWithTheirFeaturesAndServices" layoutX="42.0" layoutY="169.0" prefHeight="270.0" prefWidth="634.0">
+         <columns>
+            <TableColumn fx:id="tblClmRoomId" prefWidth="75.0" text="Room Id" />
+            <TableColumn fx:id="tblClmRoomName" prefWidth="89.5999755859375" text="Room Name" />
+            <TableColumn fx:id="tblClmRoomCapacity" prefWidth="70.39997863769531" text="Capacity" />
+            <TableColumn fx:id="tblClmRoomUnitPrice" prefWidth="66.4000244140625" text="Unit Price" />
+            <TableColumn fx:id="tblClmRoomFeatures" prefWidth="158.4000244140625" text="Features" />
+            <TableColumn fx:id="tblClmRoomServices" minWidth="7.20001220703125" prefWidth="173.60001220703123" text="Services" />
+         </columns>
+      </TableView>
+      <Label layoutX="286.0" layoutY="14.0" text="All Rooms In Hotel">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="68.0" prefHeight="27.0" prefWidth="185.0" text="Filter by room name:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfTargetRoomName" layoutX="242.0" layoutY="69.0" />
+      <Button layoutX="242.0" layoutY="103.0" mnemonicParsing="false" onAction="#onSearchClicked" text="Search" />
+      <Label fx:id="lblSearchFeedBack" layoutX="242.0" layoutY="129.0" text="Label" />
+      <Button layoutX="510.0" layoutY="459.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="34.0" prefWidth="193.0" text="Go Back Receptionist Home Page" />
+   </children>
+</AnchorPane>

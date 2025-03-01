@@ -158,7 +158,7 @@ public class NewReservationAndDeleteReservationPageController implements Initial
 
                         List<Feature> allFeatures = featureService.getAllFeatures();
                         List<Service> allServices = serviceService.getAllServices();
-                        List<RoomWithFeatureAndService> allRooms = roomService.getAllRoomsWithTheirFeaturesAndServices();
+                        List<RoomWithFeatureAndService> allRooms = roomService.getAllRoomsWithTheirFeaturesAndServices(false);
 
                         controller.setTableView(allFeatures, allServices, RoomWithFeatureAndServiceTableViewModel.transformInnerJoinResultToTableViewModelFormat(allRooms));
 
@@ -308,7 +308,7 @@ public class NewReservationAndDeleteReservationPageController implements Initial
     private void refreshRoomWithFeaturesAndServicesTable() {
         // Veritabanından güncel verileri al
         RoomService roomService = new RoomServiceImpl();
-        List<RoomWithFeatureAndServiceTableViewModel> updatedRooms = RoomWithFeatureAndServiceTableViewModel.transformInnerJoinResultToTableViewModelFormat(roomService.getAllRoomsWithTheirFeaturesAndServices());
+        List<RoomWithFeatureAndServiceTableViewModel> updatedRooms = RoomWithFeatureAndServiceTableViewModel.transformInnerJoinResultToTableViewModelFormat(roomService.getAllRoomsWithTheirFeaturesAndServices(false));
 
         // UI üzerinde tabloyu güncelle
         Platform.runLater(() -> {

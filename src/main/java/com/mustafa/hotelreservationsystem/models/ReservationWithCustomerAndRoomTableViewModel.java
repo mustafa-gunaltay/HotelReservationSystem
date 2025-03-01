@@ -2,6 +2,7 @@ package com.mustafa.hotelreservationsystem.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ReservationWithCustomerAndRoomTableViewModel {
@@ -161,6 +162,7 @@ public class ReservationWithCustomerAndRoomTableViewModel {
             result.add(oneTableViewRow);
         }
 
+        result.sort(Comparator.comparing(ReservationWithCustomerAndRoomTableViewModel::getReservationId));
         return result;
     }
 }
