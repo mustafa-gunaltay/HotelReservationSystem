@@ -503,12 +503,16 @@ public class ReservationDaoImpl implements ReservationDao{
 
                 Receptionist receptionist;
                 long receptionistId = rs.getLong("receptionistId");
-                ReceptionistDao receptionistDao = new ReceptionistDaoImpl();
-                try{
-                    receptionist = receptionistDao.retrieve(receptionistId);
-                }
-                catch (ZeroRowsAffectedOrReturnedException e){
+                if (rs.wasNull()){
                     receptionist = null;
+                }
+                else {
+                    ReceptionistDao receptionistDao = new ReceptionistDaoImpl();
+                    try {
+                        receptionist = receptionistDao.retrieve(receptionistId);
+                    } catch (ZeroRowsAffectedOrReturnedException e) {
+                        receptionist = null;
+                    }
                 }
 
                 lastReservation = new Reservation(id, checkInDate, checkOutDate, bookingDate, receptionist);

@@ -50,13 +50,15 @@
          </columns>
       </TableView>
       <Button layoutX="34.0" layoutY="417.0" mnemonicParsing="false" onAction="#onCreateReservationClicked" prefHeight="40.0" prefWidth="128.0" text="Create Reservation" />
-      <DatePicker fx:id="dpCheckInDate" layoutX="34.0" layoutY="310.0" />
-      <DatePicker fx:id="dpCheckOutDate" layoutX="34.0" layoutY="377.0" />
+      <DatePicker fx:id="dpCheckInDate" editable="false" layoutX="34.0" layoutY="310.0" />
+      <DatePicker fx:id="dpCheckOutDate" editable="false" layoutX="34.0" layoutY="377.0" />
       <Label layoutX="34.0" layoutY="294.0" text="Select Check-In Date" />
       <Label layoutX="34.0" layoutY="359.0" text="Select Check-Out Date" />
       <Button layoutX="1012.0" layoutY="707.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="40.0" prefWidth="193.0" text="Go Back Receptionist Home Page" />
       <Label fx:id="lblCreateFeedBack" layoutX="34.0" layoutY="457.0" text="Label" />
       <Button layoutX="304.0" layoutY="667.0" mnemonicParsing="false" onAction="#onDeleteReservationClicked" prefHeight="40.0" prefWidth="128.0" text="Delete Reservation" />
       <Label fx:id="lblDeleteFeedBack" layoutX="304.0" layoutY="707.0" text="Label" />
+      <Button layoutX="222.0" layoutY="310.0" mnemonicParsing="false" onAction="#onCheckInDateClearClicked" text="Clear" />
+      <Button layoutX="222.0" layoutY="377.0" mnemonicParsing="false" onAction="#onCheckOutDateClearClicked" text="Clear" />
    </children>
 </AnchorPane>

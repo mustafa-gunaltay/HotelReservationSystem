@@ -326,5 +326,18 @@ public class NewReservationAndDeleteReservationPageController implements Initial
     }
 
 
+    @FXML
+    public void onCheckInDateClearClicked() {
+        dpCheckInDate.setValue(null);
+    }
+
+    @FXML
+    public void onCheckOutDateClearClicked() {
+        dpCheckOutDate.setValue(null);
+    }
+
+
+
+
 
 }

@@ -27,7 +27,7 @@ public class ReceptionistHomePageController implements Initializable {
     @FXML
     private TableView<ReservationWithCustomerAndRoomTableViewModel> tvReceptionistHomePage;
     @FXML
-    private TableColumn<ReservationWithCustomerAndRoomTableViewModel, String> tblClmReservationId;
+    private TableColumn<ReservationWithCustomerAndRoomTableViewModel, Long> tblClmReservationId;
     @FXML
     private TableColumn<ReservationWithCustomerAndRoomTableViewModel, String> tblClmRoomsNames;
     @FXML
@@ -116,59 +116,28 @@ public class ReceptionistHomePageController implements Initializable {
 
 
     @FXML
-    public void onSearchClicked(){
-
+    public void onSearchClicked() {
         String targetRoomName = tfTargetRoomName.getText();
         LocalDate targetCheckInDate = dpCheckInDate.getValue();
         LocalDate targetCheckOutDate = dpCheckOutDate.getValue();
 
         List<ReservationWithCustomerAndRoomTableViewModel> result = FXCollections.observableArrayList();
 
-        if (targetRoomName.isEmpty() && targetCheckInDate == null && targetCheckOutDate == null) {
-            result.addAll(allReservations);
-        }
+        for (ReservationWithCustomerAndRoomTableViewModel reservation : allReservations) {
+            LocalDate checkInDate = reservation.getCheckInDate();
+            LocalDate checkOutDate = reservation.getCheckOutDate();
+            String roomNames = reservation.getRoomsNames();
 
+            boolean matchesCheckIn = (targetCheckInDate == null) ||
+                    (checkInDate.isAfter(targetCheckInDate) || checkInDate.isEqual(targetCheckInDate));
 
-        if (targetCheckInDate != null && targetCheckOutDate != null && targetRoomName.isEmpty()) {
+            boolean matchesCheckOut = (targetCheckOutDate == null) ||
+                    (checkOutDate.isBefore(targetCheckOutDate) || checkOutDate.isEqual(targetCheckOutDate));
 
-            for (ReservationWithCustomerAndRoomTableViewModel reservation : allReservations) {
+            boolean matchesRoomName = (targetRoomName.isEmpty()) || roomNames.contains(targetRoomName);
 
-                LocalDate checkInDate = reservation.getCheckInDate();
-                LocalDate checkOutDate = reservation.getCheckOutDate();
-
-                if ( (checkInDate.isAfter(targetCheckInDate) || checkInDate.isEqual(targetCheckInDate) ) &&
-                     ( checkOutDate.isBefore(targetCheckOutDate) || checkOutDate.isEqual(targetCheckOutDate) ) )
-                {
-                    result.add(reservation);
-
-                }
-            }
-
-        }
-
-        if (targetCheckInDate == null && targetCheckOutDate == null && ! targetRoomName.isEmpty()) {
-
-            for (ReservationWithCustomerAndRoomTableViewModel reservation : allReservations) {
-                if (reservation.getRoomsNames().contains(targetRoomName)) {
-                    result.add(reservation);
-                }
-            }
-        }
-
-
-        if (targetCheckInDate != null && targetCheckOutDate != null && ! targetRoomName.isEmpty()) {
-
-            for (ReservationWithCustomerAndRoomTableViewModel reservation : allReservations) {
-
-                LocalDate checkInDate = reservation.getCheckInDate();
-                LocalDate checkOutDate = reservation.getCheckOutDate();
-
-                if ( (checkInDate.isAfter(targetCheckInDate) || checkInDate.isEqual(targetCheckInDate) ) &&
-                   ( checkOutDate.isBefore(targetCheckOutDate) || checkOutDate.isEqual(targetCheckOutDate) ) &&
-                     reservation.getRoomsNames().contains(targetRoomName) )
-                {
-                    result.add(reservation);
-                }
+            if (matchesCheckIn && matchesCheckOut && matchesRoomName) {
+                result.add(reservation);
             }
         }
 
