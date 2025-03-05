@@ -12,8 +12,8 @@
 <AnchorPane prefHeight="625.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.ReceptionistHomePageController">
    <children>
       <Button layoutX="17.0" layoutY="21.0" mnemonicParsing="false" onAction="#onRoomsInfoClicked" prefHeight="36.0" prefWidth="134.0" text="Rooms Info" />
-      <Button layoutX="151.0" layoutY="21.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="134.0" text="Features Info" />
-      <Button layoutX="285.0" layoutY="21.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="134.0" text="Services Info" />
+      <Button layoutX="151.0" layoutY="21.0" mnemonicParsing="false" onAction="#onFeaturesInfoClicked" prefHeight="36.0" prefWidth="134.0" text="Features Info" />
+      <Button layoutX="285.0" layoutY="21.0" mnemonicParsing="false" onAction="#onServicesInfoClicked" prefHeight="36.0" prefWidth="134.0" text="Services Info" />
       <Button layoutX="418.0" layoutY="21.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="134.0" text="Customers" />
       <TableView fx:id="tvReceptionistHomePage" layoutX="122.0" layoutY="228.0" prefHeight="200.0" prefWidth="572.0">
         <columns>

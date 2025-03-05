@@ -112,5 +112,6 @@ public class RoomsInfoPageController implements Initializable, HomePageReturnabl
         }
 
         roomtableViewData.setAll(result);
+        lblSearchFeedBack.setText(result.size() + " rooms found");
     }
 }

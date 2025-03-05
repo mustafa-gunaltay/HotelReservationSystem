@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="473.0" prefWidth="664.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.FeaturesInfoPageController">
+   <children>
+      <TableView fx:id="tvFeatures" layoutX="137.0" layoutY="184.0" prefHeight="200.0" prefWidth="345.0">
+        <columns>
+          <TableColumn fx:id="tblClmFeatureId" prefWidth="95.20001220703125" text="Feature Id" />
+          <TableColumn fx:id="tblClmFeatureName" prefWidth="114.39996337890625" text="Feature Name" />
+            <TableColumn fx:id="tblClmFeaturePrice" prefWidth="133.60000610351562" text="Feature Price" />
+        </columns>
+      </TableView>
+      <Label layoutX="33.0" layoutY="84.0" prefHeight="27.0" prefWidth="199.0" text="Filter by feature name:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfTargetFeatureName" layoutX="232.0" layoutY="85.0" />
+      <Button layoutX="232.0" layoutY="119.0" mnemonicParsing="false" onAction="#onSearchClicked" prefHeight="27.0" prefWidth="62.0" text="Search" />
+      <Label fx:id="lblSearchFeedBack" layoutX="232.0" layoutY="146.0" text="Label" />
+      <Label layoutX="223.0" layoutY="14.0" prefHeight="27.0" prefWidth="199.0" text="All Features In Rooms">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="443.0" layoutY="417.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="42.0" prefWidth="208.0" text="Go Back Receptionist Home Page" />
+   </children>
+</AnchorPane>

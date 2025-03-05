@@ -183,4 +183,41 @@ public class ReceptionistHomePageController implements Initializable {
                 }
         );
     }
+
+    @FXML
+    public void onFeaturesInfoClicked(){
+        SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/FeaturesInfoPage.fxml",
+                new SceneInitializer<FeaturesInfoPageController>() {
+                    @Override
+                    public void initialize(FeaturesInfoPageController controller) {
+
+                        FeatureService featureService = new FeatureServiceImpl();
+                        List<Feature> allFeatures = featureService.getAllFeatures();
+
+                        controller.setTableView(allFeatures);
+
+                    }
+                }
+        );
+    }
+
+
+    @FXML
+    public void onServicesInfoClicked() {
+
+        SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/ServicesInfoPage.fxml",
+                new SceneInitializer<ServicesInfoPageController>() {
+                    @Override
+                    public void initialize(ServicesInfoPageController controller) {
+
+                        ServiceService serviceService = new ServiceServiceImpl();
+                        List<Service> allServices = serviceService.getAllServices();
+
+                        controller.setTableView(allServices);
+
+                    }
+                }
+        );
+
+    }
 }
