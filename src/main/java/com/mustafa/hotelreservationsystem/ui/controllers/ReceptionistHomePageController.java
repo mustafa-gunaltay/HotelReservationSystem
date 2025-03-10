@@ -220,4 +220,23 @@ public class ReceptionistHomePageController implements Initializable {
         );
 
     }
+
+    @FXML
+    public void onCustomersClicked() {
+
+        SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/EditingCustomersPage.fxml",
+                new SceneInitializer<EditingCustomersPageController>() {
+                    @Override
+                    public void initialize(EditingCustomersPageController controller) {
+
+                        CustomerService customerService = new CustomerServiceImpl();
+                        List<Customer> allCustomers = customerService.getAllCustomers();
+
+                        controller.setTableView(allCustomers);
+
+                    }
+                }
+        );
+
+    }
 }

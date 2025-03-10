@@ -17,4 +17,6 @@ public interface CustomerService {
     void changePhoneNumber(long id, String newPhoneNumber) throws SameEntityValueExistInDbException, EntityNotFoundByIdException;
     void changeBirthDate(long id, LocalDate birthDate) throws EntityNotFoundByIdException;
     void changeDescription(long id, String newDescription) throws EntityNotFoundByIdException;
+
+    boolean isPhoneNumberTaken(String phoneNumber);
 }

@@ -114,5 +114,16 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    @Override
+    public boolean isPhoneNumberTaken(String phoneNumber) {
+        List<Customer> allCustomers = customerDao.retrieveAllCustomers();
+        for (Customer customer : allCustomers) {
+            if (customer.getPhoneNumber().equals(phoneNumber)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

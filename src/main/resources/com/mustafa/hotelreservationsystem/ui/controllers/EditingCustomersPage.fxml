@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="718.0" prefWidth="922.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.EditingCustomersPageController">
+   <children>
+      <TableView fx:id="tvCustomers" layoutX="78.0" layoutY="157.0" prefHeight="200.0" prefWidth="730.0">
+        <columns>
+          <TableColumn fx:id="tblClmCustomerId" prefWidth="75.0" text="Customer Id" />
+          <TableColumn fx:id="tblClmCustomerFullName" prefWidth="115.20001220703125" text="Full Name" />
+            <TableColumn fx:id="tblClmCustomerPhoneNumber" prefWidth="117.59999084472656" text="Phone Number" />
+            <TableColumn fx:id="tblClmCustomerBirthDate" prefWidth="117.5999755859375" text="Birth Date" />
+            <TableColumn fx:id="tblClmCustomerDescription" prefWidth="303.1999877929687" text="Description" />
+        </columns>
+      </TableView>
+      <Label layoutX="398.0" layoutY="14.0" prefHeight="26.0" prefWidth="141.0" text="Customer Editing">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="106.0" layoutY="75.0" prefHeight="26.0" prefWidth="74.0" text="Filter By">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfTargetFullName" layoutX="197.0" layoutY="76.0" />
+      <Label layoutX="197.0" layoutY="59.0" text="Full Name" />
+      <TextField fx:id="tfTargetPhoneNumber" layoutX="429.0" layoutY="76.0" />
+      <Label layoutX="429.0" layoutY="59.0" text="Phone Number" />
+      <Button layoutX="593.0" layoutY="111.0" mnemonicParsing="false" onAction="#onSearchClicked" text="Search" />
+      <Label layoutX="630.0" layoutY="411.0" prefHeight="26.0" prefWidth="118.0" text="Select Process">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="rbAdd" layoutX="630.0" layoutY="447.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonAddClicked" text="Add">
+         <toggleGroup>
+            <ToggleGroup fx:id="Crud" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rbUpdate" layoutX="630.0" layoutY="473.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonUpdateClicked" text="Update" toggleGroup="$Crud" />
+      <RadioButton fx:id="rbDelete" layoutX="630.0" layoutY="498.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonDeleteClicked" text="Delete" toggleGroup="$Crud" />
+      <Label fx:id="lblInformation" layoutX="77.0" layoutY="374.0" prefHeight="26.0" prefWidth="257.0" text="Add New Customer">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblInformationFullName" layoutX="78.0" layoutY="410.0" text="Full Name" />
+      <Label fx:id="lblInformationPhoneNumber" layoutX="78.0" layoutY="474.0" text="Phone Number" />
+      <Label fx:id="lblInformationBirthDate" layoutX="78.0" layoutY="536.0" text="Birth Date" />
+      <Label fx:id="lblInformationDescription" layoutX="278.0" layoutY="409.0" text="Description" />
+      <TextField fx:id="tfFullName" layoutX="78.0" layoutY="428.0" />
+      <TextField fx:id="tfPhoneNumber" layoutX="78.0" layoutY="492.0" />
+      <DatePicker fx:id="dpBirthDate" editable="false" layoutX="78.0" layoutY="554.0" />
+      <TextArea fx:id="taDescription" layoutX="278.0" layoutY="427.0" prefHeight="72.0" prefWidth="214.0" />
+      <Button fx:id="btnAdd" layoutX="78.0" layoutY="605.0" mnemonicParsing="false" onAction="#onButtonAddClicked" prefHeight="41.0" prefWidth="118.0" text="Add" />
+      <Button fx:id="btnUpdate" layoutX="78.0" layoutY="605.0" mnemonicParsing="false" onAction="#onButtonUpdateClicked" prefHeight="41.0" prefWidth="118.0" text="Update" />
+      <Button fx:id="btnDelete" layoutX="78.0" layoutY="403.0" mnemonicParsing="false" onAction="#onButtonDeleteClicked" prefHeight="41.0" prefWidth="118.0" text="Delete" />
+      <Button layoutX="711.0" layoutY="655.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="42.0" prefWidth="194.0" text="Go Back Receptionist Home Page" />
+      <Label fx:id="lblAddFeedBack" layoutX="77.0" layoutY="647.0" text="Label" />
+      <Label fx:id="lblUpdateFeedBack" layoutX="77.0" layoutY="647.0" text="Label" />
+      <Label fx:id="lblDeleteFeedBack" layoutX="77.0" layoutY="445.0" text="Label" />
+      <Button layoutX="91.0" layoutY="111.0" mnemonicParsing="false" onAction="#onClearAllFiltersClicked" text="Clear All Filters" />
+   </children>
+</AnchorPane>

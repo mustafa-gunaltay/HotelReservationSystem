@@ -14,7 +14,7 @@
       <Button layoutX="17.0" layoutY="21.0" mnemonicParsing="false" onAction="#onRoomsInfoClicked" prefHeight="36.0" prefWidth="134.0" text="Rooms Info" />
       <Button layoutX="151.0" layoutY="21.0" mnemonicParsing="false" onAction="#onFeaturesInfoClicked" prefHeight="36.0" prefWidth="134.0" text="Features Info" />
       <Button layoutX="285.0" layoutY="21.0" mnemonicParsing="false" onAction="#onServicesInfoClicked" prefHeight="36.0" prefWidth="134.0" text="Services Info" />
-      <Button layoutX="418.0" layoutY="21.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="134.0" text="Customers" />
+      <Button layoutX="418.0" layoutY="21.0" mnemonicParsing="false" onAction="#onCustomersClicked" prefHeight="36.0" prefWidth="134.0" text="Customers" />
       <TableView fx:id="tvReceptionistHomePage" layoutX="122.0" layoutY="228.0" prefHeight="200.0" prefWidth="572.0">
         <columns>
           <TableColumn fx:id="tblClmReservationId" prefWidth="104.80005264282227" text="Reservation Id" />
