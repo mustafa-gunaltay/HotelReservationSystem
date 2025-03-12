@@ -13,4 +13,6 @@ public interface AdminService {
     void validateAdmin(String username, String pw) throws InvalidAdminUsernameException, InvalidAdminPasswordException;
     Admin getAdmin(long id) throws EntityNotFoundByIdException;
     List<Admin> getAllAdmins();
+
+    Admin getAdminByUsername(String username) throws EntityNotFoundByUsernameException;
 }

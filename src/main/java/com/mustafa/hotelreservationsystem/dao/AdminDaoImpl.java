@@ -4,6 +4,7 @@ import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
 import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.models.Admin;
 import com.mustafa.hotelreservationsystem.models.Entity;
+import com.mustafa.hotelreservationsystem.models.Receptionist;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -256,6 +257,43 @@ public class AdminDaoImpl implements AdminDao {
                 }
             }
 
+        }
+    }
+
+
+    @Override
+    public Admin retrieveAdminByUsername(String username) throws ZeroRowsAffectedOrReturnedException {
+
+        Admin result = null;
+
+        String query = "SELECT id, fullName, username, passwordd FROM admin WHERE username = ?";
+
+        try (
+                Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement ps = conn.prepareStatement(query)
+        )
+        {
+            ps.setString(1, username);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                long id = rs.getLong("id");
+                String fullName = rs.getString("fullName");
+                String passwordd = rs.getString("passwordd");
+
+                result = new Admin(id, fullName, username, passwordd);
+            }
+
+        }
+        catch (SQLException ex){
+            System.out.println(ex);
+        }
+
+        if (result == null) {
+            throw new ZeroRowsAffectedOrReturnedException("Zero rows returned on SELECT");
+        }
+        else {
+            return result;
         }
     }
 

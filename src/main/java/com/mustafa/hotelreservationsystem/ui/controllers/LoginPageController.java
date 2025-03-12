@@ -32,6 +32,7 @@ public class LoginPageController implements Initializable {
     @FXML
     RadioButton radioButtonReceptionist;
 
+    @FXML
     public void onLoginClick(){
 
         if (!radioButtonAdmin.isSelected() && !radioButtonReceptionist.isSelected()){
@@ -47,6 +48,12 @@ public class LoginPageController implements Initializable {
             try {
 
                 aService.validateAdmin(username, password);
+
+                try{
+                    Admin.currentAdmin = aService.getAdminByUsername(username);
+                } catch (EntityNotFoundByUsernameException e) {
+                    // never throws exception because admin can't login without proper username and pw
+                }
 
                 SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/AdminHomePage.fxml",
                         new SceneInitializer<AdminHomePageController>() {
@@ -71,8 +78,8 @@ public class LoginPageController implements Initializable {
                 rService.validateReceptionist(username, password);
                 try{
                     Receptionist.currentReceptionist = rService.getReceptionistByUsername(username);
-                } catch (EntityNotFoundByIdException e) {
-                    // never throws exception
+                } catch (EntityNotFoundByUsernameException e) {
+                    // never throws exception because receptionist can't login without proper username and pw
                 }
 
                 SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/ReceptionistHomePage.fxml",

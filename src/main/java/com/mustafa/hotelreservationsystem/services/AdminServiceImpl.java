@@ -6,6 +6,7 @@ import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
 import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
 import com.mustafa.hotelreservationsystem.exceptions.general.*;
 import com.mustafa.hotelreservationsystem.models.Admin;
+import com.mustafa.hotelreservationsystem.models.Receptionist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,5 +140,17 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+
+    @Override
+    public Admin getAdminByUsername(String username) throws EntityNotFoundByUsernameException {
+
+        try{
+            Admin result = adminDao.retrieveAdminByUsername(username);
+            return result;
+        }
+        catch (ZeroRowsAffectedOrReturnedException e) {
+            throw new EntityNotFoundByUsernameException("Admin not found", username, e);
+        }
+    }
 
 }

@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="718.0" prefWidth="922.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.EditingCustomersPageController">
    <children>
       <TableView fx:id="tvCustomers" layoutX="78.0" layoutY="157.0" prefHeight="200.0" prefWidth="730.0">
@@ -67,7 +66,7 @@
       <Button fx:id="btnAdd" layoutX="78.0" layoutY="605.0" mnemonicParsing="false" onAction="#onButtonAddClicked" prefHeight="41.0" prefWidth="118.0" text="Add" />
       <Button fx:id="btnUpdate" layoutX="78.0" layoutY="605.0" mnemonicParsing="false" onAction="#onButtonUpdateClicked" prefHeight="41.0" prefWidth="118.0" text="Update" />
       <Button fx:id="btnDelete" layoutX="78.0" layoutY="403.0" mnemonicParsing="false" onAction="#onButtonDeleteClicked" prefHeight="41.0" prefWidth="118.0" text="Delete" />
-      <Button layoutX="711.0" layoutY="655.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="42.0" prefWidth="194.0" text="Go Back Receptionist Home Page" />
+      <Button layoutX="711.0" layoutY="655.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="42.0" prefWidth="194.0" text="Go Back Home Page" />
       <Label fx:id="lblAddFeedBack" layoutX="77.0" layoutY="647.0" text="Label" />
       <Label fx:id="lblUpdateFeedBack" layoutX="77.0" layoutY="647.0" text="Label" />
       <Label fx:id="lblDeleteFeedBack" layoutX="77.0" layoutY="445.0" text="Label" />

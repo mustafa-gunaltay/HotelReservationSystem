@@ -1,7 +1,10 @@
 package com.mustafa.hotelreservationsystem.ui.controllers;
 
 import com.mustafa.hotelreservationsystem.models.Admin;
+import com.mustafa.hotelreservationsystem.models.Customer;
 import com.mustafa.hotelreservationsystem.models.Receptionist;
+import com.mustafa.hotelreservationsystem.services.CustomerService;
+import com.mustafa.hotelreservationsystem.services.CustomerServiceImpl;
 import com.mustafa.hotelreservationsystem.services.ReceptionistService;
 import com.mustafa.hotelreservationsystem.services.ReceptionistServiceImpl;
 import com.mustafa.hotelreservationsystem.ui.utils.SceneInitializer;
@@ -64,7 +67,28 @@ public class AdminHomePageController implements Initializable {
                         List<Receptionist> allReceptionists = receptionistService.getAllReceptionists();
                         controller.setTableView(allReceptionists);
                     }
-                });
+                }
+        );
+
+    }
+
+
+    @FXML
+    public void onEditCustomersClicked() {
+
+        SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/EditingCustomersPage.fxml",
+                new SceneInitializer<EditingCustomersPageController>() {
+                    @Override
+                    public void initialize(EditingCustomersPageController controller) {
+
+                        CustomerService customerService = new CustomerServiceImpl();
+                        List<Customer> allCustomers = customerService.getAllCustomers();
+
+                        controller.setTableView(allCustomers);
+
+                    }
+                }
+        );
 
     }
 

@@ -1,9 +1,6 @@
 package com.mustafa.hotelreservationsystem.services;
 
-import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdException;
-import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistPasswordException;
-import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistUsernameException;
-import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
+import com.mustafa.hotelreservationsystem.exceptions.general.*;
 import com.mustafa.hotelreservationsystem.models.Receptionist;
 
 import java.util.List;
@@ -18,6 +15,6 @@ public interface ReceptionistService {
     Receptionist deleteReceptionist(long id) throws EntityNotFoundByIdException;
     Receptionist getReceptionist(long id) throws EntityNotFoundByIdException;
     boolean isUsernameTaken(String username);
-    Receptionist getReceptionistByUsername(String username) throws EntityNotFoundByIdException;
+    Receptionist getReceptionistByUsername(String username) throws EntityNotFoundByUsernameException;
 
 }

@@ -21,4 +21,5 @@ public interface AdminDao extends Crudable{
 
     List<Admin> retrieveAllAdmins();
     void updateSpecifiedAdminField(long id, String fieldName, Object fieldValue) throws DuplicateEntryException, ZeroRowsAffectedOrReturnedException;
+    Admin retrieveAdminByUsername(String username) throws ZeroRowsAffectedOrReturnedException;
 }

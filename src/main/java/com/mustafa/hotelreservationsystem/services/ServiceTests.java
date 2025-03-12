@@ -256,7 +256,7 @@ public class ServiceTests {
             Receptionist result = rService.getReceptionistByUsername("ozy");
             System.out.println(result);
         }
-        catch(EntityNotFoundByIdException e){
+        catch(EntityNotFoundByUsernameException e){
             System.out.println(e.getMessage());
         }
 
@@ -264,7 +264,7 @@ public class ServiceTests {
             Receptionist result = rService.getReceptionistByUsername("fafdsawd");
             System.out.println(result);
         }
-        catch(EntityNotFoundByIdException e){
+        catch(EntityNotFoundByUsernameException e){
             System.out.println(e.getMessage());
         }
 

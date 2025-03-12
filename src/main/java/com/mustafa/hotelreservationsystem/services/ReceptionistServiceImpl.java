@@ -4,10 +4,7 @@ import com.mustafa.hotelreservationsystem.dao.ReceptionistDao;
 import com.mustafa.hotelreservationsystem.dao.ReceptionistDaoImpl;
 import com.mustafa.hotelreservationsystem.exceptions.db.DuplicateEntryException;
 import com.mustafa.hotelreservationsystem.exceptions.db.ZeroRowsAffectedOrReturnedException;
-import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdException;
-import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistPasswordException;
-import com.mustafa.hotelreservationsystem.exceptions.general.InvalidReceptionistUsernameException;
-import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
+import com.mustafa.hotelreservationsystem.exceptions.general.*;
 import com.mustafa.hotelreservationsystem.models.Receptionist;
 
 import java.util.ArrayList;
@@ -154,14 +151,14 @@ public class ReceptionistServiceImpl implements ReceptionistService{
     }
 
     @Override
-    public Receptionist getReceptionistByUsername(String username) throws EntityNotFoundByIdException {
+    public Receptionist getReceptionistByUsername(String username) throws EntityNotFoundByUsernameException {
 
         try{
             Receptionist result = receptionistDao.retrieveReceptionistByUsername(username);
             return result;
         }
         catch (ZeroRowsAffectedOrReturnedException e) {
-            throw new EntityNotFoundByIdException("Receptionist not found", e);
+            throw new EntityNotFoundByUsernameException("Receptionist not found", username, e);
         }
     }
 }

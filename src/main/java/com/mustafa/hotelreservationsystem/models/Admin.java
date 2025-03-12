@@ -5,6 +5,8 @@ public class Admin extends Entity{
     private String username;
     private String passwordd;
 
+    public static Admin currentAdmin;
+
     public Admin(long id, String fullName, String username, String password) {
         super(id);
         this.fullName = fullName;

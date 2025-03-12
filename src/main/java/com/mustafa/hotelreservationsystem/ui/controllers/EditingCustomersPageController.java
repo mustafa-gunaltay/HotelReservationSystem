@@ -2,13 +2,8 @@ package com.mustafa.hotelreservationsystem.ui.controllers;
 
 import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdException;
 import com.mustafa.hotelreservationsystem.exceptions.general.SameEntityValueExistInDbException;
-import com.mustafa.hotelreservationsystem.models.Customer;
-import com.mustafa.hotelreservationsystem.models.ReservationWithCustomerAndRoom;
-import com.mustafa.hotelreservationsystem.models.ReservationWithCustomerAndRoomTableViewModel;
-import com.mustafa.hotelreservationsystem.services.CustomerService;
-import com.mustafa.hotelreservationsystem.services.CustomerServiceImpl;
-import com.mustafa.hotelreservationsystem.services.ReservationService;
-import com.mustafa.hotelreservationsystem.services.ReservationServiceImpl;
+import com.mustafa.hotelreservationsystem.models.*;
+import com.mustafa.hotelreservationsystem.services.*;
 import com.mustafa.hotelreservationsystem.ui.utils.AlertManager;
 import com.mustafa.hotelreservationsystem.ui.utils.SceneInitializer;
 import com.mustafa.hotelreservationsystem.ui.utils.SceneManager;
@@ -96,18 +91,39 @@ public class EditingCustomersPageController implements Initializable, HomePageRe
     @Override
     public void goBackHomePage() {
 
-        SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/ReceptionistHomePage.fxml",
-                new SceneInitializer<ReceptionistHomePageController>() {
-                    @Override
-                    public void initialize(ReceptionistHomePageController controller) {
-                        ReservationService reservationService = new ReservationServiceImpl();
-                        List<ReservationWithCustomerAndRoom> all = reservationService.getAllReservationsWithTheirCustomersAndRooms();
+        Roles currentRole = whoLogin();
 
-                        controller.setTableView(ReservationWithCustomerAndRoomTableViewModel.transformInnerJoinResultToTableViewModelFormat(all));
+        if (currentRole.equals(Roles.RECEPTIONIST)) {
+
+            SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/ReceptionistHomePage.fxml",
+                    new SceneInitializer<ReceptionistHomePageController>() {
+                        @Override
+                        public void initialize(ReceptionistHomePageController controller) {
+                            ReservationService reservationService = new ReservationServiceImpl();
+                            List<ReservationWithCustomerAndRoom> all = reservationService.getAllReservationsWithTheirCustomersAndRooms();
+
+                            controller.setTableView(ReservationWithCustomerAndRoomTableViewModel.transformInnerJoinResultToTableViewModelFormat(all));
+                        }
+
                     }
+            );
 
-                }
-        );
+        }
+        else if (currentRole.equals(Roles.ADMIN)) {
+
+            SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/AdminHomePage.fxml",
+                    new SceneInitializer<AdminHomePageController>() {
+                        @Override
+                        public void initialize(AdminHomePageController controller) {
+                            AdminService adminService = new AdminServiceImpl();
+                            List<Admin> allAdmins = adminService.getAllAdmins();
+                            controller.setTableView(allAdmins);
+                        }
+
+                    }
+            );
+
+        }
 
     }
 
@@ -405,6 +421,15 @@ public class EditingCustomersPageController implements Initializable, HomePageRe
         customersData.setAll(result);
     }
 
+
+    private Roles whoLogin() {
+        if (Admin.currentAdmin != null) {
+            return Roles.ADMIN;
+        }
+        else {
+            return Roles.RECEPTIONIST;
+        }
+    }
 
 
 }
