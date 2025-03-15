@@ -15,7 +15,7 @@
             <TableColumn fx:id="tblClmPassword" prefWidth="113.5999694824219" text="Password" />
          </columns>
       </TableView>
-      <Button layoutX="605.0" layoutY="113.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="134.0" text="Edit Services" />
+      <Button layoutX="605.0" layoutY="113.0" mnemonicParsing="false" onAction="#onEditServicesClicked" prefHeight="38.0" prefWidth="134.0" text="Edit Services" />
       <Button layoutX="605.0" layoutY="177.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="134.0" text="Edit Features" />
       <Button layoutX="605.0" layoutY="239.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="134.0" text="Edit Rooms" />
       <Button layoutX="605.0" layoutY="309.0" mnemonicParsing="false" onAction="#onEditCustomersClicked" prefHeight="38.0" prefWidth="134.0" text="Edit Customers" />

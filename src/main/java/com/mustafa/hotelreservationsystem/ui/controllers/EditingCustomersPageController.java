@@ -139,7 +139,7 @@ public class EditingCustomersPageController implements Initializable, HomePageRe
 
         rbAdd.setSelected(true);
         onRadioButtonAddClicked();
-        // labellar bosaltilacak
+
     }
 
     public void setTableView(List<Customer> customers) {
@@ -266,7 +266,7 @@ public class EditingCustomersPageController implements Initializable, HomePageRe
             return;
         }
 
-        lblAddFeedBack.setText("Add process successful");
+        lblAddFeedBack.setText("Adding process successful");
 
     }
 
@@ -356,7 +356,7 @@ public class EditingCustomersPageController implements Initializable, HomePageRe
 
 
         setTableView(customerService.getAllCustomers());
-        lblUpdateFeedBack.setText("Update process successful");
+        lblUpdateFeedBack.setText("Updating process successful");
 
     }
 
@@ -383,7 +383,7 @@ public class EditingCustomersPageController implements Initializable, HomePageRe
         }
 
         setTableView(customerService.getAllCustomers());
-        lblDeleteFeedBack.setText("Delete process successful");
+        lblDeleteFeedBack.setText("Deleting process successful");
     }
 
 
@@ -409,9 +409,9 @@ public class EditingCustomersPageController implements Initializable, HomePageRe
             String fullName = customer.getFullName();
             String phoneNumber = customer.getPhoneNumber();
 
-            boolean matchesFullName = fullName.isEmpty() || fullName.contains(targetFullName);
+            boolean matchesFullName = targetFullName.isEmpty() || fullName.contains(targetFullName);
 
-            boolean matchesPhoneNumber = phoneNumber.isEmpty() || phoneNumber.contains(targetPhoneNumber);
+            boolean matchesPhoneNumber = targetPhoneNumber.isEmpty() || phoneNumber.contains(targetPhoneNumber);
 
             if (matchesFullName && matchesPhoneNumber) {
                 result.add(customer);
