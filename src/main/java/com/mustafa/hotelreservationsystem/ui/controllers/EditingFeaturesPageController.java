@@ -2,11 +2,9 @@ package com.mustafa.hotelreservationsystem.ui.controllers;
 
 import com.mustafa.hotelreservationsystem.exceptions.general.EntityNotFoundByIdException;
 import com.mustafa.hotelreservationsystem.models.Admin;
+import com.mustafa.hotelreservationsystem.models.Feature;
 import com.mustafa.hotelreservationsystem.models.Service;
-import com.mustafa.hotelreservationsystem.services.AdminService;
-import com.mustafa.hotelreservationsystem.services.AdminServiceImpl;
-import com.mustafa.hotelreservationsystem.services.ServiceService;
-import com.mustafa.hotelreservationsystem.services.ServiceServiceImpl;
+import com.mustafa.hotelreservationsystem.services.*;
 import com.mustafa.hotelreservationsystem.ui.utils.AlertManager;
 import com.mustafa.hotelreservationsystem.ui.utils.SceneInitializer;
 import com.mustafa.hotelreservationsystem.ui.utils.SceneManager;
@@ -22,21 +20,25 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class EditingServicesPageController implements Initializable, HomePageReturnable {
+public class EditingFeaturesPageController implements Initializable, HomePageReturnable {
 
     @FXML
-    private TableView<Service> tvServices;
+    private TableView<Feature> tvFeatures;
     @FXML
-    private TableColumn<Service, Long> tblClmServiceId;
+    private TableColumn<Feature, Long> tblClmFeatureId;
     @FXML
-    private TableColumn<Service, String> tblClmServiceName;
+    private TableColumn<Feature, String> tblClmFeatureName;
     @FXML
-    private TableColumn<Service, Long> tblClmServicePrice;
+    private TableColumn<Feature, Long> tblClmFeaturePrice;
 
     @FXML
-    private TextField tfTargetServiceName;
+    private TextField tfFeatureName;
     @FXML
-    private TextField tfTargetServicePrice;
+    private TextField tfFeaturePrice;
+    @FXML
+    private TextField tfTargetFeatureName;
+    @FXML
+    private TextField tfTargetFeaturePrice;
 
     @FXML
     private Button btnAdd;
@@ -45,13 +47,12 @@ public class EditingServicesPageController implements Initializable, HomePageRet
     @FXML
     private Button btnDelete;
 
-
     @FXML
     private Label lblInformation;
     @FXML
-    private Label lblInformationServiceName;
+    private Label lblInformationFeatureName;
     @FXML
-    private Label lblInformationServicePrice;
+    private Label lblInformationFeaturePrice;
     @FXML
     private Label lblSearchFeedback;
     @FXML
@@ -68,15 +69,9 @@ public class EditingServicesPageController implements Initializable, HomePageRet
     @FXML
     private RadioButton rbDelete;
 
-    @FXML
-    private TextField tfServiceName;
-    @FXML
-    private TextField tfServicePrice;
 
-
-    private ObservableList<Service> servicesData = FXCollections.observableArrayList();
-    private List<Service> allServices;
-
+    private ObservableList<Feature> featuresData = FXCollections.observableArrayList();
+    private List<Feature> allFeatures;
 
 
     @Override
@@ -96,65 +91,66 @@ public class EditingServicesPageController implements Initializable, HomePageRet
 
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        tblClmServiceId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tblClmServiceName.setCellValueFactory(new PropertyValueFactory<>("serviceName"));
-        tblClmServicePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        tblClmFeatureId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tblClmFeatureName.setCellValueFactory(new PropertyValueFactory<>("featureName"));
+        tblClmFeaturePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        Utils.setupTableViewSelectionMultiple(tvServices);
+        Utils.setupTableViewSelectionMultiple(tvFeatures);
 
         rbAdd.setSelected(true);
         onRadioButtonAddClicked();
 
         lblSearchFeedback.setText("");
+
     }
 
-    public void setTableView (List<Service> allServices) {
-        servicesData.setAll(allServices);
-        tvServices.setItems(servicesData);
 
-        this.allServices = allServices;
+    public void setTableView (List<Feature> allFeatures) {
+        featuresData.setAll(allFeatures);
+        tvFeatures.setItems(featuresData);
+
+        this.allFeatures = allFeatures;
     }
 
 
     @FXML
     public void onButtonSearchClicked() {
 
-        String targetServiceName = tfTargetServiceName.getText();
+        String targetFeatureName = tfTargetFeatureName.getText();
 
-        long targetMinServicePrice;
-        if (tfTargetServicePrice.getText().isEmpty()) {
-            targetMinServicePrice = 0L;
+        long targetMinFeaturePrice;
+        if (tfTargetFeaturePrice.getText().isEmpty()) {
+            targetMinFeaturePrice = 0L;
         }
         else {
             try {
-                targetMinServicePrice = Long.parseLong(tfTargetServicePrice.getText());
+                targetMinFeaturePrice = Long.parseLong(tfTargetFeaturePrice.getText());
             } catch (NumberFormatException e) {
                 AlertManager.showWarning("Warning", "Please enter a valid price");
                 return;
             }
         }
 
-        ObservableList<Service> result = FXCollections.observableArrayList();
+        ObservableList<Feature> result = FXCollections.observableArrayList();
 
-        for (Service service : allServices) {
+        for (Feature feature : allFeatures) {
 
-            String serviceName = service.getServiceName();
-            int servicePrice = service.getPrice();
+            String featureName = feature.getFeatureName();
+            int featurePrice = feature.getPrice();
 
-            boolean matchesServiceName = targetServiceName.isEmpty() || serviceName.contains(targetServiceName);
+            boolean matchesFeatureName = targetFeatureName.isEmpty() || featureName.contains(targetFeatureName);
 
-            boolean matchesServicePrice = targetMinServicePrice == 0L || servicePrice >= (int) targetMinServicePrice;
+            boolean matchesFeaturePrice = targetMinFeaturePrice == 0L || featurePrice >= (int) targetMinFeaturePrice;
 
-            if (matchesServiceName && matchesServicePrice) {
-                result.add(service);
+            if (matchesFeatureName && matchesFeaturePrice) {
+                result.add(feature);
             }
         }
 
-        servicesData.setAll(result);
+        featuresData.setAll(result);
         lblSearchFeedback.setText( result.size() + " services found");
 
     }
@@ -162,10 +158,10 @@ public class EditingServicesPageController implements Initializable, HomePageRet
 
     @FXML
     public void onButtonClearAllFiltersClicked() {
-        tfTargetServiceName.clear();
-        tfTargetServicePrice.clear();
+        tfTargetFeatureName.clear();
+        tfTargetFeaturePrice.clear();
 
-        servicesData.setAll(allServices);
+        featuresData.setAll(allFeatures);
 
         lblSearchFeedback.setText("");
     }
@@ -174,20 +170,20 @@ public class EditingServicesPageController implements Initializable, HomePageRet
     @FXML
     public void onButtonAddClicked() {
 
-        if (tfServiceName.getText().isEmpty() ) {
-            AlertManager.showWarning("Warning", "Please enter service name");
+        if (tfFeatureName.getText().isEmpty() ) {
+            AlertManager.showWarning("Warning", "Please enter feature name");
             return;
         }
-        String serviceName = tfServiceName.getText();
+        String featureName = tfFeatureName.getText();
 
-        long servicePrice;
-        if (tfServicePrice.getText().isEmpty()) {
-            AlertManager.showWarning("Warning", "Please enter service price");
+        long featurePrice;
+        if (tfFeaturePrice.getText().isEmpty()) {
+            AlertManager.showWarning("Warning", "Please enter feature price");
             return;
         }
         else {
             try{
-                servicePrice = Long.parseLong(tfServicePrice.getText());
+                featurePrice = Long.parseLong(tfFeaturePrice.getText());
             } catch (NumberFormatException e) {
                 AlertManager.showWarning("Warning", "Please enter a valid price");
                 return;
@@ -195,9 +191,9 @@ public class EditingServicesPageController implements Initializable, HomePageRet
         }
 
 
-        ServiceService serviceService = new ServiceServiceImpl();
-        serviceService.createService(new Service(serviceName, (int) servicePrice));
-        setTableView(serviceService.getAllServices());
+        FeatureService featureService = new FeatureServiceImpl();
+        featureService.createFeature(new Feature(featureName, (int) featurePrice));
+        setTableView(featureService.getAllFeatures());
 
         lblAddFeedback.setText("Adding process successful");
 
@@ -208,35 +204,36 @@ public class EditingServicesPageController implements Initializable, HomePageRet
     @FXML
     public void onButtonUpdateClicked() {
 
-        if (tvServices.getSelectionModel().getSelectedItem() == null) {
-            AlertManager.showWarning("Warning", "Please select at least one service to update");
+        if (tvFeatures.getSelectionModel().getSelectedItem() == null) {
+            AlertManager.showWarning("Warning", "Please select at least one feature to update");
             return;
         }
 
-        String serviceName = null;
-        if ( ! tfServiceName.getText().isEmpty()) {
-            serviceName = tfServiceName.getText();
+        String featureName = null;
+        if ( ! tfFeatureName.getText().isEmpty()) {
+            featureName = tfFeatureName.getText();
         }
 
         long servicePrice = 0L;
-        if ( ! tfServicePrice.getText().isEmpty()) {
+        if ( ! tfFeaturePrice.getText().isEmpty()) {
             try{
-                servicePrice = Long.parseLong(tfServicePrice.getText());
+                servicePrice = Long.parseLong(tfFeaturePrice.getText());
             } catch (NumberFormatException e) {
                 AlertManager.showWarning("Warning", "Please enter a valid price");
                 return;
             }
         }
 
-        ServiceService serviceService = new ServiceServiceImpl();
-        List<Service> selectedServices = tvServices.getSelectionModel().getSelectedItems();
-        for (Service service : selectedServices) {
 
-            long serviceId = service.getId();
+        FeatureService featureService = new FeatureServiceImpl();
+        List<Feature> selectedFeatures = tvFeatures.getSelectionModel().getSelectedItems();
+        for (Feature feature : selectedFeatures) {
 
-            if (serviceName != null){
+            long featureId = feature.getId();
+
+            if (featureName != null){
                 try {
-                    serviceService.changeServiceName(serviceId, serviceName);
+                    featureService.changeFeatureName(featureId, featureName);
                 } catch (EntityNotFoundByIdException e) {
                     AlertManager.showError("Error", e.getMessage());
                     return;
@@ -245,7 +242,7 @@ public class EditingServicesPageController implements Initializable, HomePageRet
 
             if (servicePrice != 0L) {
                 try{
-                    serviceService.changePrice(serviceId, (int) servicePrice);
+                    featureService.changePrice(featureId, (int) servicePrice);
                 } catch (EntityNotFoundByIdException e) {
                     AlertManager.showError("Error", e.getMessage());
                     return;
@@ -253,7 +250,7 @@ public class EditingServicesPageController implements Initializable, HomePageRet
             }
         }
 
-        setTableView(serviceService.getAllServices());
+        setTableView(featureService.getAllFeatures());
         lblUpdateFeedback.setText("Updating process successful");
 
     }
@@ -262,30 +259,30 @@ public class EditingServicesPageController implements Initializable, HomePageRet
     @FXML
     public void onButtonDeleteClicked() {
 
-        if (tvServices.getSelectionModel().getSelectedItem() == null) {
-            AlertManager.showWarning("Warning", "Please select at least one service to delete");
+        if (tvFeatures.getSelectionModel().getSelectedItem() == null) {
+            AlertManager.showWarning("Warning", "Please select at least one feature to delete");
             return;
         }
 
-        ServiceService serviceService = new ServiceServiceImpl();
-        List<Service> selectedServices = tvServices.getSelectionModel().getSelectedItems();
-        for (Service service : selectedServices) {
 
-            long serviceId = service.getId();
+        FeatureService featureService = new FeatureServiceImpl();
+        List<Feature> selectedFeatures = tvFeatures.getSelectionModel().getSelectedItems();
+        for (Feature feature : selectedFeatures) {
+
+            long featureId = feature.getId();
 
             try{
-                serviceService.deleteService(serviceId);
+                featureService.deleteFeature(featureId);
             } catch (EntityNotFoundByIdException e) {
                 AlertManager.showError("Error", e.getMessage());
                 return;
             }
         }
 
-        setTableView(serviceService.getAllServices());
+        setTableView(featureService.getAllFeatures());
         lblDeleteFeedback.setText("Deleting process successful");
 
     }
-
 
     @FXML
     public void onRadioButtonAddClicked() {
@@ -299,7 +296,7 @@ public class EditingServicesPageController implements Initializable, HomePageRet
 
         setInformationFieldsVisibility(true);
 
-        lblInformation.setText("Add New Service");
+        lblInformation.setText("Add New Feature");
         setEmptyAllInformationFields();
         setEmptyAllFeedbackFields();
     }
@@ -316,7 +313,7 @@ public class EditingServicesPageController implements Initializable, HomePageRet
 
         setInformationFieldsVisibility(true);
 
-        lblInformation.setText("Update Selected Services");
+        lblInformation.setText("Update Selected Features");
         setEmptyAllInformationFields();
         setEmptyAllFeedbackFields();
     }
@@ -333,21 +330,21 @@ public class EditingServicesPageController implements Initializable, HomePageRet
 
         setInformationFieldsVisibility(false);
 
-        lblInformation.setText("Delete Selected Services");
+        lblInformation.setText("Delete Selected Features");
         setEmptyAllFeedbackFields();
     }
 
     private void setInformationFieldsVisibility(boolean visible) {
-        tfServiceName.setVisible(visible);
-        tfServicePrice.setVisible(visible);
+        tfFeatureName.setVisible(visible);
+        tfFeaturePrice.setVisible(visible);
 
-        lblInformationServiceName.setVisible(visible);
-        lblInformationServicePrice.setVisible(visible);
+        lblInformationFeatureName.setVisible(visible);
+        lblInformationFeaturePrice.setVisible(visible);
     }
 
     private void setEmptyAllInformationFields() {
-        tfServiceName.setText("");
-        tfServicePrice.setText("");
+        tfFeatureName.setText("");
+        tfFeaturePrice.setText("");
     }
 
     private void setEmptyAllFeedbackFields() {
@@ -355,5 +352,6 @@ public class EditingServicesPageController implements Initializable, HomePageRet
         lblUpdateFeedback.setText("");
         lblDeleteFeedback.setText("");
     }
+
 
 }

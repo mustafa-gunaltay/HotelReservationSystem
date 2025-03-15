@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="615.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.EditingFeaturesPageController">
+   <children>
+      <Label layoutX="336.0" layoutY="14.0" text="Feature Editing">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="115.0" layoutY="81.0" text="Filter by">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfTargetFeatureName" layoutX="223.0" layoutY="82.0" />
+      <TextField fx:id="tfTargetFeaturePrice" layoutX="424.0" layoutY="82.0" />
+      <Label layoutX="223.0" layoutY="64.0" text="Feature Name" />
+      <Label layoutX="424.0" layoutY="64.0" text="Minimum Feature Price" />
+      <Button layoutX="102.0" layoutY="115.0" mnemonicParsing="false" onAction="#onButtonClearAllFiltersClicked" text="Clear all filters" />
+      <Button layoutX="548.0" layoutY="115.0" mnemonicParsing="false" onAction="#onButtonSearchClicked" text="Search" />
+      <TableView fx:id="tvFeatures" layoutX="190.0" layoutY="172.0" prefHeight="200.0" prefWidth="434.0">
+        <columns>
+          <TableColumn fx:id="tblClmFeatureId" prefWidth="116.0" text="Feature Id" />
+          <TableColumn fx:id="tblClmFeatureName" prefWidth="204.800048828125" text="Feature Name" />
+            <TableColumn fx:id="tblClmFeaturePrice" prefWidth="112.7999267578125" text="Feature Price" />
+        </columns>
+      </TableView>
+      <Label layoutX="544.0" layoutY="400.0" text="Select Process">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="rbAdd" layoutX="544.0" layoutY="435.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonAddClicked" text="Add">
+         <toggleGroup>
+            <ToggleGroup fx:id="Crud" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rbUpdate" layoutX="544.0" layoutY="460.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonUpdateClicked" text="Update" toggleGroup="$Crud" />
+      <RadioButton fx:id="rbDelete" layoutX="544.0" layoutY="484.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonDeleteClicked" text="Delete" toggleGroup="$Crud" />
+      <Label fx:id="lblInformation" layoutX="82.0" layoutY="385.0" prefHeight="26.0" prefWidth="214.0" text="Add New Feature">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfFeatureName" layoutX="82.0" layoutY="435.0" />
+      <TextField fx:id="tfFeaturePrice" layoutX="82.0" layoutY="493.0" />
+      <Label fx:id="lblInformationFeatureName" layoutX="82.0" layoutY="417.0" text="Feature Name" />
+      <Label fx:id="lblInformationFeaturePrice" layoutX="84.0" layoutY="473.0" text="Feature Price" />
+      <Label fx:id="lblSearchFeedback" layoutX="548.0" layoutY="141.0" text="Label" />
+      <Button fx:id="btnAdd" layoutX="82.0" layoutY="537.0" mnemonicParsing="false" onAction="#onButtonAddClicked" prefHeight="38.0" prefWidth="98.0" text="Add" />
+      <Button fx:id="btnDelete" layoutX="82.0" layoutY="420.0" mnemonicParsing="false" onAction="#onButtonDeleteClicked" prefHeight="38.0" prefWidth="98.0" text="Delete" />
+      <Button fx:id="btnUpdate" layoutX="82.0" layoutY="537.0" mnemonicParsing="false" onAction="#onButtonUpdateClicked" prefHeight="38.0" prefWidth="98.0" text="Update" />
+      <Label fx:id="lblAddFeedback" layoutX="82.0" layoutY="578.0" text="Label" />
+      <Label fx:id="lblUpdateFeedback" layoutX="82.0" layoutY="578.0" text="Label" />
+      <Label fx:id="lblDeleteFeedback" layoutX="82.0" layoutY="458.0" text="Label" />
+      <Button layoutX="621.0" layoutY="559.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="38.0" prefWidth="182.0" text="Go Back Admin Home Page" />
+   </children>
+</AnchorPane>
