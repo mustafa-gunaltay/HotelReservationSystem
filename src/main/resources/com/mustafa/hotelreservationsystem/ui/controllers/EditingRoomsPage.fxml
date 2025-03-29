@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="661.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.EditingRoomsPageController">
+   <children>
+      <TableView fx:id="tvRooms" layoutX="183.0" layoutY="144.0" prefHeight="200.0" prefWidth="483.0">
+        <columns>
+          <TableColumn fx:id="tblClmRoomId" prefWidth="95.19998168945312" text="Room Id" />
+          <TableColumn fx:id="tblClmRoomName" prefWidth="132.8000030517578" text="Room Name" />
+            <TableColumn fx:id="tblClmRoomCapacity" prefWidth="112.0" text="Capacity" />
+            <TableColumn fx:id="tblClmRoomUnitPrice" prefWidth="141.59999389648436" text="Unit Price" />
+        </columns>
+      </TableView>
+      <Label layoutX="333.0" layoutY="14.0" prefHeight="26.0" prefWidth="141.0" text="Room Editing">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfTargetRoomName" layoutX="155.0" layoutY="66.0" />
+      <TextField fx:id="tfTargetCapacity" layoutX="359.0" layoutY="66.0" />
+      <TextField fx:id="tfTargetUnitPrice" layoutX="570.0" layoutY="66.0" />
+      <Label layoutX="48.0" layoutY="65.0" prefHeight="26.0" prefWidth="80.0" text="Filter By">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="155.0" layoutY="48.0" text="Room Name" />
+      <Label layoutX="359.0" layoutY="48.0" text="Minimum Capacity" />
+      <Label layoutX="570.0" layoutY="48.0" text="Minimum Unit Price" />
+      <Button layoutX="694.0" layoutY="107.0" mnemonicParsing="false" onAction="#onButtonSearchClicked" text="Search" />
+      <Button layoutX="33.0" layoutY="94.0" mnemonicParsing="false" onAction="#onButtonClearAllFiltersClicked" text="Clear All Filters" />
+      <Label layoutX="621.0" layoutY="386.0" prefHeight="26.0" prefWidth="118.0" text="Select Process">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="rbAdd" layoutX="621.0" layoutY="420.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonAddClicked" text="Add">
+         <toggleGroup>
+            <ToggleGroup fx:id="Crud" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="rbUpdate" layoutX="621.0" layoutY="444.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonUpdateClicked" text="Update" toggleGroup="$Crud" />
+      <RadioButton fx:id="rbDelete" layoutX="621.0" layoutY="468.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonDeleteClicked" text="Delete" toggleGroup="$Crud" />
+      <Button fx:id="btnAdd" layoutX="60.0" layoutY="572.0" mnemonicParsing="false" onAction="#onButtonAddClicked" prefHeight="39.0" prefWidth="94.0" text="Add" />
+      <Button fx:id="btnUpdate" layoutX="60.0" layoutY="572.0" mnemonicParsing="false" onAction="#onButtonUpdateClicked" prefHeight="39.0" prefWidth="94.0" text="Update" />
+      <Button fx:id="btnDelete" layoutX="60.0" layoutY="398.0" mnemonicParsing="false" onAction="#onButtonDeleteClicked" prefHeight="39.0" prefWidth="94.0" text="Delete" />
+      <TextField fx:id="tfRoomName" layoutX="62.0" layoutY="414.0" />
+      <TextField fx:id="tfCapacity" layoutX="63.0" layoutY="471.0" />
+      <TextField fx:id="tfUnitPrice" layoutX="63.0" layoutY="531.0" />
+      <Label fx:id="lblInformation" layoutX="54.0" layoutY="366.0" prefHeight="26.0" prefWidth="257.0" text="Add New Room">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblInformationRoomName" layoutX="62.0" layoutY="398.0" text="Room Name" />
+      <Label fx:id="lblInformationCapacity" layoutX="62.0" layoutY="453.0" text="Capacity" />
+      <Label fx:id="lblInformationUnitPrice" layoutX="63.0" layoutY="513.0" text="Unit Price" />
+      <Label fx:id="lblAddFeedback" layoutX="60.0" layoutY="609.0" text="Label" />
+      <Label fx:id="lblUpdateFeedback" layoutX="60.0" layoutY="609.0" text="Label" />
+      <Label fx:id="lblDeleteFeedback" layoutX="60.0" layoutY="437.0" text="Label" />
+      <Button layoutX="677.0" layoutY="609.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="39.0" prefWidth="178.0" text="Go Back Admin Home Page" />
+      <Label fx:id="lblSearchFeedback" layoutX="694.0" layoutY="136.0" text="Label" />
+   </children>
+</AnchorPane>

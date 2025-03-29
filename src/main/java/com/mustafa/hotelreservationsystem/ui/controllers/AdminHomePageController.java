@@ -125,5 +125,22 @@ public class AdminHomePageController implements Initializable {
 
     }
 
+    @FXML
+    public void onEditRoomsClicked() {
+        SceneManager.switchScene("/com/mustafa/hotelreservationsystem/ui/controllers/EditingRoomsPage.fxml",
+                new SceneInitializer<EditingRoomsPageController>() {
+                    @Override
+                    public void initialize(EditingRoomsPageController controller) {
+
+                        RoomService roomService = new RoomServiceImpl();
+                        List<Room> allRooms = roomService.getAllRooms();
+
+                        controller.setTableView(allRooms);
+
+                    }
+                }
+        );
+    }
+
 
 }
