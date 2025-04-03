@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="544.0" prefWidth="779.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.AdminHomePageController">
+<AnchorPane prefHeight="544.0" prefWidth="779.0" stylesheets="@css/hotel-theme.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.AdminHomePageController">
    <children>
-      <TableView fx:id="tvAdmin" layoutX="50.0" layoutY="25.0" prefHeight="214.0" prefWidth="441.0">
+      <TableView fx:id="tvAdmin" layoutX="27.0" layoutY="144.0" prefHeight="214.0" prefWidth="487.0">
          <columns>
-            <TableColumn fx:id="tblClmId" prefWidth="102.4000015258789" text="Admin ID" />
-            <TableColumn fx:id="tblClmFullName" prefWidth="118.4000244140625" text="Full Name" />
-            <TableColumn fx:id="tblClmUsername" prefWidth="104.79998779296875" text="Username" />
-            <TableColumn fx:id="tblClmPassword" prefWidth="113.5999694824219" text="Password" />
+            <TableColumn fx:id="tblClmId" prefWidth="94.39997100830078" text="Admin ID" />
+            <TableColumn fx:id="tblClmFullName" prefWidth="122.39996337890625" text="Full Name" />
+            <TableColumn fx:id="tblClmUsername" prefWidth="131.20001220703125" text="Username" />
+            <TableColumn fx:id="tblClmPassword" prefWidth="136.79995727539062" text="Password" />
          </columns>
       </TableView>
-      <Button layoutX="605.0" layoutY="113.0" mnemonicParsing="false" onAction="#onEditServicesClicked" prefHeight="38.0" prefWidth="134.0" text="Edit Services" />
-      <Button layoutX="605.0" layoutY="177.0" mnemonicParsing="false" onAction="#onEditFeaturesClicked" prefHeight="38.0" prefWidth="134.0" text="Edit Features" />
-      <Button layoutX="605.0" layoutY="239.0" mnemonicParsing="false" onAction="#onEditRoomsClicked" prefHeight="38.0" prefWidth="134.0" text="Edit Rooms" />
-      <Button layoutX="605.0" layoutY="309.0" mnemonicParsing="false" onAction="#onEditCustomersClicked" prefHeight="38.0" prefWidth="134.0" text="Edit Customers" />
-      <Button layoutX="605.0" layoutY="48.0" mnemonicParsing="false" onAction="#onEditReceptionistClick" prefHeight="38.0" prefWidth="134.0" text="Edit Receptionists" />
+      <Label layoutX="158.0" layoutY="27.0" prefHeight="30.0" prefWidth="242.0" styleClass="my-header-label" text="Admin Home Page"> </Label>
+      <Pane layoutX="548.0" prefHeight="547.0" prefWidth="234.0" style="-fx-background-color: #e0c98f;">
+         <children>
+            <Button layoutX="31.0" layoutY="244.0" mnemonicParsing="false" onAction="#onEditRoomsClicked" prefHeight="38.0" prefWidth="172.0" text="Edit Rooms" />
+            <Button layoutX="31.0" layoutY="111.0" mnemonicParsing="false" onAction="#onEditCustomersClicked" prefHeight="38.0" prefWidth="172.0" text="Edit Customers" />
+            <Button layoutX="31.0" layoutY="179.0" mnemonicParsing="false" onAction="#onEditReceptionistClick" prefHeight="38.0" prefWidth="172.0" text="Edit Receptionists" />
+            <Button layoutX="31.0" layoutY="335.0" mnemonicParsing="false" onAction="#onEditServicesClicked" prefHeight="38.0" prefWidth="172.0" text="Edit Services" />
+            <Button layoutX="31.0" layoutY="399.0" mnemonicParsing="false" onAction="#onEditFeaturesClicked" prefHeight="38.0" prefWidth="172.0" text="Edit Features" />
+            <Label layoutX="51.0" layoutY="30.0" text="Configuration Panel" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

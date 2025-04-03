@@ -9,11 +9,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="532.0" prefWidth="779.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.EditingReceptionistPageController">
+<AnchorPane prefHeight="641.0" prefWidth="915.0" stylesheets="@css/hotel-theme.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.EditingReceptionistPageController">
    <children>
-      <TableView fx:id="tvReceptionist" layoutX="40.0" layoutY="32.0" prefHeight="200.0" prefWidth="420.0">
+      <TableView fx:id="tvReceptionist" layoutX="248.0" layoutY="82.0" prefHeight="200.0" prefWidth="420.0">
         <columns>
           <TableColumn fx:id="tblClmId" prefWidth="98.39997100830078" text="Receptionist Id" />
           <TableColumn fx:id="tblClmFullName" prefWidth="121.60003662109375" text="Full Name" />
@@ -21,35 +22,40 @@
             <TableColumn fx:id="tblClmPassword" prefWidth="111.19998168945312" text="Password" />
         </columns>
       </TableView>
-      <Label fx:id="lblInformation" layoutX="52.0" layoutY="256.0" prefHeight="27.0" prefWidth="291.0" text="Add New Receptionist">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="tfFullName" layoutX="52.0" layoutY="308.0" />
-      <Label fx:id="lblFullName" layoutX="52.0" layoutY="291.0" prefHeight="18.0" prefWidth="74.0" text="Full Name" />
-      <PasswordField fx:id="tfPassword" layoutX="52.0" layoutY="419.0" />
-      <Label fx:id="lblPassword" layoutX="52.0" layoutY="402.0" text="Password" />
-      <Label fx:id="lblUsername" layoutX="52.0" layoutY="345.0" text="Username" />
-      <Button fx:id="btnAdd" layoutX="51.0" layoutY="460.0" mnemonicParsing="false" onAction="#onButtonAddClicked" prefHeight="37.0" prefWidth="102.0" text="Add" />
-      <RadioButton fx:id="rbAdd" layoutX="364.0" layoutY="289.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonAddClicked" text="Add">
-         <toggleGroup>
-            <ToggleGroup fx:id="Crud" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton fx:id="rbUpdate" layoutX="364.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonUpdateClicked" text="Update" toggleGroup="$Crud" />
-      <RadioButton fx:id="rbDelete" layoutX="364.0" layoutY="343.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonDeleteClicked" text="Delete" toggleGroup="$Crud" />
-      <Label layoutX="357.0" layoutY="257.0" prefHeight="27.0" prefWidth="150.0" text="Select Process">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnUpdate" layoutX="51.0" layoutY="460.0" mnemonicParsing="false" onAction="#onButtonUpdateClicked" prefHeight="37.0" prefWidth="102.0" text="Update" />
-      <Button fx:id="btnDelete" layoutX="51.0" layoutY="290.0" mnemonicParsing="false" onAction="#onButtonDeleteClicked" prefHeight="37.0" prefWidth="102.0" text="Delete" />
-      <TextField fx:id="tfUsername" layoutX="51.0" layoutY="363.0" />
-      <Label fx:id="lblAddProcessFeedBack" layoutX="51.0" layoutY="498.0" prefHeight="18.0" prefWidth="125.0" text="Add Information Label" />
-      <Label fx:id="lblUpdateProcessFeedBack" layoutX="49.0" layoutY="498.0" text="Update Information Label" />
-      <Label fx:id="lblDeleteProcessFeedBack" layoutX="51.0" layoutY="326.0" text="Delete Information Label" />
-      <Button layoutX="581.0" layoutY="455.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="46.0" prefWidth="167.0" text="Go Back Admin Home Page" />
+      <Button layoutX="668.0" layoutY="570.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="46.0" prefWidth="232.0" text="Go Back Admin Home Page" />
+      <Label layoutX="332.0" layoutY="14.0" styleClass="my-header-label" text="Receptionist Editing" />
+      <Pane layoutX="52.0" layoutY="334.0" prefHeight="283.0" prefWidth="531.0" styleClass="my-pane-background">
+         <children>
+            <RadioButton fx:id="rbAdd" layoutX="404.0" layoutY="69.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonAddClicked" text="Add">
+               <toggleGroup>
+                  <ToggleGroup fx:id="Crud" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="rbUpdate" layoutX="404.0" layoutY="97.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonUpdateClicked" text="Update" toggleGroup="$Crud" />
+            <RadioButton fx:id="rbDelete" layoutX="404.0" layoutY="123.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonDeleteClicked" text="Delete" toggleGroup="$Crud" />
+            <Label layoutX="404.0" layoutY="34.0" prefHeight="27.0" prefWidth="110.0" text="Select Process">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblInformation" layoutX="15.0" layoutY="8.0" prefHeight="27.0" prefWidth="291.0" text="Add New Receptionist">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfFullName" layoutX="15.0" layoutY="60.0" />
+            <PasswordField fx:id="tfPassword" layoutX="15.0" layoutY="171.0" />
+            <Label fx:id="lblPassword" layoutX="15.0" layoutY="154.0" text="Password" />
+            <Label fx:id="lblUsername" layoutX="15.0" layoutY="97.0" text="Username" />
+            <Button fx:id="btnUpdate" layoutX="14.0" layoutY="212.0" mnemonicParsing="false" onAction="#onButtonUpdateClicked" prefHeight="37.0" prefWidth="102.0" text="Update" />
+            <Button fx:id="btnDelete" layoutX="14.0" layoutY="42.0" mnemonicParsing="false" onAction="#onButtonDeleteClicked" prefHeight="37.0" prefWidth="102.0" text="Delete" />
+            <TextField fx:id="tfUsername" layoutX="14.0" layoutY="115.0" />
+            <Label fx:id="lblUpdateProcessFeedBack" layoutX="12.0" layoutY="250.0" text="Update Information Label" />
+            <Label fx:id="lblDeleteProcessFeedBack" layoutX="14.0" layoutY="78.0" text="Delete Information Label" />
+            <Label fx:id="lblFullName" layoutX="13.0" layoutY="38.0" prefHeight="18.0" prefWidth="74.0" text="Full Name" />
+            <Button fx:id="btnAdd" layoutX="14.0" layoutY="212.0" mnemonicParsing="false" onAction="#onButtonAddClicked" prefHeight="37.0" prefWidth="102.0" text="Add" />
+            <Label fx:id="lblAddProcessFeedBack" layoutX="12.0" layoutY="249.0" prefHeight="18.0" prefWidth="125.0" text="Add Information Label" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

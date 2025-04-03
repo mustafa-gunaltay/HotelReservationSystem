@@ -145,25 +145,11 @@ public class ReceptionistHomePageController implements Initializable {
 
     @FXML
     public void onClearAllFiltersClicked(){
-        onCheckInDateClearClicked();
-        onCheckOutDateClearClicked();
-        onRoomNameClearClicked();
-    }
-
-    @FXML
-    public void onCheckInDateClearClicked(){
         dpCheckInDate.setValue(null);
-    }
-
-    @FXML
-    public void onCheckOutDateClearClicked(){
         dpCheckOutDate.setValue(null);
-    }
-
-    @FXML
-    public void onRoomNameClearClicked(){
         tfTargetRoomName.clear();
     }
+
 
     @FXML
     public void onRoomsInfoClicked(){

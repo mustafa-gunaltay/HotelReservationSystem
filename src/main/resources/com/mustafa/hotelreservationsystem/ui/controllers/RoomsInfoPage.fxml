@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="508.0" prefWidth="718.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.RoomsInfoPageController">
+<AnchorPane prefHeight="508.0" prefWidth="718.0" stylesheets="@css/hotel-theme.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.RoomsInfoPageController">
    <children>
       <TableView fx:id="tvRoomsWithTheirFeaturesAndServices" layoutX="42.0" layoutY="169.0" prefHeight="270.0" prefWidth="634.0">
          <columns>
@@ -25,14 +25,14 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="42.0" layoutY="68.0" prefHeight="27.0" prefWidth="185.0" text="Filter by room name:">
+      <Label layoutX="75.0" layoutY="70.0" prefHeight="27.0" prefWidth="143.0" text="Filter by room name:">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <TextField fx:id="tfTargetRoomName" layoutX="242.0" layoutY="69.0" />
       <Button layoutX="242.0" layoutY="103.0" mnemonicParsing="false" onAction="#onSearchClicked" text="Search" />
-      <Label fx:id="lblSearchFeedBack" layoutX="242.0" layoutY="129.0" text="Label" />
-      <Button layoutX="510.0" layoutY="459.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="34.0" prefWidth="193.0" text="Go Back Receptionist Home Page" />
+      <Label fx:id="lblSearchFeedBack" layoutX="242.0" layoutY="135.0" text="Label" />
+      <Button layoutX="436.0" layoutY="459.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="34.0" prefWidth="268.0" text="Go Back Receptionist Home Page" />
    </children>
 </AnchorPane>

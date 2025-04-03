@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="494.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.ServicesInfoPageController">
+<AnchorPane prefHeight="494.0" prefWidth="677.0" stylesheets="@css/hotel-theme.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.ServicesInfoPageController">
    <children>
       <TableView fx:id="tvServices" layoutX="147.0" layoutY="194.0" prefHeight="200.0" prefWidth="345.0">
          <columns>
@@ -18,19 +17,19 @@
             <TableColumn fx:id="tblClmServicePrice" prefWidth="133.60000610351562" text="Service Price" />
          </columns>
       </TableView>
-      <Label layoutX="43.0" layoutY="94.0" prefHeight="27.0" prefWidth="199.0" text="Filter by service name:">
+      <Label layoutX="73.0" layoutY="96.0" prefHeight="27.0" prefWidth="160.0" text="Filter by service name:">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <TextField fx:id="tfTargetServiceName" layoutX="242.0" layoutY="95.0" />
-      <Button layoutX="242.0" layoutY="129.0" mnemonicParsing="false" onAction="#onSearchClicked" prefHeight="27.0" prefWidth="62.0" text="Search" />
-      <Label fx:id="lblSearchFeedBack" layoutX="242.0" layoutY="156.0" text="Label" />
+      <Button layoutX="242.0" layoutY="129.0" mnemonicParsing="false" onAction="#onSearchClicked" prefHeight="32.0" prefWidth="84.0" text="Search" />
+      <Label fx:id="lblSearchFeedBack" layoutX="242.0" layoutY="161.0" text="Label" />
       <Label layoutX="233.0" layoutY="24.0" prefHeight="27.0" prefWidth="199.0" text="All Services In Rooms">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="453.0" layoutY="427.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="42.0" prefWidth="208.0" text="Go Back Receptionist Home Page" />
+      <Button layoutX="405.0" layoutY="437.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="42.0" prefWidth="257.0" text="Go Back Receptionist Home Page" />
    </children>
 </AnchorPane>

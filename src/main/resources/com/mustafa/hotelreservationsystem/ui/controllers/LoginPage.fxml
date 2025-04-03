@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.LoginPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/hotel-theme.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.LoginPageController">
    <children>
       <TextField fx:id="textFieldUsername" layoutX="215.0" layoutY="132.0" />
       <TextField fx:id="textFieldPassword" layoutX="216.0" layoutY="218.0" />
@@ -23,21 +25,17 @@
          </font>
       </Text>
       <Button fx:id="btnLogin" layoutX="243.0" layoutY="293.0" mnemonicParsing="false" onAction="#onLoginClick" prefHeight="37.0" prefWidth="96.0" text="Login" />
-      <Text layoutX="207.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Page">
-         <font>
-            <Font size="38.0" />
-         </font>
-      </Text>
-      <RadioButton fx:id="radioButtonAdmin" layoutX="37.0" layoutY="105.0" mnemonicParsing="false" text="Admin">
-         <toggleGroup>
-            <ToggleGroup fx:id="Roles" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton fx:id="radioButtonReceptionist" layoutX="37.0" layoutY="136.0" mnemonicParsing="false" text="Receptionist" toggleGroup="$Roles" />
-      <Text layoutX="75.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Roles">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Text>
+      <Pane layoutX="14.0" layoutY="132.0" prefHeight="99.0" prefWidth="150.0" styleClass="my-pane-background">
+         <children>
+            <Label layoutX="34.0" layoutY="14.0" text="Role" />
+            <RadioButton fx:id="radioButtonAdmin" layoutX="34.0" layoutY="40.0" mnemonicParsing="false" text="Admin">
+               <toggleGroup>
+                  <ToggleGroup fx:id="Roles" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="radioButtonReceptionist" layoutX="34.0" layoutY="71.0" mnemonicParsing="false" text="Receptionist" toggleGroup="$Roles" />
+         </children>
+      </Pane>
+      <Label layoutX="232.0" layoutY="28.0" styleClass="my-header-label" text="Login Page" />
    </children>
 </AnchorPane>

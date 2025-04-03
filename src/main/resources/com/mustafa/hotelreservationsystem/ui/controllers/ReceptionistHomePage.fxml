@@ -7,48 +7,57 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="625.0" prefWidth="849.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.ReceptionistHomePageController">
+<AnchorPane prefHeight="670.0" prefWidth="927.0" stylesheets="@css/hotel-theme.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.ReceptionistHomePageController">
    <children>
-      <Button layoutX="17.0" layoutY="21.0" mnemonicParsing="false" onAction="#onRoomsInfoClicked" prefHeight="36.0" prefWidth="134.0" text="Rooms Info" />
-      <Button layoutX="151.0" layoutY="21.0" mnemonicParsing="false" onAction="#onFeaturesInfoClicked" prefHeight="36.0" prefWidth="134.0" text="Features Info" />
-      <Button layoutX="285.0" layoutY="21.0" mnemonicParsing="false" onAction="#onServicesInfoClicked" prefHeight="36.0" prefWidth="134.0" text="Services Info" />
-      <Button layoutX="418.0" layoutY="21.0" mnemonicParsing="false" onAction="#onCustomersClicked" prefHeight="36.0" prefWidth="134.0" text="Customers" />
-      <TableView fx:id="tvReceptionistHomePage" layoutX="122.0" layoutY="228.0" prefHeight="200.0" prefWidth="572.0">
+      <TableView fx:id="tvReceptionistHomePage" layoutX="14.0" layoutY="268.0" prefHeight="200.0" prefWidth="654.0">
         <columns>
           <TableColumn fx:id="tblClmReservationId" prefWidth="104.80005264282227" text="Reservation Id" />
-          <TableColumn fx:id="tblClmRoomsNames" prefWidth="108.79998779296875" text="Room Names" />
-            <TableColumn fx:id="tblClmCheckInDate" prefWidth="99.99992370605469" text="Check-In Date" />
-            <TableColumn fx:id="tblClmCheckOutDate" prefWidth="108.7999267578125" text="Check-Out Date" />
-            <TableColumn fx:id="tblClmCustomersNames" prefWidth="148.0" text="Customers" />
+          <TableColumn fx:id="tblClmRoomsNames" prefWidth="127.20001220703125" text="Room Names" />
+            <TableColumn fx:id="tblClmCheckInDate" prefWidth="110.39996337890625" text="Check-In Date" />
+            <TableColumn fx:id="tblClmCheckOutDate" prefWidth="119.199951171875" text="Check-Out Date" />
+            <TableColumn fx:id="tblClmCustomersNames" prefWidth="184.80002441406248" text="Customers" />
         </columns>
       </TableView>
-      <Button layoutX="131.0" layoutY="523.0" mnemonicParsing="false" onAction="#onCreateOrDeleteReservationClicked" prefHeight="36.0" prefWidth="186.0" text="Create/Delete Reservation" />
-      <Button layoutX="342.0" layoutY="523.0" mnemonicParsing="false" onAction="#onEditRoomCustomizationClicked" prefHeight="36.0" prefWidth="151.0" text="Edit Room Customization" />
-      <DatePicker fx:id="dpCheckInDate" editable="false" layoutX="122.0" layoutY="125.0" />
-      <DatePicker fx:id="dpCheckOutDate" editable="false" layoutX="359.0" layoutY="125.0" />
-      <TextField fx:id="tfTargetRoomName" layoutX="622.0" layoutY="125.0" />
-      <Label layoutX="29.0" layoutY="124.0" text="Filter By">
+      <DatePicker fx:id="dpCheckInDate" editable="false" layoutX="204.0" layoutY="125.0" />
+      <DatePicker fx:id="dpCheckOutDate" editable="false" layoutX="441.0" layoutY="125.0" />
+      <TextField fx:id="tfTargetRoomName" layoutX="704.0" layoutY="131.0" />
+      <Label layoutX="56.0" layoutY="138.0" text="Filter By">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="122.0" layoutY="104.0" text="Check-In Date From">
+      <Label layoutX="204.0" layoutY="104.0" text="Check-In Date From">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="359.0" layoutY="104.0" text="Check-Out Date To">
+      <Label layoutX="441.0" layoutY="104.0" text="Check-Out Date To">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="622.0" layoutY="106.0" text="Room Name" />
-      <Button layoutX="728.0" layoutY="179.0" mnemonicParsing="false" onAction="#onSearchClicked" prefHeight="27.0" prefWidth="67.0" text="Search" />
+      <Label layoutX="704.0" layoutY="106.0" text="Room Name" />
+      <Button layoutX="823.0" layoutY="186.0" mnemonicParsing="false" onAction="#onSearchClicked" prefHeight="32.0" prefWidth="82.0" text="Search" />
       <Button layoutX="17.0" layoutY="166.0" mnemonicParsing="false" onAction="#onClearAllFiltersClicked" text="Clear All Filters" />
-      <Button layoutX="122.0" layoutY="154.0" mnemonicParsing="false" onAction="#onCheckInDateClearClicked" text="Clear" />
-      <Button layoutX="359.0" layoutY="154.0" mnemonicParsing="false" onAction="#onCheckOutDateClearClicked" text="Clear" />
-      <Button layoutX="622.0" layoutY="153.0" mnemonicParsing="false" onAction="#onRoomNameClearClicked" text="Clear" />
+      <Pane layoutX="684.0" layoutY="268.0" prefHeight="175.0" prefWidth="246.0" styleClass="my-pane-background">
+         <children>
+            <Button layoutX="52.0" layoutY="57.0" mnemonicParsing="false" onAction="#onCustomersClicked" prefHeight="36.0" prefWidth="134.0" text="Customers" />
+            <Label layoutX="53.0" layoutY="24.0" text="Configuration Panel" />
+            <Button layoutX="14.0" layoutY="113.0" mnemonicParsing="false" onAction="#onEditRoomCustomizationClicked" prefHeight="36.0" prefWidth="210.0" text="Edit Room Customization" />
+         </children>
+      </Pane>
+      <Label layoutX="309.0" layoutY="21.0" styleClass="my-header-label" text="Receptionist Home Page" />
+      <Button layoutX="14.0" layoutY="493.0" mnemonicParsing="false" onAction="#onCreateOrDeleteReservationClicked" prefHeight="36.0" prefWidth="238.0" text="Create and Delete Reservation" />
+      <Pane layoutX="684.0" layoutY="461.0" prefHeight="206.0" prefWidth="246.0" styleClass="my-pane-background">
+         <children>
+            <Label layoutX="60.0" layoutY="14.0" text="Information Panel" />
+            <Button layoutX="52.0" layoutY="51.0" mnemonicParsing="false" onAction="#onRoomsInfoClicked" prefHeight="36.0" prefWidth="134.0" text="Rooms Info" />
+            <Button layoutX="52.0" layoutY="103.0" mnemonicParsing="false" onAction="#onFeaturesInfoClicked" prefHeight="36.0" prefWidth="134.0" text="Features Info" />
+            <Button layoutX="52.0" layoutY="156.0" mnemonicParsing="false" onAction="#onServicesInfoClicked" prefHeight="36.0" prefWidth="134.0" text="Services Info" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="761.0" prefWidth="1218.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.NewReservationAndDeleteReservationPageController">
+<AnchorPane prefHeight="761.0" prefWidth="1218.0" stylesheets="@css/hotel-theme.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.NewReservationAndDeleteReservationPageController">
    <children>
       <TableView fx:id="tvCustomers" layoutX="22.0" layoutY="76.0" prefHeight="200.0" prefWidth="545.0">
         <columns>
@@ -49,16 +49,16 @@
             <TableColumn fx:id="tblClmReservationCustomers" prefWidth="311.1999755859375" text="Customers" />
          </columns>
       </TableView>
-      <Button layoutX="34.0" layoutY="417.0" mnemonicParsing="false" onAction="#onCreateReservationClicked" prefHeight="40.0" prefWidth="128.0" text="Create Reservation" />
+      <Button layoutX="34.0" layoutY="429.0" mnemonicParsing="false" onAction="#onCreateReservationClicked" prefHeight="40.0" prefWidth="166.0" text="Create Reservation" />
       <DatePicker fx:id="dpCheckInDate" editable="false" layoutX="34.0" layoutY="310.0" />
       <DatePicker fx:id="dpCheckOutDate" editable="false" layoutX="34.0" layoutY="377.0" />
       <Label layoutX="34.0" layoutY="294.0" text="Select Check-In Date" />
       <Label layoutX="34.0" layoutY="359.0" text="Select Check-Out Date" />
-      <Button layoutX="1012.0" layoutY="707.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="40.0" prefWidth="193.0" text="Go Back Receptionist Home Page" />
-      <Label fx:id="lblCreateFeedBack" layoutX="34.0" layoutY="457.0" text="Label" />
-      <Button layoutX="304.0" layoutY="667.0" mnemonicParsing="false" onAction="#onDeleteReservationClicked" prefHeight="40.0" prefWidth="128.0" text="Delete Reservation" />
+      <Button layoutX="964.0" layoutY="703.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="40.0" prefWidth="267.0" text="Go Back Receptionist Home Page" />
+      <Label fx:id="lblCreateFeedBack" layoutX="34.0" layoutY="469.0" text="Label" />
+      <Button layoutX="304.0" layoutY="667.0" mnemonicParsing="false" onAction="#onDeleteReservationClicked" prefHeight="40.0" prefWidth="165.0" text="Delete Reservation" />
       <Label fx:id="lblDeleteFeedBack" layoutX="304.0" layoutY="707.0" text="Label" />
-      <Button layoutX="222.0" layoutY="310.0" mnemonicParsing="false" onAction="#onCheckInDateClearClicked" text="Clear" />
-      <Button layoutX="222.0" layoutY="377.0" mnemonicParsing="false" onAction="#onCheckOutDateClearClicked" text="Clear" />
+      <Button layoutX="229.0" layoutY="315.0" mnemonicParsing="false" onAction="#onCheckInDateClearClicked" text="Clear" />
+      <Button layoutX="229.0" layoutY="382.0" mnemonicParsing="false" onAction="#onCheckOutDateClearClicked" text="Clear" />
    </children>
 </AnchorPane>

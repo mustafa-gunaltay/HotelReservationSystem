@@ -282,6 +282,7 @@ public class NewReservationAndDeleteReservationPageController implements Initial
         ReservationService reservationService = new ReservationServiceImpl();
 
         if (tvReservationWithTheirRoomsAndCustomers.getSelectionModel().isEmpty()) {
+            lblDeleteFeedBack.setText("Reservation can not be deleted");
             AlertManager.showWarning("Warning", "No reservation selected for deletion");
             return;
         }
@@ -291,7 +292,7 @@ public class NewReservationAndDeleteReservationPageController implements Initial
             try {
                 reservationService.deleteReservation(reservation.getReservationId());
             } catch (EntityNotFoundByIdException e) {
-                lblCreateFeedBack.setText("Reservation can not be deleted");
+                lblDeleteFeedBack.setText("Reservation can not be deleted");
                 AlertManager.showError("Error", "Reservation is not found");
                 return;
             }

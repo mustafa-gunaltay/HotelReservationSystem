@@ -1,0 +1,186 @@
+/* 🌟 Genel Arkaplan ve Yazı Renkleri */
+.root {
+    -fx-background-color: #f5e6ca; /* Açık krem tonu */
+    -fx-font-family: "Arial";
+}
+
+/* 📌 Tüm Butonlar */
+.button {
+    -fx-background-color: #f39c12; /* Açık turuncu */
+    -fx-text-fill: #000000; /* Siyah yazı */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 2, 2);
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+/* 🎭 Buton Hover Efekti (Üzerine gelince değişen) */
+.button:hover {
+    -fx-background-color: #e67e22; /* Koyu turuncu */
+    -fx-scale-x: 1.05; /* %5 büyüme */
+    -fx-scale-y: 1.05;
+}
+
+/* 🎭 Buton Basılınca Efekti */
+.button:pressed {
+    -fx-background-color: #d35400; /* Daha koyu turuncu */
+    -fx-scale-x: 0.97; /* Hafif küçülme */
+    -fx-scale-y: 0.97;
+}
+
+/* 🏷️ Tüm Label'lar */
+.label {
+    -fx-text-fill: #000000; /* Siyah */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* 🎨 TextField & TextArea */
+.text-field, .text-area {
+    -fx-background-color: #ffffff; /* Beyaz */
+    -fx-border-color: #f39c12;
+    -fx-border-width: 2px;
+    -fx-border-radius: 6px;
+    -fx-padding: 5px;
+}
+
+.text-field:focused, .text-area:focused {
+    -fx-border-color: #e67e22; /* Odaklandığında renk değiştir */
+    -fx-background-color: #fff8e1; /* Hafif sarımsı */
+}
+
+/* 🔘 Radio Button */
+.radio-button {
+    -fx-text-fill: #000000;
+    -fx-font-size: 13px;
+}
+
+.radio-button:selected {
+    -fx-mark-color: #e67e22;
+}
+
+/* 📅 DatePicker */
+.date-picker {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #f39c12;
+    -fx-border-radius: 6px;
+    -fx-padding: 5px;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: #f39c12;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #e67e22;
+}
+
+/* 🖼️ ImageView (Opsiyonel, Gölgelendirme) */
+.image-view {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 2, 2);
+}
+
+/* 📊 TableView */
+.table-view {
+    -fx-background-color: #f5e6ca; /* Ana arkaplan rengi - krem tonu */
+    -fx-border-color: #f39c12;
+    -fx-border-radius: 8px;
+    -fx-padding: 5px;
+}
+
+/* Tablonun içindeki arkaplan rengi */
+.table-view .virtual-flow .clipped-container .sheet {
+    -fx-background-color: #f5e6ca;
+}
+
+/* Sütun Başlıkları */
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #f5e6ca;
+    -fx-border-color: #d4a76a;
+    -fx-border-width: 0 2px 0 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+}
+
+/* Satırlar */
+.table-row-cell {
+    -fx-border-color: #d4a76a;
+    -fx-border-width: 0 0 1px 0;
+    -fx-background-color: #f5e6ca; /* Satır arkaplan rengi - krem */
+}
+
+/* Seçili Satır Rengi - Odak olmadığında dahil */
+.table-row-cell:selected {
+    -fx-background-color: #d35400; /* Daha koyu turuncu */
+}
+
+/* Seçili Satır + Odak */
+.table-row-cell:selected:focused {
+    -fx-background-color: #d35400; /* Daha koyu turuncu */
+}
+
+/* Tüm seçili satırlar - odak durumundan bağımsız */
+.table-view:focused .table-row-cell:filled:selected {
+    -fx-background-color: #d35400; /* Daha koyu turuncu */
+}
+
+/* Hücre seçili durumda */
+.table-view:focused .table-cell:selected {
+    -fx-background-color: transparent; /* Hücre arka planı şeffaf */
+}
+
+/* Odak olmayan seçili durumu */
+.table-view:focused .table-row-cell:filled:selected:focused {
+    -fx-background-color: #d35400; /* Daha koyu turuncu */
+}
+
+/* Odak olmasa bile seçili satırların koyu kalması için */
+.table-view .table-row-cell:filled:selected,
+.table-view .table-row-cell:filled:selected:hover {
+    -fx-background-color: #d35400; /* Daha koyu turuncu */
+}
+
+/* Hücre içindeki metin rengi - normal durum */
+.table-cell {
+    -fx-text-fill: #000000; /* Normal hücre metin rengi */
+}
+
+/* Hücre içindeki metin rengi - seçili durum */
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: #ffffff; /* Seçili satırlardaki metin rengi */
+}
+
+/* Tek/Çift Satırlar (İsteğe bağlı) */
+.table-row-cell:odd {
+    -fx-background-color: #f5e6ca; /* Tek satırlar */
+}
+
+.table-row-cell:even {
+    -fx-background-color: #f5e6ca; /* Çift satırlar */
+}
+
+/* My Style Classes */
+.my-pane-background {
+    -fx-background-color: #e0c98f;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #d4a76a;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 2, 2);
+    -fx-padding: 10px;
+}
+
+.my-header-label {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Georgia";
+}

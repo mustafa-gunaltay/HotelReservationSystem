@@ -8,11 +8,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane onDragDetected="#onButtonUpdateClicked" prefHeight="676.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.EditingServicesPageController">
+<AnchorPane onDragDetected="#onButtonUpdateClicked" prefHeight="676.0" prefWidth="905.0" stylesheets="@css/hotel-theme.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mustafa.hotelreservationsystem.ui.controllers.EditingServicesPageController">
    <children>
-      <TableView fx:id="tvServices" layoutX="244.0" layoutY="196.0" prefHeight="200.0" prefWidth="432.0">
+      <TableView fx:id="tvServices" layoutX="236.0" layoutY="180.0" prefHeight="200.0" prefWidth="432.0">
         <columns>
           <TableColumn fx:id="tblClmServiceId" prefWidth="104.800048828125" text="Service Id" />
           <TableColumn fx:id="tblClmServiceName" prefWidth="203.20001220703125" text="Service Name" />
@@ -20,48 +21,53 @@
         </columns>
       </TableView>
       <TextField fx:id="tfTargetServiceName" layoutX="278.0" layoutY="77.0" />
-      <Label layoutX="190.0" layoutY="77.0" text="Filter by">
+      <Label layoutX="181.0" layoutY="85.0" text="Filter by">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
       <Label layoutX="278.0" layoutY="60.0" text="Service Name" />
-      <TextField fx:id="tfTargetServicePrice" layoutX="449.0" layoutY="77.0" />
-      <Label layoutX="449.0" layoutY="60.0" text="Minimum Service Price" />
-      <Button layoutX="177.0" layoutY="111.0" mnemonicParsing="false" onAction="#onButtonClearAllFiltersClicked" text="Clear all filters" />
-      <Button layoutX="571.0" layoutY="124.0" mnemonicParsing="false" onAction="#onButtonSearchClicked" text="Search" />
-      <Label layoutX="636.0" layoutY="424.0" text="Select Process">
+      <TextField fx:id="tfTargetServicePrice" layoutX="514.0" layoutY="78.0" />
+      <Label layoutX="512.0" layoutY="60.0" text="Minimum Service Price" />
+      <Button layoutX="145.0" layoutY="118.0" mnemonicParsing="false" onAction="#onButtonClearAllFiltersClicked" text="Clear all filters" />
+      <Button layoutX="656.0" layoutY="118.0" mnemonicParsing="false" onAction="#onButtonSearchClicked" text="Search" />
+      <Button layoutX="655.0" layoutY="610.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="52.0" prefWidth="235.0" text="Go Back Admin Home Page" />
+      <Label fx:id="lblSearchFeedback" layoutX="658.0" layoutY="156.0" text="Label" />
+      <Label layoutX="355.0" layoutY="14.0" styleClass="my-header-label" text="Service Editing">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <RadioButton fx:id="rbAdd" layoutX="636.0" layoutY="459.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonAddClicked" text="Add">
-         <toggleGroup>
-            <ToggleGroup fx:id="Crud" />
-         </toggleGroup></RadioButton>
-      <RadioButton fx:id="rbUpdate" layoutX="636.0" layoutY="484.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonUpdateClicked" text="Update" toggleGroup="$Crud" />
-      <RadioButton fx:id="rbDelete" layoutX="636.0" layoutY="508.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonDeleteClicked" text="Delete" toggleGroup="$Crud" />
-      <TextField fx:id="tfServiceName" layoutX="109.0" layoutY="455.0" />
-      <TextField fx:id="tfServicePrice" layoutX="109.0" layoutY="513.0" />
-      <Label fx:id="lblInformationServiceName" layoutX="109.0" layoutY="437.0" text="Service Name" />
-      <Label fx:id="lblInformationServicePrice" layoutX="111.0" layoutY="493.0" text="Service Price" />
-      <Label fx:id="lblInformation" layoutX="106.0" layoutY="404.0" text="Add New Customer">
-         <font>
-            <Font name="System Bold" size="17.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnAdd" layoutX="106.0" layoutY="570.0" mnemonicParsing="false" onAction="#onButtonAddClicked" prefHeight="44.0" prefWidth="103.0" text="Add" />
-      <Button fx:id="btnUpdate" layoutX="106.0" layoutY="570.0" mnemonicParsing="false" onAction="#onButtonUpdateClicked" prefHeight="44.0" prefWidth="103.0" text="Update" />
-      <Button fx:id="btnDelete" layoutX="106.0" layoutY="437.0" mnemonicParsing="false" onAction="#onButtonDeleteClicked" prefHeight="44.0" prefWidth="103.0" text="Delete" />
-      <Button layoutX="727.0" layoutY="610.0" mnemonicParsing="false" onAction="#goBackHomePage" prefHeight="52.0" prefWidth="163.0" text="Go Back Admin Home Page" />
-      <Label fx:id="lblAddFeedback" layoutX="106.0" layoutY="617.0" text="Label" />
-      <Label fx:id="lblUpdateFeedback" layoutX="106.0" layoutY="617.0" text="Label" />
-      <Label fx:id="lblDeleteFeedback" layoutX="106.0" layoutY="481.0" text="Label" />
-      <Label fx:id="lblSearchFeedback" layoutX="571.0" layoutY="150.0" text="Label" />
-      <Label layoutX="379.0" layoutY="14.0" text="Service Editing">
-         <font>
-            <Font name="System Bold" size="17.0" />
-         </font>
-      </Label>
+      <Pane layoutX="50.0" layoutY="396.0" prefHeight="271.0" prefWidth="548.0" styleClass="my-pane-background">
+         <children>
+            <Label layoutX="357.0" layoutY="37.0" text="Select Process">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <RadioButton fx:id="rbAdd" layoutX="357.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonAddClicked" text="Add">
+               <toggleGroup>
+                  <ToggleGroup fx:id="Crud" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="rbUpdate" layoutX="357.0" layoutY="88.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonUpdateClicked" text="Update" toggleGroup="$Crud" />
+            <RadioButton fx:id="rbDelete" layoutX="357.0" layoutY="112.0" mnemonicParsing="false" onMouseClicked="#onRadioButtonDeleteClicked" text="Delete" toggleGroup="$Crud" />
+            <TextField fx:id="tfServiceName" layoutX="51.0" layoutY="58.0" />
+            <TextField fx:id="tfServicePrice" layoutX="51.0" layoutY="116.0" />
+            <Label fx:id="lblInformationServicePrice" layoutX="53.0" layoutY="96.0" text="Service Price" />
+            <Label fx:id="lblInformation" layoutX="48.0" layoutY="7.0" text="Add New Customer">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnUpdate" layoutX="48.0" layoutY="173.0" mnemonicParsing="false" onAction="#onButtonUpdateClicked" prefHeight="44.0" prefWidth="103.0" text="Update" />
+            <Button fx:id="btnDelete" layoutX="48.0" layoutY="40.0" mnemonicParsing="false" onAction="#onButtonDeleteClicked" prefHeight="44.0" prefWidth="103.0" text="Delete" />
+            <Label fx:id="lblUpdateFeedback" layoutX="48.0" layoutY="220.0" text="Label" />
+            <Label fx:id="lblDeleteFeedback" layoutX="48.0" layoutY="84.0" text="Label" />
+            <Label fx:id="lblInformationServiceName" layoutX="51.0" layoutY="37.0" text="Service Name" />
+            <Button fx:id="btnAdd" layoutX="48.0" layoutY="173.0" mnemonicParsing="false" onAction="#onButtonAddClicked" prefHeight="44.0" prefWidth="103.0" text="Add" />
+            <Label fx:id="lblAddFeedback" layoutX="48.0" layoutY="220.0" text="Label" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
